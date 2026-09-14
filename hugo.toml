@@ -1,0 +1,4 @@
+baseURL = 'https://www.fottp.org.uk/'
+locale = 'en-gb'
+title = 'Friends of Telford Town Park'
+theme = 'ananke'
