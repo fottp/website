@@ -33,9 +33,9 @@ Open gaps, flagged with `<!-- TODO -->` comments in the content itself:
 - `content/our-projects/index.md` — one project entry ("clearing overhanging trees") needs a real photo (old one was stock); the "Gallery" section's old-site images were only ever captured as 50×67px thumbnails by a JS lightbox, so full-resolution photos need sourcing separately.
 - The "200+ members / 30+ events / 100+ projects" stats on the home page are carried over from the old site and should be verified with the committee before publishing.
 - Map embed is still a TODO on `content/contact-us/index.md` — see open decisions below.
-- **Two Web3Forms forms, split by mailbox.** The plain `[email address removed]` address was replaced with Web3Forms-backed HTML forms (2026-09-15, to stop the address being scraped/spammed). gruntfutuk runs two mailboxes handled by different people: `[email address removed]` for membership sign-ups, `[email address removed]` for general enquiries. Web3Forms ties one access key to one destination email, so there are now two forms:
-  - `content/become-a-member/index.md` (linked from the homepage's "Become a Member" button) — **live**, using the `[email address removed]` access key.
-  - `content/contact-us/index.md` (general enquiries) — **needs a second access key**. Sign up a second form at web3forms.com for `[email address removed]`, then replace `CONTACT-WEB3FORMS-ACCESS-KEY-HERE` in that file.
+- **Two Web3Forms forms, split by mailbox — DONE.** The plain `[email address removed]` address was replaced with Web3Forms-backed HTML forms (2026-09-15, to stop the address being scraped/spammed). gruntfutuk runs two mailboxes handled by different people: `[email address removed]` for membership sign-ups, `[email address removed]` for general enquiries. Web3Forms ties one access key to one destination email, so there are two forms, both live with real access keys:
+  - `content/become-a-member/index.md` (linked from the homepage's "Become a Member" button) → `[email address removed]`.
+  - `content/contact-us/index.md` (general enquiries, team bios) → `[email address removed]`.
 
   Needed `[markup.goldmark.renderer] unsafe = true` in `hugo.toml` so the raw `<form>` HTML in Markdown renders. Note: Web3Forms' dashboard concept of "a form" is just a config record (name + destination email) that issues an access key — it's unrelated to the actual HTML form, which lives in our Markdown.
 
