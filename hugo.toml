@@ -60,10 +60,24 @@ theme = 'hugo-universal-theme'
       </p>
       """
 
-# Top bar with contact details is left disabled to avoid publishing an
-# email address in plain text sitewide (see the contact form on /contact-us/).
+# Top bar: used only for social links, not contact details — an email
+# address in plain text sitewide is exactly what the Web3Forms change
+# on /contact-us/ was meant to avoid.
 [params.topbar]
-    enable = false
+    enable = true
+    text = "Follow us:"
+
+[[menu.topbar]]
+    weight = 1
+    name = "Facebook"
+    url = "https://www.facebook.com/FOTTP/"
+    pre = "<i class='fab fa-facebook fa-lg'></i>"
+
+[[menu.topbar]]
+    weight = 2
+    name = "Instagram"
+    url = "https://www.instagram.com/FOTTP/"
+    pre = "<i class='fab fa-instagram fa-lg'></i>"
 
 # Web3Forms access keys for the site's forms, rendered by
 # layouts/partials/webform.html — kept out of content/ entirely so the
