@@ -32,7 +32,8 @@ Open gaps, flagged with `<!-- TODO -->` comments in the content itself:
 - `content/about-us/index.md` — needs a real event photo (old one was stock).
 - `content/our-projects/index.md` — one project entry ("clearing overhanging trees") needs a real photo (old one was stock); the "Gallery" section's old-site images were only ever captured as 50×67px thumbnails by a JS lightbox, so full-resolution photos need sourcing separately.
 - The "200+ members / 30+ events / 100+ projects" stats on the home page are carried over from the old site and should be verified with the committee before publishing.
-- Contact form and map embed are still just TODOs on `content/contact-us/index.md` — see open decisions below.
+- Map embed is still a TODO on `content/contact-us/index.md` — see open decisions below.
+- **Contact form needs a real Web3Forms access key.** The plain `[email address removed]` address was replaced with a Web3Forms-backed HTML form (chosen 2026-09-15 to stop the address being scraped/spammed; no account dashboard needed, no cookies). Sign up at web3forms.com with `[email address removed]` to get an access key, then replace `WEB3FORMS-ACCESS-KEY-HERE` in `content/contact-us/index.md`. Needed `[markup.goldmark.renderer] unsafe = true` in `hugo.toml` so the raw `<form>` HTML in that Markdown file renders.
 
 `import/` (the raw scrape) is kept locally only, not committed — useful as a reference while tidying but not needed once `content/` is done.
 
@@ -40,7 +41,6 @@ Dependencies for `scrape_old_site.py`: managed as a proper **uv** project at `D:
 
 ## Open decisions (not yet made)
 - **Theme**: Ananke is a placeholder. Candidates discussed: Hugo Blox, Blowfish, Hextra. Choose based on what a community charity needs: image-led landing page, news/events list, static pages, easy Markdown editing.
-- **Contact form**: static site needs an external form backend (Formspree / Web3Forms / Basin) or a mailto link. Not decided.
 - **Analytics**: none, or a cookieless option (Plausible / GoatCounter). Aim: no cookie banner.
 - **Map**: plain Google Maps iframe or OpenStreetMap embed.
 - **Editing workflow for non-technical members**: GitHub Desktop + VS Code, or a Git-backed CMS (Decap / Sveltia / Pages CMS). Not decided.

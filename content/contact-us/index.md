@@ -38,8 +38,27 @@ I have always loved gardening and working outside; if I had not become a teacher
 
 ## Get in touch
 
-E-mail: **[email address removed]**
-
 Address: **TF3 4EP**
 
-<!-- TODO: contact form (Formspree/Web3Forms/Basin) and map embed are open decisions — see docs/HANDOFF.md -->
+<!-- TODO: swap in the real Web3Forms access key once gruntfutuk signs up at web3forms.com with [email address removed] — see docs/HANDOFF.md -->
+<form action="https://api.web3forms.com/submit" method="POST">
+  <input type="hidden" name="access_key" value="WEB3FORMS-ACCESS-KEY-HERE">
+  <input type="hidden" name="subject" value="New message from the FOTTP website contact form">
+  <input type="checkbox" name="botcheck" style="display: none;" tabindex="-1" autocomplete="off">
+
+  <p>
+    <label for="contact-name">Name*</label><br>
+    <input type="text" id="contact-name" name="name" required>
+  </p>
+  <p>
+    <label for="contact-email">Email*</label><br>
+    <input type="email" id="contact-email" name="email" required>
+  </p>
+  <p>
+    <label for="contact-message">Message*</label><br>
+    <textarea id="contact-message" name="message" rows="6" required></textarea>
+  </p>
+  <button type="submit">Send message</button>
+</form>
+
+<!-- TODO: map embed is still an open decision — see docs/HANDOFF.md -->
