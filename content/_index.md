@@ -19,6 +19,8 @@ Friends of Telford Town Park brings neighbours and visitors alike to enrich, res
 - **30+** Friends events held annually
 - **100+** restoration projects completed
 
+![A community fun run passing through Telford Town Park](community-fun-run.jpg)
+
 ## Active Community Engagement
 
 Volunteer in fun and fulfilling events, workshops, and restorations designed for all ages to enjoy and contribute.
