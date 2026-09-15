@@ -35,4 +35,6 @@ Support vital conservation efforts including planting, habitat restoration, and 
 
 Explore QR-guided trails, digital park maps, and interactive resources enhancing visitor experience.
 
+![Telford Town Park in the snow](snowy-pond.jpg)
+
 [Meet the Team](/contact-us/)
