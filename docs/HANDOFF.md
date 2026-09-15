@@ -43,6 +43,7 @@ Dependencies for `scrape_old_site.py`: managed as a proper **uv** project at `D:
 - **Theme**: Ananke is a placeholder. Candidates discussed: Hugo Blox, Blowfish, Hextra. Choose based on what a community charity needs: image-led landing page, news/events list, static pages, easy Markdown editing.
 - **Analytics**: none, or a cookieless option (Plausible / GoatCounter). Aim: no cookie banner.
 - **Map**: plain Google Maps iframe or OpenStreetMap embed.
+- **Language selector**: the old site's flag switcher is just IONOS's "Website Translator" WordPress plugin wrapping Google's client-side Website Translator widget (machine-translates the DOM on the fly, gated behind its own cookie consent) — no real translated content behind it. Deliberately not replicating this for now (adding it back would mean a third-party script and a cookie banner, against the no-tracking preference); revisit later if genuinely needed.
 - **Editing workflow for non-technical members**: GitHub Desktop + VS Code, or a Git-backed CMS (Decap / Sveltia / Pages CMS). Not decided.
 - **Housekeeping**: bump action versions (Node 20 deprecation warning: checkout, configure-pages, upload-artifact). Low priority; pipeline works.
 - **Second GitHub org owner** to be added.
