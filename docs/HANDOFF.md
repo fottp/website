@@ -3,7 +3,7 @@
 _Generated 14 September 2026 from the claude.ai planning session. Update this file as work progresses._
 
 ## Goal
-Replace the charity's existing IONOS site-builder website (https://www.fottp.co.uk) with a static Hugo site at **https://www.fottp.org.uk**, maintained in Git so future committee members can edit it with GitHub Desktop and a text editor.
+`fottp.org.uk` is a **proof-of-concept** aiming to hold largely the same content as the charity's current definitive site, https://www.fottp.co.uk (an IONOS site-builder site built and run day-to-day by a current trustee) — but on an open-source, Git-based static-site approach, specifically so the content isn't locked away from the wider set of trustees the way it is when one person's tooling/account is the only way to edit it. Maintained in Git so committee members can edit it with GitHub Desktop and a text editor, or (as of 2026-09-15) via the Sveltia CMS at `/admin/` for non-technical editing — see below.
 
 ## Current state — infrastructure is COMPLETE and live
 | Component | Detail |
@@ -20,10 +20,21 @@ Replace the charity's existing IONOS site-builder website (https://www.fottp.co.
 Git identity: commits use the GitHub noreply address (email-privacy protection is on). Line endings: Git for Windows autocrlf default; repo stores LF.
 
 ## Old site facts (source for migration)
-- https://www.fottp.co.uk — IONOS "MyWebsite Now" builder on WordPress; `server: IONOS Webserver`; domain registered 28 May 2026 via IONOS, expires 28 May 2027, registrant redacted; held by an unknown person (possibly not a charity member). Do not modify; it will be redirected or lapsed later.
+- **https://www.fottp.co.uk is the charity's current, definitive site** — IONOS "MyWebsite Now" builder on WordPress; `server: IONOS Webserver`; domain registered 28 May 2026 via IONOS, expires 28 May 2027, registrant redacted (WHOIS privacy — this doesn't mean the site is unmaintained, it's actively built and run by a current trustee). Do not modify; it will be redirected or lapsed once `fottp.org.uk` is ready to take over.
 - **The WordPress REST API (`/wp-json/`) is disabled** for anonymous requests — returns "wp-json is disabled". Content must be scraped from the rendered HTML.
 - Pages are a handful of static ones (home, about, partners, projects, contact) plus images under `/wp-content/uploads/go-x/`. Embedded widgets: contact form, Google Maps, translator, IONOS SiteAnalytics with cookie consent — none of these need reproducing as-is.
 - Bot detection may 403 non-browser user agents; a browser-like User-Agent header may be needed.
+
+### A third site: https://friendsoftelfordtownpark.org — old, unmaintainable, being harvested for content
+Investigated 2026-09-15. This is **not** the current site and **not** what `fottp.org.uk` is replacing — it's an older site the charity can no longer maintain, and the goal is to recover any content from it worth keeping before it's lost, folding it into `fottp.org.uk` alongside what's already been migrated from fottp.co.uk.
+
+**Platform:** WordPress 5.4.21 (outdated — 5+ major releases behind), theme "Barletta" (a commercial ThemeForest theme) + child theme, built with the SiteOrigin Page Builder plugin. Notable plugins: The Events Calendar (real calendar/events functionality, a genuine feature gap versus fottp.co.uk and the new site), Contact Form 7, Custom Facebook Feed, Photo Gallery, Social Icons, and PixelYourSite (a Facebook-pixel/tracking plugin — worth knowing given this repo's no-tracking preference).
+
+**Hosting:** split across two providers. DNS and email are at IONOS (nameservers on IONOS's `ui-dns.*` cluster, MX at `mx00/mx01.ionos.co.uk`, SPF references IONOS). The actual website is hosted separately — the A record (`54.38.72.95`) reverse-resolves to `ns1.dawleywebdesign.email`, and the site's own code has custom plugins literally named `dwd-carousel`/`dwd-custom-func`, pointing to a local outfit called **Dawley Web Design** running their own nginx server with Let's Encrypt TLS and self-managing the WordPress install — separate from the domain/DNS/email arrangement at IONOS. This split (and the outdated WP core) is presumably why it "cannot be maintained" going forward.
+
+**Content scale — much bigger than fottp.co.uk, and its REST API is open** (a real advantage — content can be pulled as structured JSON via `/wp-json/wp/v2/pages`, `/wp-json/wp/v2/posts`, `/wp-json/wp/v2/media` with pagination, no HTML scraping needed): **50 pages, 85 posts, 1,278 media library items** (the media count will collapse a lot once WordPress's auto-generated thumbnail/medium/large/scaled size variants per upload are deduplicated down to originals). Content is recent — includes a post modified in 2025 and a page about a Queen's Award received March 2025.
+
+**Not yet done:** a full raw backup/export of this site's pages, posts and media hasn't been pulled yet. Given it "cannot be maintained," treat recovering a complete local copy as the priority before deciding what specifically gets folded into `fottp.org.uk`'s curated content — same pattern as the `import/` raw-scrape-then-curate approach used for fottp.co.uk.
 
 ## Content migration — DONE
 All 5 old-site pages have been scraped (into `import/`, not committed) and tidied into Hugo page bundles under `content/`: home (`content/_index.md`), `about-us`, `contact-us`, `our-partners`, `our-projects`. Cleanup during tidying: stripped the old site's duplicated contact-form/map-consent widget boilerplate and JS gallery "Loading..." artefacts, and dropped stock photos left over from the builder template (a stock crowd scene, plus unrelated shots of Bath and the Lake District) rather than present them as photos of Telford Town Park. Genuine team/volunteer/partner photos were kept and renamed descriptively.
