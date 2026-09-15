@@ -39,8 +39,16 @@ Open gaps, flagged with `<!-- TODO -->` comments in the content itself:
 
 Dependencies for `scrape_old_site.py`: managed as a proper **uv** project at `D:\websites\fottp.org.uk\` (not bare pip, not just a loose `.venv`) — `uv init` (creates `pyproject.toml` + `.venv`), then `uv add requests beautifulsoup4 markdownify`, then `uv run scrape_old_site.py`.
 
+## Theme — DECIDED
+Replaced Ananke with **[hugo-universal-theme](https://github.com/devcows/hugo-universal-theme)** (2026-09-15), chosen for a working responsive hamburger nav out of the box (standard Bootstrap navbar-toggler) without needing Go/Node on top of Hugo (ruled out Blowfish for that reason; ruled out Hugo Blox for its history of breaking rebrands; ruled out hugo-hero-theme for being stale since Nov 2024).
+
+The theme pulls in jQuery, Bootstrap 3.4.1, Font Awesome and Google's Roboto webfont — all **self-hosted** under `static/vendor/` (not loaded from CDNs) to keep the no-tracking preference. `layouts/partials/headers.html` and `layouts/partials/scripts.html` override the theme's versions to point at the local copies. `layouts/index.html` also overrides the theme's default, which only renders config-driven marketing sections (carousel/testimonials/clients) and never the page's own Markdown — the override adds the missing `{{ .Content }}` block.
+
+The top nav is configured in `hugo.toml` under `[menu]` in the same order as the old site (Home, About Us, Our Partners, Contact Us, Our Projects). All content pages carry `type: page` front matter so they use the theme's plain single-column layout (`layouts/page/single.html`) rather than its blog/sidebar layout. The theme's own `breadcrumbs.html` partial renders the front-matter title as the page's `<h1>` — content Markdown should start below that (no leading `# Heading` matching the title) to avoid duplicate H1s.
+
+Left disabled for now (all still open decisions, see below): `enableGoogleMaps`, `enableRecaptchaInContactForm`, `params.topbar` (would otherwise show contact details in plain text sitewide, undoing the Web3Forms change). No real FOTTP logo exists yet, so `disabled_logo = true` shows the charity name as text instead — TODO: swap in a real logo image and set `disabled_logo = false`.
+
 ## Open decisions (not yet made)
-- **Theme**: Ananke is a placeholder. Candidates discussed: Hugo Blox, Blowfish, Hextra. Choose based on what a community charity needs: image-led landing page, news/events list, static pages, easy Markdown editing.
 - **Analytics**: none, or a cookieless option (Plausible / GoatCounter). Aim: no cookie banner.
 - **Map**: plain Google Maps iframe or OpenStreetMap embed.
 - **Language selector**: the old site's flag switcher is just IONOS's "Website Translator" WordPress plugin wrapping Google's client-side Website Translator widget (machine-translates the DOM on the fly, gated behind its own cookie consent) — no real translated content behind it. Deliberately not replicating this for now (adding it back would mean a third-party script and a cookie banner, against the no-tracking preference); revisit later if genuinely needed.
