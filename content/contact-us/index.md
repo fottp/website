@@ -41,9 +41,8 @@ I have always loved gardening and working outside; if I had not become a teacher
 
 Address: **TF3 4EP**
 
-<!-- TODO: swap in the real Web3Forms access key once gruntfutuk signs up at web3forms.com — see docs/HANDOFF.md -->
 <form action="https://api.web3forms.com/submit" method="POST">
-  <input type="hidden" name="access_key" value="WEB3FORMS-ACCESS-KEY-HERE">
+  <input type="hidden" name="access_key" value="8772a910-7df8-460c-acbf-24aa267f0895">
   <input type="hidden" name="subject" value="New message from the FOTTP website contact form">
   <input type="checkbox" name="botcheck" style="display: none;" tabindex="-1" autocomplete="off">
 
