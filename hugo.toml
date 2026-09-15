@@ -37,9 +37,12 @@ theme = 'hugo-universal-theme'
     defaultKeywords = ["Telford Town Park", "FOTTP", "charity", "volunteering", "Telford"]
     defaultDescription = "Friends of Telford Town Park (FOTTP) is a community charity supporting and improving Telford Town Park."
 
-    # No logo image sourced yet — TODO: replace with a real FOTTP logo and set disabled_logo = false
-    disabled_logo = true
+    disabled_logo = false
     logo_text = "Friends of Telford Town Park"
+    logo = "img/logo.png"
+    # TODO: same image reused for the mobile logo for now — consider a
+    # tighter-cropped, text-free variant if the navbar looks cramped on phones
+    logo_small = "img/logo.png"
 
     # Google Maps and reCAPTCHA are open decisions — see docs/HANDOFF.md — left disabled for now
     enableGoogleMaps = false
