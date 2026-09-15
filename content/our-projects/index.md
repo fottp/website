@@ -7,6 +7,14 @@ Have a look at some of our vital restoration and maintenance efforts. We work ti
 
 ## Some of our recent work
 
+### 2024 — The Crannog Project
+
+With the support of Simmonds Transport, the Friends are involved in a major project to repair and improve the Crannog and the area around Grange Pool — including repairing the seating area and bridge, painting benches and tables, clearing pathways, and planting hedgerow trees to support the banks.
+
+![Volunteers planting new hedgerow trees near the Crannog](crannog-planting.jpg)
+
+![Freshly painted picnic benches near Grange Pool](crannog-benches.jpg)
+
 ### 19 August — Restoring the Chelsea and Maxel gardens
 
 The Friends of Telford Town Park were hard at work in the gardens and then enjoying a well-earned cup of tea and a chat.
@@ -46,7 +54,7 @@ Our volunteers are always helping us restore our beloved park! Past work session
 
 ## The Park We're Protecting
 
-Telford Town Park carries real industrial heritage alongside its green space — reminders of why our restoration work matters.
+Telford Town Park was once a huge industrial site, and much of that heritage still survives alongside its green space today. The chimney is one of the park's most prominent landmarks: built in 1873 on the site of an earlier 18th-century ironworks, it stands 62 metres tall. The Abraham Darby monument marks 300 years since Darby's ironworking innovations put the area on the map. These are reminders of why our restoration work matters — protecting both the park's nature and its history for the future.
 
 ![The Abraham Darby 300th anniversary monument in the park](abraham-darby-monument.jpg)
 
