@@ -1,6 +1,8 @@
 ---
 title: "Contact Us"
 type: page
+layout: contact-form
+webform: contact
 ---
 
 ## Our Team
@@ -40,25 +42,5 @@ I have always loved gardening and working outside; if I had not become a teacher
 ## Get in touch
 
 Address: **TF3 4EP**
-
-<form action="https://api.web3forms.com/submit" method="POST">
-  <input type="hidden" name="access_key" value="85114ca7-f06c-4478-8a03-88fb14dc6ec5">
-  <input type="hidden" name="subject" value="New message from the FOTTP website contact form">
-  <input type="checkbox" name="botcheck" style="display: none;" tabindex="-1" autocomplete="off">
-
-  <p>
-    <label for="contact-name">Name*</label><br>
-    <input type="text" id="contact-name" name="name" required>
-  </p>
-  <p>
-    <label for="contact-email">Email*</label><br>
-    <input type="email" id="contact-email" name="email" required>
-  </p>
-  <p>
-    <label for="contact-message">Message*</label><br>
-    <textarea id="contact-message" name="message" rows="6" required></textarea>
-  </p>
-  <button type="submit">Send message</button>
-</form>
 
 <!-- TODO: map embed is still an open decision — see docs/HANDOFF.md -->
