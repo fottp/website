@@ -1,7 +1,63 @@
 baseURL = 'https://www.fottp.org.uk/'
 locale = 'en-gb'
 title = 'Friends of Telford Town Park'
-theme = 'ananke'
+theme = 'hugo-universal-theme'
 
 [markup.goldmark.renderer]
   unsafe = true
+
+[menu]
+[[menu.main]]
+    name       = "Home"
+    url        = "/"
+    weight     = 1
+
+[[menu.main]]
+    name       = "About Us"
+    url        = "/about-us/"
+    weight     = 2
+
+[[menu.main]]
+    name       = "Our Partners"
+    url        = "/our-partners/"
+    weight     = 3
+
+[[menu.main]]
+    name       = "Contact Us"
+    url        = "/contact-us/"
+    weight     = 4
+
+[[menu.main]]
+    name       = "Our Projects"
+    url        = "/our-projects/"
+    weight     = 5
+
+[params]
+    author = "Friends of Telford Town Park"
+    defaultKeywords = ["Telford Town Park", "FOTTP", "charity", "volunteering", "Telford"]
+    defaultDescription = "Friends of Telford Town Park (FOTTP) is a community charity supporting and improving Telford Town Park."
+
+    # No logo image sourced yet — TODO: replace with a real FOTTP logo and set disabled_logo = false
+    disabled_logo = true
+    logo_text = "Friends of Telford Town Park"
+
+    # Google Maps and reCAPTCHA are open decisions — see docs/HANDOFF.md — left disabled for now
+    enableGoogleMaps = false
+    enableRecaptchaInContactForm = false
+
+    date_format = "2 January 2006"
+
+    about_us = "<p>Friends of Telford Town Park was founded to unite people who cherish this unique green space, supporting restoration, activities and a community spirit that keeps the park vibrant and welcoming for all generations.</p>"
+    copyright = "&copy; Friends of Telford Town Park. All rights reserved."
+
+    contact_url = "/contact-us/"
+    address = """<p>Telford Town Park
+        <br>Telford
+        <br>TF3 4EP
+      </p>
+      """
+
+# Top bar with contact details is left disabled to avoid publishing an
+# email address in plain text sitewide (see the contact form on /contact-us/).
+[params.topbar]
+    enable = false
