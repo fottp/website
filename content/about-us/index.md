@@ -15,6 +15,10 @@ Friends of Telford Town Park was founded in 2003 by a small group of three peopl
 
 Over the years the Friends have been recognised with a national Fields in Trust award (2013), the Green Flag Award for the park, "Best UK Park" at the Fields in Trust awards, and the Queen's Award for Voluntary Service — and celebrated 20 years of service in 2023.
 
+On 28 September 2020, the Friends were delighted to welcome HRH The Princess Royal to the Town Park, where she was shown around the Chelsea and Maxell Gardens and planted a commemorative tree.
+
+![HRH The Princess Royal touring the Chelsea Gardens with a FOTTP volunteer](royal-visit.jpg)
+
 ## Meet Our Dedicated Team
 
 We have a wonderfully committed team here at the Friends of Telford Town Park.
