@@ -1,5 +1,6 @@
 ---
 title: "Committed to Telford Town Park's Future"
+type: page
 ---
 
 ## Our Story and Mission

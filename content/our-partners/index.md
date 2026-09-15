@@ -1,8 +1,7 @@
 ---
 title: "Our Partners"
+type: page
 ---
-
-# Our Partners
 
 We're grateful for the support of local businesses and organisations who help us look after Telford Town Park.
 
@@ -16,6 +15,6 @@ We're grateful for the support of local businesses and organisations who help us
 
 ## Get in touch
 
-E-mail: **[email address removed]**
-
 Address: **TF3 4EP**
+
+Want to get in touch? [Contact us](/contact-us/).

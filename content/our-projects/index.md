@@ -1,8 +1,7 @@
 ---
 title: "Our Projects"
+type: page
 ---
-
-# Our Projects
 
 Have a look at some of our vital restoration and maintenance efforts. We work tirelessly with our friends and volunteers to ensure Telford Town Park receives the love it deserves.
 
