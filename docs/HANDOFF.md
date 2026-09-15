@@ -25,12 +25,18 @@ Git identity: commits use the GitHub noreply address (email-privacy protection i
 - Pages are a handful of static ones (home, about, partners, projects, contact) plus images under `/wp-content/uploads/go-x/`. Embedded widgets: contact form, Google Maps, translator, IONOS SiteAnalytics with cookie consent — none of these need reproducing as-is.
 - Bot detection may 403 non-browser user agents; a browser-like User-Agent header may be needed.
 
-## Next task — content migration (in progress)
-1. Run a scraper (see `scrape_old_site.py` below; place it at `D:\websites\fottp.org.uk\scrape_old_site.py`, i.e. one level above the Hugo `website` folder) that fetches each old page, converts the main content to Markdown with `markdownify`, downloads images, and writes `import/<slug>/index.md` + images + `original.html`.
-2. Review and tidy the Markdown (builder HTML converts messily), then move the pages into `content/` as Hugo page bundles.
-3. Commit `import/` only if useful as a record; otherwise keep it out of the repo.
+## Content migration — DONE
+All 5 old-site pages have been scraped (into `import/`, not committed) and tidied into Hugo page bundles under `content/`: home (`content/_index.md`), `about-us`, `contact-us`, `our-partners`, `our-projects`. Cleanup during tidying: stripped the old site's duplicated contact-form/map-consent widget boilerplate and JS gallery "Loading..." artefacts, and dropped stock photos left over from the builder template (a stock crowd scene, plus unrelated shots of Bath and the Lake District) rather than present them as photos of Telford Town Park. Genuine team/volunteer/partner photos were kept and renamed descriptively.
 
-Dependencies: managed as a proper **uv** project at `D:\websites\fottp.org.uk\` (not bare pip, not just a loose `.venv`) — `uv init` (creates `pyproject.toml` + `.venv`), then `uv add requests beautifulsoup4 markdownify`, then `uv run scrape_old_site.py`.
+Open gaps, flagged with `<!-- TODO -->` comments in the content itself:
+- `content/about-us/index.md` — needs a real event photo (old one was stock).
+- `content/our-projects/index.md` — one project entry ("clearing overhanging trees") needs a real photo (old one was stock); the "Gallery" section's old-site images were only ever captured as 50×67px thumbnails by a JS lightbox, so full-resolution photos need sourcing separately.
+- The "200+ members / 30+ events / 100+ projects" stats on the home page are carried over from the old site and should be verified with the committee before publishing.
+- Contact form and map embed are still just TODOs on `content/contact-us/index.md` — see open decisions below.
+
+`import/` (the raw scrape) is kept locally only, not committed — useful as a reference while tidying but not needed once `content/` is done.
+
+Dependencies for `scrape_old_site.py`: managed as a proper **uv** project at `D:\websites\fottp.org.uk\` (not bare pip, not just a loose `.venv`) — `uv init` (creates `pyproject.toml` + `.venv`), then `uv add requests beautifulsoup4 markdownify`, then `uv run scrape_old_site.py`.
 
 ## Open decisions (not yet made)
 - **Theme**: Ananke is a placeholder. Candidates discussed: Hugo Blox, Blowfish, Hextra. Choose based on what a community charity needs: image-led landing page, news/events list, static pages, easy Markdown editing.
