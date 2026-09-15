@@ -7,7 +7,7 @@ type: page
 
 Friends of Telford Town Park was founded to unite people who cherish this unique green space. Our mission is to support restoration, promote activities, and foster a community spirit that ensures the park remains a vibrant, welcoming destination for all generations.
 
-<!-- TODO: replace with a real photo of a FOTTP event once one is available -->
+![Out and about in Telford Town Park](park-path.jpg)
 
 ## Meet Our Dedicated Team
 

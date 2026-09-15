@@ -42,4 +42,20 @@ Our volunteers are always helping us restore our beloved park! Past work session
 - Clearing the snake and lizard sanctuary with Fujitsu
 - Clearing the Stirchley old school entrance with Fujitsu
 
-<!-- TODO: the old site's gallery images were only ever captured as small (50x67px) thumbnails by the JS lightbox widget — need full-resolution photos re-sourced for a proper gallery -->
+<!-- TODO: the old site's gallery images were only ever captured as small (50x67px) thumbnails by the JS lightbox widget — need full-resolution photos re-sourced for these specific past sessions -->
+
+## The Park We're Protecting
+
+Telford Town Park carries real industrial heritage alongside its green space — reminders of why our restoration work matters.
+
+![The Abraham Darby 300th anniversary monument in the park](abraham-darby-monument.jpg)
+
+![The monument seen across the meadow](monument-meadow.jpg)
+
+![The park's historic chimney in winter](old-chimney-winter.jpg)
+
+![The chimney and picnic area](old-chimney-area.jpg)
+
+![The chimney in summer](old-chimney-summer.jpg)
+
+![One of the park's fishing lakes](fishing-lake.jpg)
