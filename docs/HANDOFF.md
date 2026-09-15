@@ -30,7 +30,7 @@ Git identity: commits use the GitHub noreply address (email-privacy protection i
 2. Review and tidy the Markdown (builder HTML converts messily), then move the pages into `content/` as Hugo page bundles.
 3. Commit `import/` only if useful as a record; otherwise keep it out of the repo.
 
-Dependencies: `pip install requests beautifulsoup4 markdownify`.
+Dependencies: managed as a proper **uv** project at `D:\websites\fottp.org.uk\` (not bare pip, not just a loose `.venv`) — `uv init` (creates `pyproject.toml` + `.venv`), then `uv add requests beautifulsoup4 markdownify`, then `uv run scrape_old_site.py`.
 
 ## Open decisions (not yet made)
 - **Theme**: Ananke is a placeholder. Candidates discussed: Hugo Blox, Blowfish, Hextra. Choose based on what a community charity needs: image-led landing page, news/events list, static pages, easy Markdown editing.

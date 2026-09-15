@@ -7,7 +7,7 @@ Maintainer: gruntfutuk (GitHub username; not a trustee). Read `docs/HANDOFF.md` 
 ## Environment
 - Developed on native Windows (PowerShell). Use PowerShell-compatible commands; other charity members will use GitHub Desktop + VS Code, so keep the toolchain simple.
 - Hugo **0.166.0 extended** (winget `Hugo.Hugo.Extended`). The version is pinned in `.github/workflows/hugo.yml`; bump local and CI together.
-- Python 3.14+ for any helper scripts: use `int | float` unions and `collections.abc`, not `typing` imports.
+- Python 3.14+ for any helper scripts: use `int | float` unions and `collections.abc`, not `typing` imports. Manage dependencies and run scripts with **uv** (local `.venv`, not bare `pip`).
 - British English spelling throughout content and copy.
 
 ## Layout
