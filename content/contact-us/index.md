@@ -41,9 +41,8 @@ I have always loved gardening and working outside; if I had not become a teacher
 
 Address: **TF3 4EP**
 
-<!-- TODO: swap in the real Web3Forms access key for the [email address removed] form once created — see docs/HANDOFF.md -->
 <form action="https://api.web3forms.com/submit" method="POST">
-  <input type="hidden" name="access_key" value="CONTACT-WEB3FORMS-ACCESS-KEY-HERE">
+  <input type="hidden" name="access_key" value="85114ca7-f06c-4478-8a03-88fb14dc6ec5">
   <input type="hidden" name="subject" value="New message from the FOTTP website contact form">
   <input type="checkbox" name="botcheck" style="display: none;" tabindex="-1" autocomplete="off">
 
