@@ -52,11 +52,18 @@ The top nav is configured in `hugo.toml` under `[menu]` in the same order as the
 
 Left disabled for now (all still open decisions, see below): `enableGoogleMaps`, `enableRecaptchaInContactForm`, `params.topbar` (would otherwise show contact details in plain text sitewide, undoing the Web3Forms change). No real FOTTP logo exists yet, so `disabled_logo = true` shows the charity name as text instead — TODO: swap in a real logo image and set `disabled_logo = false`.
 
+## Non-technical editing — DECIDED: Sveltia CMS at /admin/
+Added 2026-09-15 so committee members can edit page content through a web form instead of Git/Markdown, without needing GitHub Desktop or VS Code at all.
+
+**How to log in:** go to `https://www.fottp.org.uk/admin/` and click "Sign In with Token". It links to GitHub's token-creation page with the right scopes pre-selected — generate a token there (needs write access to the `fottp/website` repo), paste it into the CMS, and it's saved in your browser. This avoids needing a separate OAuth app/proxy server (a third-party service CLAUDE.md would otherwise want sign-off on) at the cost of each editor doing this one-time token setup themselves. Tokens expire (90 days by default on GitHub) and need regenerating when they do.
+
+**What's editable:** the 6 existing pages (Home, About Us, Our Partners, Our Projects, Contact Us, Become a Member) as a fixed list — title and body text, plus any images in the page's own content bundle (uploads stay alongside that page's other files, matching Hugo's existing page-bundle layout — no image reorganisation was needed for this). New page *types* aren't supported by this config; that would need a config.yml change first.
+
+**What's deliberately NOT editable via the CMS:** the two Web3Forms forms (access keys, hidden fields) on Contact Us and Become a Member. These were moved out of `content/` entirely into `hugo.toml` (`[params.webforms]`) and `layouts/partials/webform.html` / `layouts/page/contact-form.html`, specifically so the CMS — which only ever reads/writes files under `content/` — has no path to see or break them. The CMS's Contact Us / Become a Member entries show a hint explaining the form is handled separately. See `static/admin/config.yml` for the full field config.
 ## Open decisions (not yet made)
 - **Analytics**: none, or a cookieless option (Plausible / GoatCounter). Aim: no cookie banner.
 - **Map**: plain Google Maps iframe or OpenStreetMap embed.
 - **Language selector**: the old site's flag switcher is just IONOS's "Website Translator" WordPress plugin wrapping Google's client-side Website Translator widget (machine-translates the DOM on the fly, gated behind its own cookie consent) — no real translated content behind it. Deliberately not replicating this for now (adding it back would mean a third-party script and a cookie banner, against the no-tracking preference); revisit later if genuinely needed.
-- **Editing workflow for non-technical members**: GitHub Desktop + VS Code, or a Git-backed CMS (Decap / Sveltia / Pages CMS). Not decided.
 - **Housekeeping**: bump action versions (Node 20 deprecation warning: checkout, configure-pages, upload-artifact). Low priority; pipeline works.
 - **Second GitHub org owner** to be added.
 - **Old domain** fottp.co.uk: leave until the new site is agreed; then redirect or let lapse (May 2027).
