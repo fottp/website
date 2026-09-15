@@ -1,0 +1,75 @@
+backend:
+  name: github
+  repo: fottp/website
+  branch: main
+
+# Sign in with a GitHub personal access token (Sveltia CMS's "Sign In
+# with Token" button) — no OAuth app or proxy server needed. Fine for
+# a small committee; see docs/HANDOFF.md for how to generate one.
+
+media_folder: static/images
+public_folder: /images
+
+collections:
+  - name: pages
+    label: Pages
+    files:
+      - name: home
+        label: Home
+        file: content/_index.md
+        media_folder: ""
+        public_folder: ""
+        fields:
+          - {label: Title, name: title, widget: string}
+          - {label: Content, name: body, widget: markdown}
+
+      - name: about-us
+        label: About Us
+        file: content/about-us/index.md
+        media_folder: ""
+        public_folder: ""
+        fields:
+          - {label: Title, name: title, widget: string}
+          - {label: Content, name: body, widget: markdown}
+
+      - name: our-partners
+        label: Our Partners
+        file: content/our-partners/index.md
+        media_folder: ""
+        public_folder: ""
+        fields:
+          - {label: Title, name: title, widget: string}
+          - {label: Content, name: body, widget: markdown}
+
+      - name: our-projects
+        label: Our Projects
+        file: content/our-projects/index.md
+        media_folder: ""
+        public_folder: ""
+        fields:
+          - {label: Title, name: title, widget: string}
+          - {label: Content, name: body, widget: markdown}
+
+      - name: contact-us
+        label: Contact Us
+        file: content/contact-us/index.md
+        media_folder: ""
+        public_folder: ""
+        fields:
+          - {label: Title, name: title, widget: string}
+          - label: Content
+            name: body
+            widget: markdown
+            hint: "The contact form itself is managed by the site's developer and isn't editable here — this is just the page text above it."
+
+      - name: become-a-member
+        label: Become a Member
+        file: content/become-a-member/index.md
+        media_folder: ""
+        public_folder: ""
+        fields:
+          - {label: Title, name: title, widget: string}
+          - label: Content
+            name: body
+            widget: markdown
+            hint: "The membership form itself is managed by the site's developer and isn't editable here — this is just the page text above it."
