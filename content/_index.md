@@ -6,7 +6,7 @@ title: "Home"
 
 Join FOTTP to support, enjoy, and protect the natural beauty and lively spirit of Telford Town Park. Engage with events, volunteer, and connect with your community in a welcoming green space.
 
-[Become a Member](/contact-us/)
+[Become a Member](/become-a-member/)
 
 ## Growing Our Community Spirit
 
