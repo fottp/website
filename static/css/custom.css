@@ -1,0 +1,25 @@
+.box-image-text .image {
+  min-height: 190px;
+  max-height: 190px;
+}
+
+.box-image-text .image img {
+  max-height: 190px;
+  margin: auto;
+}
+
+.box-simple {
+  min-height: 230px;
+}
+
+/* Keep page images from overflowing the viewport on small screens.
+   The theme's own responsive-image rule only targets its blog layout
+   (#blog-post #post-content img), not the plain page layout this
+   site actually uses for every page. An oversized image here forces
+   the whole page wider than the phone screen, which is also why text
+   and the nav appeared tiny — the browser has to zoom the layout out
+   to fit the widest element. */
+#content img {
+  max-width: 100%;
+  height: auto;
+}
