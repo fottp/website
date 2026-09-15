@@ -38,4 +38,4 @@ Explore QR-guided trails, digital park maps, and interactive resources enhancing
 
 ![Telford Town Park in the snow](snowy-pond.jpg)
 
-[Meet the Team](/contact-us/)
+[Meet the Team](/about-us/)
