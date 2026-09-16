@@ -6,7 +6,7 @@
 <form action="https://api.web3forms.com/submit" method="POST">
   <input type="hidden" name="access_key" value="{{ $cfg.access_key }}">
   <input type="hidden" name="subject" value="{{ $cfg.subject }}">
-  <input type="checkbox" name="botcheck" style="display: none;" tabindex="-1" autocomplete="off">
+  <input type="checkbox" name="botcheck" style="display: none;" tabindex="-1" autocomplete="off" aria-hidden="true">
 
   <p>
     <label for="{{ $name }}-name">Name*</label><br>

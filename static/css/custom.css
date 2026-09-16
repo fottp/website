@@ -1,3 +1,37 @@
+/* Accessibility: the theme's default --primary-accent (#38a7bb) fails
+   WCAG2AA contrast (2.83:1) as link/button text on white and as the
+   active-nav-item background behind white text. This darker value
+   passes (5.99:1) for both of those uses. */
+:root {
+  --primary-accent: #0f6d7d;
+}
+
+/* The same accent, darkened above, now fails against the dark
+   #copyright background (2.11:1) — that context needs a lighter tint. */
+#copyright a {
+  color: #6fd1e6;
+}
+#copyright a:hover,
+#copyright a:focus {
+  color: #ffffff;
+}
+
+/* #footer's own #999-on-#555 body text fails contrast (2.62:1);
+   darkening the background (not lightening the text, to keep footer
+   headings/links visually consistent) gets it to 4.63:1. */
+#footer {
+  background: #303030;
+}
+
+/* Disabled prev/next links on the (unused but publicly reachable)
+   /categories/ and /tags/ list pages fail contrast at #999999 on white. */
+.pager .disabled > a,
+.pager .disabled > a:hover,
+.pager .disabled > a:focus,
+.pager .disabled > span {
+  color: #767676;
+}
+
 .box-image-text .image {
   min-height: 190px;
   max-height: 190px;
