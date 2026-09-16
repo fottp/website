@@ -46,6 +46,20 @@
   min-height: 230px;
 }
 
+/* Visually separate each ## section on a plain content page (heading +
+   text + its photo) so it's clear which photo belongs with which text —
+   previously they ran together with no boundary between blocks. */
+#content h2 {
+  margin-top: 3em;
+  padding-top: 1.5em;
+  border-top: 1px solid #e0e0e0;
+}
+#content h2:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
 /* Keep page images from overflowing the viewport on small screens.
    The theme's own responsive-image rule only targets its blog layout
    (#blog-post #post-content img), not the plain page layout this

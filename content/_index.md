@@ -8,8 +8,6 @@ Join FOTTP to support, enjoy, and protect the natural beauty and lively spirit o
 
 [Become a Member](/become-a-member/)
 
-![Swans and geese on one of the park's ponds](pond-swans.jpg)
-
 ## Growing Our Community Spirit
 
 Friends of Telford Town Park brings neighbours and visitors alike to enrich, restore, and celebrate this cherished green space. We organise events, fundraising, and activities that inspire community pride and environmental care.
@@ -20,11 +18,13 @@ Friends of Telford Town Park brings neighbours and visitors alike to enrich, res
 - **30+** Friends events held annually
 - **100+** restoration projects completed
 
-![A community fun run passing through Telford Town Park](community-fun-run.jpg)
+![Swans and geese on one of the park's ponds](pond-swans.jpg)
 
 ## Active Community Engagement
 
 Volunteer in fun and fulfilling events, workshops, and restorations designed for all ages to enjoy and contribute.
+
+![A community fun run passing through Telford Town Park](community-fun-run.jpg)
 
 ## Park Restoration Projects
 
@@ -34,8 +34,6 @@ Support vital conservation efforts including planting, habitat restoration, and 
 
 ## Innovative Interactive Features
 
-Explore QR-guided trails, digital park maps, and interactive resources enhancing visitor experience.
+When visiting the park, you can explore QR-guided trails, use digital park maps, and enjoy interactive resources enhancing your experience.
 
-![Telford Town Park in the snow](snowy-pond.jpg)
-
-[Meet the Team](/about-us/)
+[Meet the Team](/about-us/) · [See more photos of the park](/gallery/)
