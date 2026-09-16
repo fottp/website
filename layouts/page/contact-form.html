@@ -21,16 +21,14 @@
 
                 <div class="row">
 
-                    <div class="col-md-12">
-
-                        <div>
-                          {{ .Content }}
-                        </div>
-
+                    <div class="col-md-6">
                         {{ with .Params.webform }}
                           {{ partial "webform.html" (dict "name" .) }}
                         {{ end }}
+                    </div>
 
+                    <div class="col-md-6">
+                        {{ .Content }}
                     </div>
 
                 </div>

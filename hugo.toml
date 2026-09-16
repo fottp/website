@@ -3,9 +3,6 @@ locale = 'en-gb'
 title = 'Friends of Telford Town Park'
 theme = 'hugo-universal-theme'
 
-[markup.goldmark.renderer]
-  unsafe = true
-
 [menu]
 [[menu.main]]
     name       = "Home"

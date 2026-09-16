@@ -1,0 +1,22 @@
+{{/*
+  Embeds an OpenStreetMap iframe plus a "View larger map" link.
+  Params: lat, lon (marker position), bbox (the four export coordinates
+  in west,south,east,north order — copy these from the "Export" tab at
+  openstreetmap.org), title (accessible name for the iframe),
+  height (default 450).
+*/}}
+{{ $lat := .Get "lat" }}
+{{ $lon := .Get "lon" }}
+{{ $bbox := .Get "bbox" }}
+{{ $title := .Get "title" | default "Map" }}
+{{ $height := .Get "height" | default "450" }}
+<iframe
+  width="100%"
+  height="{{ $height }}"
+  style="border:0"
+  loading="lazy"
+  title="{{ $title }}"
+  src="https://www.openstreetmap.org/export/embed.html?bbox={{ $bbox }}&amp;layer=mapnik&amp;marker={{ $lat }}%2C{{ $lon }}">
+</iframe>
+
+<p><a href="https://www.openstreetmap.org/?mlat={{ $lat }}&amp;mlon={{ $lon }}#map=15/{{ $lat }}/{{ $lon }}">View larger map</a></p>
