@@ -173,6 +173,8 @@ Where a job belongs to a committee role rather than a person (secretary, treasur
 - **Housekeeping**: bump action versions (Node 20 deprecation warning: checkout, configure-pages, upload-artifact). Low priority; pipeline works.
 - **Second GitHub org owner** to be added.
 - **Old domain** fottp.co.uk: leave until the new site is agreed; then redirect or let lapse (May 2027).
+- **Queen's Award for Voluntary Service — year unconfirmed.** One archive page implied 2016, another June 2020 (possibly awarded twice). About Us names the award with no year; don't publish a specific year until gruntfutuk confirms.
+- **Christmas/Santa Fun Run — FOTTP's role unconfirmed.** A 2012 archive post (for RNIB/Guide Dogs) suggests FOTTP ran it, but gruntfutuk wasn't aware of this either. Don't publish it, and don't use the linked Midlands Air Ambulance cheque photo, until confirmed.
 
 ## Working preferences
 - Step-by-step: run one command, check output, then continue.
