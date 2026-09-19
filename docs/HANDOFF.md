@@ -113,7 +113,9 @@ _Verified 2026-09-19: an editor account edited "Become a Member", sent it for re
 
 **Status:** the ruleset requiring pull requests on `main` is active, and the content path is verified — an editor account edited, reviewed and published a page and a news post through the CMS with no approval needed, and a direct CMS save was correctly rejected before the editorial workflow was picked up.
 
-**Not yet tested:** that an editor's pull request changing something **outside** `content/` (e.g. `hugo.toml`) is blocked until a code owner approves, that direct pushes to `main` by an editor are rejected, and whether the owner bypass applies to owners' own pushes (an owner's direct CMS save was rejected during testing, so check the bypass list is set to "Always allow" if owners are meant to be able to push directly). Try these with an editor account before relying on the review step for anything beyond content.
+**Verified:** owners on the ruleset's bypass list can push directly to `main` — a Git push by an owner was accepted on 2026-09-19, with GitHub logging "Bypassed rule violations for refs/heads/main: Changes must be made through a pull request". An owner's direct *CMS* save was rejected once (before the editorial workflow config had loaded), so the CMS itself is not exempt: owners editing through the CMS follow the same Save → Send for review → Ready → Publish steps as editors.
+
+**Not yet tested:** that an editor's pull request changing something **outside** `content/` (e.g. `hugo.toml`) is blocked until a code owner approves, and that an editor's direct push to `main` is rejected. Try these with an editor account before relying on the review step for anything beyond content.
 
 ## Open decisions (not yet made)
 - **Analytics**: none, or a cookieless option (Plausible / GoatCounter). Aim: no cookie banner.
