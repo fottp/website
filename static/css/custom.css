@@ -23,15 +23,6 @@
   background: #303030;
 }
 
-/* Disabled prev/next links on the (unused but publicly reachable)
-   /categories/ and /tags/ list pages fail contrast at #999999 on white. */
-.pager .disabled > a,
-.pager .disabled > a:hover,
-.pager .disabled > a:focus,
-.pager .disabled > span {
-  color: #767676;
-}
-
 .box-image-text .image {
   min-height: 190px;
   max-height: 190px;

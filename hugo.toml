@@ -1,5 +1,9 @@
 baseURL = 'https://www.fottp.org.uk/'
 locale = 'en-gb'
+
+# The site has no categories or tags; without these pages the theme's sidebar
+# and search widget (and their deprecation warnings) are never used.
+disableKinds = ['taxonomy', 'term']
 title = 'Friends of Telford Town Park'
 theme = 'hugo-universal-theme'
 
