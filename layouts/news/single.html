@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+
+  <head>
+    {{ partial "headers.html" . }}
+    {{ partial "custom_headers.html" . }}
+  </head>
+
+  <body>
+
+    <div id="all">
+        {{ partial "top.html" . }}
+
+        {{ partial "nav.html" . }}
+
+        {{ partial "breadcrumbs.html" . }}
+
+        <div id="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+
+                        <p class="news-date"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format site.Params.date_format }}</time></p>
+
+                        {{ with .Params.image }}{{ with $.Resources.Get . }}
+                        {{ $img := . }}{{ if gt .Width 1000 }}{{ $img = .Resize "1000x q82" }}{{ end }}
+                        <p><img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="{{ $.Params.image_alt }}"></p>
+                        {{ end }}{{ end }}
+
+                        {{ .Content }}
+
+                        <p class="news-back"><a href="{{ "news/" | relURL }}">&larr; Back to all news</a></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{ partial "footer.html" . }}
+
+    </div>
+    <!-- /#all -->
+
+    {{ partial "scripts.html" . }}
+
+  </body>
+</html>

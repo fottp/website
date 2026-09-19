@@ -73,3 +73,22 @@ collections:
             name: body
             widget: markdown
             hint: "The membership form itself is managed by the site's developer and isn't editable here — this is just the page text above it."
+
+  - name: news
+    label: News
+    label_singular: News post
+    folder: content/news
+    path: "{{slug}}/index"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    create: true
+    media_folder: ""
+    public_folder: ""
+    fields:
+      - {label: Title, name: title, widget: string}
+      - {label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "D MMMM YYYY", time_format: false, hint: "Shown on the post. A future date hides the post until that day."}
+      - {label: Summary, name: description, widget: text, required: false, hint: "One or two sentences shown on the News page and the home page. If left blank, the start of the post is used."}
+      - {label: Photo, name: image, widget: image, required: false, choose_url: false, hint: "Optional. Shown small next to the post on the News page and home page, and large at the top of the post."}
+      - {label: Photo description, name: image_alt, widget: string, required: false, hint: "Describe what the photo shows, for people using screen readers. Only needed if you add a photo."}
+      - {label: Content, name: body, widget: markdown}

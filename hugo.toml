@@ -15,19 +15,24 @@ theme = 'hugo-universal-theme'
     weight     = 2
 
 [[menu.main]]
-    name       = "Our Partners"
-    url        = "/our-partners/"
+    name       = "News"
+    url        = "/news/"
     weight     = 3
-
-[[menu.main]]
-    name       = "Contact Us"
-    url        = "/contact-us/"
-    weight     = 4
 
 [[menu.main]]
     name       = "Our Projects"
     url        = "/our-projects/"
+    weight     = 4
+
+[[menu.main]]
+    name       = "Our Partners"
+    url        = "/our-partners/"
     weight     = 5
+
+[[menu.main]]
+    name       = "Contact Us"
+    url        = "/contact-us/"
+    weight     = 6
 
 [params]
     author = "Friends of Telford Town Park"

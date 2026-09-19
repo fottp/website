@@ -102,3 +102,32 @@
 .webform-consent input[type="checkbox"] {
   margin-right: 6px;
 }
+
+/* News: list page, single post and the home page "Latest news" strip. */
+.news-date {
+  /* #595959 on white is 7:1; the theme's .text-muted (#777) is 4.48:1. */
+  color: #595959;
+  font-size: 14px;
+  margin: 0 0 0.5em;
+}
+.news-item {
+  margin-bottom: 2.5em;
+}
+.news-item h2,
+.news-item h3 {
+  margin-top: 0;
+}
+.news-thumb {
+  margin-bottom: 1em;
+}
+.news-thumb img {
+  width: 100%;
+}
+.news-back {
+  margin-top: 3em;
+}
+#latest-news {
+  margin-top: 3em;
+  padding-top: 1.5em;
+  border-top: 1px solid #e0e0e0;
+}
