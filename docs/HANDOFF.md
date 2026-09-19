@@ -2,6 +2,8 @@
 
 _Generated 14 September 2026 from the claude.ai planning session. Update this file as work progresses._
 
+Maintained by **gruntfutuk** (GitHub username; not a trustee of the charity).
+
 ## Goal
 `fottp.org.uk` is a **proof-of-concept** aiming to hold largely the same content as the charity's current definitive site, https://www.fottp.co.uk (an IONOS site-builder site built and run day-to-day by a current trustee) — but on an open-source, Git-based static-site approach, specifically so the content isn't locked away from the wider set of trustees the way it is when one person's tooling/account is the only way to edit it. Maintained in Git so committee members can edit it with GitHub Desktop and a text editor, or (as of 2026-09-15) via the Sveltia CMS at `/admin/` for non-technical editing — see below.
 
@@ -49,9 +51,9 @@ Two photos needed a quick check with gruntfutuk before use, both resolved: the f
 
 **Map — DECIDED: OpenStreetMap.** Added 2026-09-15 to `content/contact-us/index.md` as a plain `<iframe>` embed of `openstreetmap.org/export/embed.html` — no API key, account or cookies needed, unlike Google Maps. Uses the same coordinates (52.6708325, -2.4477144) the old site's Google Maps embed used for the park.
 - Map embed is still a TODO on `content/contact-us/index.md` — see open decisions below.
-- **Two Web3Forms forms, split by mailbox — DONE.** The plain `[email address removed]` address was replaced with Web3Forms-backed HTML forms (2026-09-15, to stop the address being scraped/spammed). gruntfutuk runs two mailboxes handled by different people: `[email address removed]` for membership sign-ups, `[email address removed]` for general enquiries. Web3Forms ties one access key to one destination email, so there are two forms, both live with real access keys:
-  - `content/become-a-member/index.md` (linked from the homepage's "Become a Member" button) → `[email address removed]`.
-  - `content/contact-us/index.md` (general enquiries, team bios) → `[email address removed]`.
+- **Two Web3Forms forms, split by mailbox — DONE.** The charity's plain-text email address was replaced with Web3Forms-backed HTML forms (2026-09-15, to stop the address being scraped/spammed). gruntfutuk runs two mailboxes handled by different people: a membership mailbox for membership sign-ups and a contact mailbox for general enquiries. Web3Forms ties one access key to one destination email, so there are two forms, both live with real access keys:
+  - `content/become-a-member/index.md` (linked from the homepage's "Become a Member" button) → the membership mailbox.
+  - `content/contact-us/index.md` (general enquiries, team bios) → the contact mailbox.
 
   Needed `[markup.goldmark.renderer] unsafe = true` in `hugo.toml` so the raw `<form>` HTML in Markdown renders. Note: Web3Forms' dashboard concept of "a form" is just a config record (name + destination email) that issues an access key — it's unrelated to the actual HTML form, which lives in our Markdown.
 
