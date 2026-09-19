@@ -1,8 +1,8 @@
 ---
-title: Home
+title: Friends of Telford Town Park
 ---
 
-# Celebrate Telford Town Park Together
+## Celebrate Telford Town Park Together
 
 Join FOTTP to support, enjoy, and protect the natural beauty and lively spirit of Telford Town Park. Engage with events, volunteer, and connect with your community in a welcoming green space. It will only cost you time.
 
