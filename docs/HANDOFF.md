@@ -84,10 +84,24 @@ The org requires administrator approval for fine-grained tokens, so the token do
 
 _Verified 2026-09-19: a second account added to the `editors` team logged in this way._
 
+**How an editor makes a change** (Sveltia's editorial workflow; every change is a pull request on GitHub and nothing goes live until it is published):
+1. Open **Pages** or **News** in the CMS, edit an entry (or add a News post with the **+** button) and click **Save**.
+2. A box appears: click **Send for review** (or **Later** to keep it as a draft).
+3. Open the entry, and in the top right change **Status: In Review** to **Ready**. A **Publish** button then appears (alternatively use the Editorial Workflow board, below).
+4. Click **Publish**. The pull request is merged and its branch deleted, and the site rebuilds — the change is live within a minute or two.
+
+The **Editorial Workflow board** (Draft / In Review / Ready columns) is the branch-and-pencil icon, third from the left in the top-left corner. The icons have no hover labels. Cards can be dragged between columns, and each card offers the actions for its stage.
+
+**Never merge a CMS pull request on GitHub itself.** Only the CMS's Publish deletes the `cms/…` branch, and a branch left behind makes the CMS think the entry is still unpublished (this happened with the first test post: the CMS said "not published yet" for a live page until the leftover branches were deleted). If it happens, delete the leftover `cms/…` branch on GitHub and hard-refresh the CMS (Ctrl+F5). As a backstop the repo now has "Automatically delete head branches" turned on (Settings → General → Pull Requests), so merged branches should tidy themselves up, but still publish through the CMS. A hard refresh is also the fix if the CMS ever seems to use an old config (e.g. it tries to save straight to `main` and errors with "Changes must be made through a pull request").
+
+**Deleting a published entry:** per Sveltia's docs, Delete opens a pull request that removes it and the entry stays live, marked "Pending Deletion", until you use **Delete** on its card on the Editorial Workflow board (**Cancel** leaves it in place). Not yet tried here — the first test post was removed via GitHub's "Delete directory" and a normal pull request, which also works.
+
+_Verified 2026-09-19: an editor account edited "Become a Member", sent it for review, set it Ready and published it; the pull request touched only `content/become-a-member/index.md` and the site updated within moments._
+
 **What's editable:** the 6 existing pages (Home, About Us, Our Partners, Our Projects, Contact Us, Become a Member) as a fixed list — title and body text, plus any images in the page's own content bundle (uploads stay alongside that page's other files, matching Hugo's existing page-bundle layout — no image reorganisation was needed for this). New page *types* aren't supported by this config; that would need a config.yml change first. (The one exception is **News**, added 2026-09-19: a `news` folder collection under `content/news/`, where each post is its own page bundle. The News page, the "Latest news" strip on the home page and the RSS feed all fill in automatically from those posts; the strip stays hidden until the first post exists.)
 
 **What's deliberately NOT editable via the CMS:** the two Web3Forms forms (access keys, hidden fields) on Contact Us and Become a Member. These were moved out of `content/` entirely into `hugo.toml` (`[params.webforms]`) and `layouts/partials/webform.html` / `layouts/page/contact-form.html`, specifically so the CMS — which only ever reads/writes files under `content/` — has no path to see or break them. The CMS's Contact Us / Become a Member entries show a hint explaining the form is handled separately. See `static/admin/config.yml` for the full field config.
-## Access and review — DECIDED 2026-09-19 (GitHub settings still to apply)
+## Access and review — DECIDED 2026-09-19 (ruleset on `main` created; part of it not yet tested)
 **People:** the GitHub organisation should have at least two **owners**, each a named person with their own GitHub account and 2FA (the org already enforces 2FA) — not a shared login, so the audit log shows who did what and nobody is the single point of failure. **Editors** are an org team with Write access to `fottp/website`; they sign in to `/admin/` with their own token (see above).
 
 **Why review, not just permissions:** GitHub can't limit a Write collaborator to one folder, so an editor's account can technically change any file (layouts, `hugo.toml`, the deploy workflow). Protection therefore comes from requiring an owner's review for anything that isn't page/news content:
@@ -97,7 +111,9 @@ _Verified 2026-09-19: a second account added to the `editors` team logged in thi
 
 **Branch ruleset to create on `main`** (repo Settings → Rules → Rulesets → New branch ruleset, target: default branch): enforcement Active; bypass list = Repository admin role (so owners can still push directly); rules: restrict deletions, block force pushes, require a pull request before merging with **0** required approvals and **Require review from Code Owners** ticked. Order matters — set `editorial_workflow` live first, or editors' direct saves will be rejected. Then add the second owner to `CODEOWNERS` (a code owner can't approve their own PR).
 
-**Not yet tested:** how Sveltia's editorial workflow behaves with this ruleset. Try it with a test editor account (edit a news post; then try to change something outside `content/`) before relying on it.
+**Status:** the ruleset requiring pull requests on `main` is active, and the content path is verified — an editor account edited, reviewed and published a page and a news post through the CMS with no approval needed, and a direct CMS save was correctly rejected before the editorial workflow was picked up.
+
+**Not yet tested:** that an editor's pull request changing something **outside** `content/` (e.g. `hugo.toml`) is blocked until a code owner approves, that direct pushes to `main` by an editor are rejected, and whether the owner bypass applies to owners' own pushes (an owner's direct CMS save was rejected during testing, so check the bypass list is set to "Always allow" if owners are meant to be able to push directly). Try these with an editor account before relying on the review step for anything beyond content.
 
 ## Open decisions (not yet made)
 - **Analytics**: none, or a cookieless option (Plausible / GoatCounter). Aim: no cookie banner.
