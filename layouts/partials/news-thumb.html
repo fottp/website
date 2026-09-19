@@ -1,11 +1,10 @@
 {{- /* Thumbnail for a news post: the file named by its `image` front matter,
-       from the post's own page bundle, scaled down so the list pages don't
-       load full-size photos. Decorative (alt="") because the post title is
-       always shown as a link beside it. Renders nothing if there is no image. */ -}}
+       from the post's own page bundle. Offered in a couple of small sizes (see
+       responsive-img.html) so the list pages don't load full-size photos.
+       Decorative (alt="") because the post title is always shown as a link
+       beside it. Renders nothing if there is no image. */ -}}
 {{- with .Params.image -}}
   {{- with $.Resources.Get . -}}
-    {{- $img := . -}}
-    {{- if gt .Width 600 }}{{ $img = .Resize "600x q82" }}{{ end -}}
-    <img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="" class="img-responsive">
+    {{- partial "responsive-img.html" (dict "img" . "alt" "" "class" "img-responsive" "lazy" true "noOriginal" true "widths" (slice 400 600) "sizes" "(min-width: 768px) 360px, calc(100vw - 30px)") -}}
   {{- end -}}
 {{- end -}}

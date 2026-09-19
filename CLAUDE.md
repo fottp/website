@@ -7,7 +7,7 @@ Hugo static site for charity FOTTP, live at https://www.fottp.org.uk, deployed v
 ## Environment
 - Windows native (PowerShell/Git Bash); others use GitHub Desktop+VS Code or Sveltia CMS (`/admin/`) — keep toolchain simple for both.
 - Hugo **0.166.0 extended**, pinned in `.github/workflows/hugo.yml` — bump local and CI together.
-- Python 3.14+: `int | float` unions, `collections.abc`. Use **uv** (`.venv`), not pip. Photos: resize to 1600px max edge, JPEG q~82, before committing.
+- Python 3.14+: `int | float` unions, `collections.abc`. Use **uv** (`.venv`), not pip. Photos: resize to 1600px max edge, JPEG q~82, before committing (the build then makes smaller responsive copies itself — see HANDOFF.md "Image resizing").
 - British English throughout.
 
 ## Layout

@@ -1,0 +1,40 @@
+{{- /* An <img> that offers the browser several sizes of one photo.
+
+       Hugo makes the smaller copies at build time (they never go in Git); the
+       browser then downloads just the one that fits its screen. Copies are
+       only made smaller than the original, never enlarged, and the original is
+       offered as the largest choice (unless noOriginal is set).
+
+       Params (dict):
+         img     (required)  image resource, e.g. from .Resources.Get
+         alt                 alt text ("" for a purely decorative image)
+         sizes               how wide the image is shown, for the browser's choice
+         widths              slice of widths to make, default 480 / 800 / 1200
+         noOriginal          true = don't offer the full-size original (for
+                             thumbnails, so a phone never picks it)
+         lazy                true = load only when scrolled near
+         class, title        optional attributes
+*/ -}}
+{{- $img := .img -}}
+{{- $widths := .widths | default (slice 480 800 1200) -}}
+{{- $src := $img -}}
+{{- $srcset := slice -}}
+{{- range $widths -}}
+  {{- if lt . $img.Width -}}
+    {{- $r := $img.Resize (printf "%dx q82" .) -}}
+    {{- $srcset = $srcset | append (printf "%s %dw" $r.RelPermalink $r.Width) -}}
+    {{- if le . 800 }}{{ $src = $r }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- if or (not .noOriginal) (eq (len $srcset) 0) -}}
+  {{- $srcset = $srcset | append (printf "%s %dw" $img.RelPermalink $img.Width) -}}
+{{- end -}}
+<img src="{{ $src.RelPermalink }}"
+  {{- if gt (len $srcset) 1 }} srcset="{{ delimit $srcset ", " }}" sizes="{{ .sizes | default "100vw" }}"{{ end }}
+  {{- /* width/height give the browser the photo's shape before it loads; they use the
+         ORIGINAL's size so the page lays out exactly as it did with the plain <img>,
+         whichever smaller copy the browser actually downloads. */ -}}
+  {{- printf " width=%d height=%d" $img.Width $img.Height | safeHTMLAttr }} alt="{{ .alt }}"
+  {{- if .lazy }} loading="lazy" decoding="async"{{ end }}
+  {{- with .class }} class="{{ . }}"{{ end }}
+  {{- with .title }} title="{{ . }}"{{ end }}>

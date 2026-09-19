@@ -23,8 +23,7 @@
                         <p class="news-date"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format site.Params.date_format }}</time></p>
 
                         {{ with .Params.image }}{{ with $.Resources.Get . }}
-                        {{ $img := . }}{{ if gt .Width 1000 }}{{ $img = .Resize "1000x q82" }}{{ end }}
-                        <p><img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="{{ $.Params.image_alt }}"></p>
+                        <p>{{ partial "responsive-img.html" (dict "img" . "alt" $.Params.image_alt "sizes" "(min-width: 992px) 750px, calc(100vw - 30px)") }}</p>
                         {{ end }}{{ end }}
 
                         {{ .Content }}
