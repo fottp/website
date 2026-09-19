@@ -81,3 +81,15 @@
 #heading-breadcrumbs h1 {
   color: #ffffff;
 }
+
+/* The theme sets nav, banner titles, footer headings and buttons in ALL
+   CAPS with wide tracking; capitals are slower to read than normal
+   sentence/title case, so show text as written and drop the tracking
+   that only suits capitals. */
+.navbar ul.nav > li > a,
+#heading-breadcrumbs h1,
+#footer h4,
+.btn {
+  text-transform: none;
+  letter-spacing: normal;
+}
