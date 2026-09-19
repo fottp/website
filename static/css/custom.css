@@ -93,3 +93,12 @@
   text-transform: none;
   letter-spacing: normal;
 }
+
+/* Consent checkbox on the web forms: Bootstrap makes labels bold, which
+   suits field names but not a sentence of small print. */
+.webform-consent {
+  font-weight: normal;
+}
+.webform-consent input[type="checkbox"] {
+  margin-right: 6px;
+}

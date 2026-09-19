@@ -8,6 +8,7 @@
   <input type="hidden" name="subject" value="{{ $cfg.subject }}">
   <input type="checkbox" name="botcheck" style="display: none;" tabindex="-1" autocomplete="off" aria-hidden="true">
 
+  <p>* Please fill in all the required fields.</p>
   <p>
     <label for="{{ $name }}-name">Name*</label><br>
     <input type="text" id="{{ $name }}-name" name="name" required>
@@ -19,6 +20,12 @@
   <p>
     <label for="{{ $name }}-message">{{ $cfg.message_label }}</label><br>
     <textarea id="{{ $name }}-message" name="message" rows="6" {{ if $cfg.message_required }}required{{ end }}></textarea>
+  </p>
+  <p>
+    <label class="webform-consent" for="{{ $name }}-consent">
+      <input type="checkbox" id="{{ $name }}-consent" name="consent" value="Agreed" required>
+      I hereby agree that this data will be stored and processed for the purpose of establishing contact. I am aware that I can revoke my consent at any time.*
+    </label>
   </p>
   <button type="submit">{{ $cfg.submit_label }}</button>
 </form>
