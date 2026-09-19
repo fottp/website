@@ -3,6 +3,12 @@ backend:
   repo: fottp/website
   branch: main
 
+# Each save becomes a draft pull request and "Publish" merges it, so editors
+# never push straight to main. Together with .github/CODEOWNERS and the branch
+# ruleset described in docs/HANDOFF.md ("Access and review") this means only
+# content changes can go live without an owner's review.
+publish_mode: editorial_workflow
+
 # Sign in with a GitHub personal access token (Sveltia CMS's "Sign In
 # with Token" button) — no OAuth app or proxy server needed. Fine for
 # a small committee; see docs/HANDOFF.md for how to generate one.

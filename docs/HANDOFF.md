@@ -73,11 +73,32 @@ Left disabled for now (all still open decisions, see below): `enableGoogleMaps`,
 ## Non-technical editing — DECIDED: Sveltia CMS at /admin/
 Added 2026-09-15 so committee members can edit page content through a web form instead of Git/Markdown, without needing GitHub Desktop or VS Code at all.
 
-**How to log in:** go to `https://www.fottp.org.uk/admin/` and click "Sign In with Token". It links to GitHub's token-creation page with the right scopes pre-selected — generate a token there (needs write access to the `fottp/website` repo), paste it into the CMS, and it's saved in your browser. This avoids needing a separate OAuth app/proxy server (a third-party service CLAUDE.md would otherwise want sign-off on) at the cost of each editor doing this one-time token setup themselves. Tokens expire (90 days by default on GitHub) and need regenerating when they do.
+**Who can log in:** someone with a GitHub account (2FA on) who has accepted their invitation to the `fottp` organisation and is in the org's `editors` team, which has **Write** access to `fottp/website`.
+
+**How to log in:** go to `https://www.fottp.org.uk/admin/` and click "Sign In with Token", then create a fine-grained token on the GitHub page it opens and paste it into the CMS (it's saved in the browser). This avoids a separate OAuth app/proxy server (a third-party service CLAUDE.md would otherwise want sign-off on) at the cost of each editor doing this token setup themselves. **The link's pre-filled form is not enough on its own** — it creates a token for the editor's *own* account with no repositories, and the CMS then says "You don't have access to the 'website' repository". Before generating, change:
+- **Resource owner** → `fottp` (not the personal account).
+- **Repository access** → Only select repositories → `fottp/website`.
+- **Permissions** → Contents: Read and write; Pull requests: Read and write (Metadata: Read is automatic).
+
+The org requires administrator approval for fine-grained tokens, so the token does nothing until an owner approves it (org Settings → Third-party Access → Personal access tokens → Pending requests; check it lists only `fottp/website` and those permissions). Tokens expire (set an expiry when creating one) and need regenerating and re-approving when they do. Classic tokens are also allowed by the org but are broader (all repos the account can reach), so prefer fine-grained.
+
+_Verified 2026-09-19: a second account added to the `editors` team logged in this way._
 
 **What's editable:** the 6 existing pages (Home, About Us, Our Partners, Our Projects, Contact Us, Become a Member) as a fixed list — title and body text, plus any images in the page's own content bundle (uploads stay alongside that page's other files, matching Hugo's existing page-bundle layout — no image reorganisation was needed for this). New page *types* aren't supported by this config; that would need a config.yml change first. (The one exception is **News**, added 2026-09-19: a `news` folder collection under `content/news/`, where each post is its own page bundle. The News page, the "Latest news" strip on the home page and the RSS feed all fill in automatically from those posts; the strip stays hidden until the first post exists.)
 
 **What's deliberately NOT editable via the CMS:** the two Web3Forms forms (access keys, hidden fields) on Contact Us and Become a Member. These were moved out of `content/` entirely into `hugo.toml` (`[params.webforms]`) and `layouts/partials/webform.html` / `layouts/page/contact-form.html`, specifically so the CMS — which only ever reads/writes files under `content/` — has no path to see or break them. The CMS's Contact Us / Become a Member entries show a hint explaining the form is handled separately. See `static/admin/config.yml` for the full field config.
+## Access and review — DECIDED 2026-09-19 (GitHub settings still to apply)
+**People:** the GitHub organisation should have at least two **owners**, each a named person with their own GitHub account and 2FA (the org already enforces 2FA) — not a shared login, so the audit log shows who did what and nobody is the single point of failure. **Editors** are an org team with Write access to `fottp/website`; they sign in to `/admin/` with their own token (see above).
+
+**Why review, not just permissions:** GitHub can't limit a Write collaborator to one folder, so an editor's account can technically change any file (layouts, `hugo.toml`, the deploy workflow). Protection therefore comes from requiring an owner's review for anything that isn't page/news content:
+- `static/admin/config.yml` has `publish_mode: editorial_workflow` — each CMS save becomes a draft pull request, and "Publish" merges it.
+- `.github/CODEOWNERS` makes the owners code owners of everything **except** `/content/`.
+- Raw HTML is not enabled in Markdown (goldmark `unsafe` is off), so an editor can't inject scripts through content.
+
+**Branch ruleset to create on `main`** (repo Settings → Rules → Rulesets → New branch ruleset, target: default branch): enforcement Active; bypass list = Repository admin role (so owners can still push directly); rules: restrict deletions, block force pushes, require a pull request before merging with **0** required approvals and **Require review from Code Owners** ticked. Order matters — set `editorial_workflow` live first, or editors' direct saves will be rejected. Then add the second owner to `CODEOWNERS` (a code owner can't approve their own PR).
+
+**Not yet tested:** how Sveltia's editorial workflow behaves with this ruleset. Try it with a test editor account (edit a news post; then try to change something outside `content/`) before relying on it.
+
 ## Open decisions (not yet made)
 - **Analytics**: none, or a cookieless option (Plausible / GoatCounter). Aim: no cookie banner.
 - **Language selector**: the old site's flag switcher is just IONOS's "Website Translator" WordPress plugin wrapping Google's client-side Website Translator widget (machine-translates the DOM on the fly, gated behind its own cookie consent) — no real translated content behind it. Deliberately not replicating this for now (adding it back would mean a third-party script and a cookie banner, against the no-tracking preference); revisit later if genuinely needed.

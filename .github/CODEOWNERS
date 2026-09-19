@@ -1,0 +1,17 @@
+# Code owners for the FOTTP website.
+#
+# Editors (via the Sveltia CMS) may publish changes to page and news content
+# on their own. Anything else -- layouts, site config, the CMS config, the
+# deploy workflow, docs -- needs review from a code owner before it can merge.
+#
+# This only takes effect once the branch ruleset on `main` requires review
+# from code owners (see docs/HANDOFF.md, "Access and review").
+#
+# The last matching pattern wins, and a pattern with no owner means "no review
+# needed", so `/content/` below opens up just that folder.
+#
+# TODO: add the second owner (or an org team, e.g. @fottp/website-owners) on
+# the first line once decided; a code owner can't approve their own changes.
+
+*           @gruntfutuk
+/content/
