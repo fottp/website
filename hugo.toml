@@ -51,7 +51,7 @@ disableKinds = ['taxonomy', 'term']
 [[menu.topbar]]
     weight = 2
     name = "Instagram"
-    url = "https://www.instagram.com/FOTTP/"
+    url = "https://www.instagram.com/friendsoftelfordtownpark/"
     [menu.topbar.params]
         icon = "instagram"
 
