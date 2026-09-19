@@ -131,3 +131,13 @@
   padding-top: 1.5em;
   border-top: 1px solid #e0e0e0;
 }
+
+/* Team headshots on About Us (a ### name followed directly by its photo)
+   were shown at whatever size each source file happened to be, so the two
+   768px photos looked much bigger than the 480px one. Show them all at
+   480px, or the column width on narrow screens. */
+#content h3 + p > img {
+  width: 480px;
+  max-width: 100%;
+  height: auto;
+}
