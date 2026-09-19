@@ -1,0 +1,12 @@
+{{- /* Slim "Follow us" bar above the navbar: social links only (no contact details in plain text).
+       Entries come from [[menu.topbar]] in hugo.toml; each has params.icon naming a Hextra icon. */ -}}
+{{- with site.Menus.topbar }}
+<div class="fottp-topbar">
+  <div class="fottp-topbar-inner hextra-max-navbar-width">
+    <span>Follow us:</span>
+    <span class="fottp-social">
+      {{- range . }}<a href="{{ .URL }}" target="_blank" rel="noopener" aria-label="{{ .Name }}">{{ partial "utils/icon.html" (dict "name" .Params.icon "attributes" "height=18") }}</a>{{ end -}}
+    </span>
+  </div>
+</div>
+{{- end }}

@@ -1,0 +1,3 @@
+# The theme is copied into this repo (see themes/hextra/VENDORED.md). Force LF so a Windows
+# checkout (Git's autocrlf) can't rewrite its templates and break them.
+themes/hextra/** text eol=lf

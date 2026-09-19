@@ -1,7 +1,7 @@
 {{- /* Every Markdown image, ![alt](photo.jpg), passes through here.
 
        A JPEG or PNG that sits in the page's own folder is rendered as a
-       responsive <img> (see partials/responsive-img.html). Anything else
+       responsive <img> (see _partials/responsive-img.html). Anything else
        -- a remote address, a /static path, an SVG or GIF -- is output as
        a plain <img>, exactly as before. */ -}}
 {{- $dest := .Destination -}}
@@ -9,9 +9,8 @@
 {{- if and (not (strings.HasPrefix $dest "/")) (not (findRE `^[a-z][a-z0-9+.-]*:` $dest)) -}}
   {{- with .PageInner.Resources.Get $dest -}}
     {{- if and (eq .ResourceType "image") (in (slice "jpeg" "png") .MediaType.SubType) -}}
-      {{- /* News posts sit in a narrower column than ordinary pages. */ -}}
-      {{- $sizes := "(min-width: 1200px) 1140px, calc(100vw - 30px)" -}}
-      {{- if eq $.Page.Section "news" }}{{ $sizes = "(min-width: 992px) 750px, calc(100vw - 30px)" }}{{ end -}}
+      {{- /* How wide the photo is shown, so the browser can pick the smallest copy that fits. */ -}}
+      {{- $sizes := "(min-width: 1280px) 672px, (min-width: 768px) calc(100vw - 96px), calc(100vw - 48px)" -}}
       {{- partial "responsive-img.html" (dict "img" . "alt" $.PlainText "title" $.Title "sizes" $sizes "lazy" true) -}}
       {{- $done = true -}}
     {{- end -}}

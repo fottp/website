@@ -1,92 +1,97 @@
 baseURL = 'https://www.fottp.org.uk/'
 locale = 'en-gb'
-
-# The site has no categories or tags; without these pages the theme's sidebar
-# and search widget (and their deprecation warnings) are never used.
-disableKinds = ['taxonomy', 'term']
 title = 'Friends of Telford Town Park'
-theme = 'hugo-universal-theme'
+theme = 'hextra'
 
-[menu]
+# The site has no categories or tags, so those pages (and the theme's tag widgets) are switched off.
+disableKinds = ['taxonomy', 'term']
+
+# No page on this site shows a table of contents (the theme's "On this page" panel).
+[[cascade]]
+    [cascade.params]
+        toc = false
+
+# The nav bar. `pageRef` (not `url`) lets the theme highlight the current page and keeps
+# its mobile menu to just these entries.
 [[menu.main]]
-    name       = "Home"
-    url        = "/"
+    name       = "About Us"
+    pageRef    = "/about-us"
     weight     = 1
 
 [[menu.main]]
-    name       = "About Us"
-    url        = "/about-us/"
+    name       = "News"
+    pageRef    = "/news"
     weight     = 2
 
 [[menu.main]]
-    name       = "News"
-    url        = "/news/"
+    name       = "Our Projects"
+    pageRef    = "/our-projects"
     weight     = 3
 
 [[menu.main]]
-    name       = "Our Projects"
-    url        = "/our-projects/"
+    name       = "Our Partners"
+    pageRef    = "/our-partners"
     weight     = 4
 
 [[menu.main]]
-    name       = "Our Partners"
-    url        = "/our-partners/"
+    name       = "Contact Us"
+    pageRef    = "/contact-us"
     weight     = 5
 
-[[menu.main]]
-    name       = "Contact Us"
-    url        = "/contact-us/"
-    weight     = 6
+# "Follow us" bar: used only for social links, not contact details — an email
+# address in plain text sitewide is exactly what the Web3Forms change
+# on /contact-us/ was meant to avoid. `icon` is the name of a Hextra icon.
+[[menu.topbar]]
+    weight = 1
+    name = "Facebook"
+    url = "https://www.facebook.com/FOTTP/"
+    [menu.topbar.params]
+        icon = "facebook"
+
+[[menu.topbar]]
+    weight = 2
+    name = "Instagram"
+    url = "https://www.instagram.com/FOTTP/"
+    [menu.topbar.params]
+        icon = "instagram"
 
 [params]
-    author = "Friends of Telford Town Park"
-    defaultKeywords = ["Telford Town Park", "FOTTP", "charity", "volunteering", "Telford"]
-    defaultDescription = "Friends of Telford Town Park (FOTTP) is a community charity supporting and improving Telford Town Park."
-
-    disabled_logo = false
-    logo_text = "Friends of Telford Town Park"
-    logo = "img/logo.png"
-    # TODO: same image reused for the mobile logo for now — consider a
-    # tighter-cropped, text-free variant if the navbar looks cramped on phones
-    logo_small = "img/logo.png"
-
-    # Google Maps and reCAPTCHA are open decisions — see docs/HANDOFF.md — left disabled for now
-    enableGoogleMaps = false
-    enableRecaptchaInContactForm = false
+    # Default page description (search results, link previews) when a page has none.
+    description = "Friends of Telford Town Park (FOTTP) is a community charity supporting and improving Telford Town Park."
 
     date_format = "2 January 2006"
 
+    # Shown in the footer (layouts/_partials/custom/footer.html).
     about_us = "<p>Friends of Telford Town Park was founded to unite people who cherish this unique green space, supporting restoration, activities and a community spirit that keeps the park vibrant and welcoming for all generations.</p>"
     copyright = "&copy; Friends of Telford Town Park. Registered charity in England &amp; Wales, no. 1219196. All rights reserved."
-
-    contact_url = "/contact-us/"
     address = """<p>Telford Town Park
         <br>Telford
         <br>TF3 4EP
       </p>
       """
 
-# Top bar: used only for social links, not contact details — an email
-# address in plain text sitewide is exactly what the Web3Forms change
-# on /contact-us/ was meant to avoid.
-[params.topbar]
-    enable = true
-    text = "Follow us:"
-
-[[menu.topbar]]
-    weight = 1
-    name = "Facebook"
-    url = "https://www.facebook.com/FOTTP/"
-    pre = "<i class='fab fa-facebook fa-lg'></i>"
-
-[[menu.topbar]]
-    weight = 2
-    name = "Instagram"
-    url = "https://www.instagram.com/FOTTP/"
-    pre = "<i class='fab fa-instagram fa-lg'></i>"
+    # Theme (Hextra) settings.
+    [params.navbar]
+        displayTitle = true
+        displayLogo = true
+        [params.navbar.logo]
+            path = "img/logo.png"
+            dark = "img/logo.png"
+            width = 46
+            height = 40
+    [params.footer]
+        displayPoweredBy = false
+        displayCopyright = false
+    [params.theme]
+        default = "light"
+        displayToggle = false
+    [params.search]
+        enable = false
+    [params.blog.list]
+        pagerSize = 10
 
 # Web3Forms access keys for the site's forms, rendered by
-# layouts/partials/webform.html — kept out of content/ entirely so the
+# layouts/_partials/webform.html — kept out of content/ entirely so the
 # Sveltia CMS (which only ever touches content/) can't see or break them.
 [params.webforms.contact]
     access_key = "85114ca7-f06c-4478-8a03-88fb14dc6ec5"

@@ -1,0 +1,15 @@
+{{- /* Hextra calls this hook from its footer. */ -}}
+<div class="fottp-footer">
+  <div class="fottp-footer-cols">
+    <div>
+      <h2>About us</h2>
+      {{ site.Params.about_us | safeHTML }}
+    </div>
+    <div>
+      <h2>Contact</h2>
+      {{ site.Params.address | safeHTML }}
+      <p><a href="{{ "contact-us/" | relURL }}">Contact us</a></p>
+    </div>
+  </div>
+  <p class="fottp-copyright">{{ site.Params.copyright | safeHTML }}</p>
+</div>

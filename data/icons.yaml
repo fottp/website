@@ -1,0 +1,4 @@
+# Three-bar hamburger (Hextra's own has two). The outer bars keep Hextra's shape and
+# animate into the X exactly as before; the middle bar is a direct <path> child, which
+# Hextra's CSS already fades out when the menu opens.
+hamburger-menu: '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><g><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8H20"></path></g><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12H20"></path><g><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16H20"></path></g></svg>'

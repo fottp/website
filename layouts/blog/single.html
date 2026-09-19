@@ -1,0 +1,17 @@
+{{ define "main" }}
+  {{ partial "page-banner.html" . }}
+  <div class="hx:mx-auto hx:flex hextra-max-page-width">
+    {{ partial "sidebar.html" (dict "context" . "disableSidebar" true "displayPlaceholder" true) }}
+    {{ partial "toc.html" . }}
+    <article class="hx:w-full hx:break-words hx:flex hx:min-h-[calc(100vh-var(--navbar-height))] hx:min-w-0 hx:justify-center hx:pb-8 hx:pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+      <main id="content" class="hx:w-full hx:min-w-0 hextra-max-content-width hx:px-6 hx:pt-8 hx:md:px-12">
+        <p class="fottp-date"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (site.Params.date_format | default "2 January 2006") }}</time></p>
+        {{ with .Params.image }}{{ with $.Resources.Get . }}<p class="fottp-lead">{{ partial "responsive-img.html" (dict "img" . "alt" $.Params.image_alt "sizes" "(min-width: 1280px) 672px, (min-width: 768px) calc(100vw - 96px), calc(100vw - 48px)") }}</p>{{ end }}{{ end }}
+        <div class="content">
+          {{ .Content }}
+        </div>
+        <p class="fottp-back"><a href="{{ "news/" | relURL }}">&larr; Back to all news</a></p>
+      </main>
+    </article>
+  </div>
+{{ end }}

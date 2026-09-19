@@ -1,0 +1,31 @@
+{{ define "main" }}
+  {{ partial "page-banner.html" . }}
+  {{- $readMore := (T "readMore") | default "Read more →" -}}
+  <div class="hx:mx-auto hx:flex hextra-max-page-width">
+    {{ partial "sidebar.html" (dict "context" . "disableSidebar" true "displayPlaceholder" true) }}
+    <article class="hx:w-full hx:break-words hx:flex hx:min-h-[calc(100vh-var(--navbar-height))] hx:min-w-0 hx:justify-center hx:pb-8 hx:pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+      <main id="content" class="hx:w-full hx:min-w-0 hextra-max-content-width hx:px-6 hx:pt-8 hx:md:px-12">
+        <div class="content">{{ .Content }}</div>
+        {{- $pages := partial "utils/sort-pages" (dict "page" . "by" site.Params.blog.list.sortBy "order" site.Params.blog.list.sortOrder) -}}
+        {{- $pagerSize := site.Params.blog.list.pagerSize | default 10 -}}
+        {{- $paginator := .Paginate $pages $pagerSize -}}
+        {{- range $paginator.Pages }}
+          {{- $thumb := partial "news-thumb.html" . }}
+          <article class="fottp-news-item{{ if not $thumb }} fottp-no-thumb{{ end }}">
+            {{- if $thumb }}<a class="fottp-news-thumb" href="{{ .RelPermalink }}" tabindex="-1" aria-hidden="true">{{ $thumb }}</a>{{ end }}
+            <div>
+              <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+              <p class="fottp-date"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (site.Params.date_format | default "2 January 2006") }}</time></p>
+              <p>{{- partial "utils/page-description" . -}}</p>
+            </div>
+          </article>
+        {{ end -}}
+
+        {{- if gt $paginator.TotalPages 1 -}}
+          {{ partial "components/blog-pager.html" $paginator }}
+        {{- end -}}
+      </main>
+    </article>
+    <div class="hx:max-xl:hidden hx:h-0 hx:w-64 hx:shrink-0"></div>
+  </div>
+{{- end -}}

@@ -1,43 +1,15 @@
-<!DOCTYPE html>
-<html lang="{{ .Site.Language.Locale }}">
-
-  <head>
-    {{ partial "headers.html" . }}
-    {{ partial "custom_headers.html" . }}
-  </head>
-
-  <body>
-
-    <div id="all">
-
-        {{ partial "top.html" . }}
-
-        {{ partial "nav.html" . }}
-
-        <div id="content">
-            <div class="container">
-
-                <div class="col-sm-6 col-sm-offset-3" id="error-page">
-
-                    <div class="box">
-
-                        <h3>{{ i18n "404Message" | markdownify }}</h3>
-                        <h4 class="text-muted">{{ i18n "404Error" | markdownify }}</h4>
-
-                        <p class="buttons"><a href="{{ "/" | relURL }}" class="btn btn-template-main"><i class="fas fa-home"></i> {{ i18n "404NavHome" | markdownify }}</a>
-                        </p>
-                    </div>
-
-
-                </div>
-                <!-- /.col-sm-6 -->
-            </div>
-            <!-- /.container -->
-        </div>
-        <!-- /#content -->
-
-        {{ partial "footer.html" . }}
-
-    </div>
-  </body>
-</html>
+{{- /* Replaces Hextra's bare 404 page (no navigation, no page title) with one in the site's style.
+       GitHub Pages serves this file for any address that doesn't exist. */ -}}
+{{ define "main" }}
+  {{ partial "page-banner.html" (dict "Title" "Page not found") }}
+  <div class="hx:mx-auto hextra-max-page-width">
+    {{- /* Phones only: the panel that the menu button opens. */ -}}
+    {{ partial "sidebar.html" (dict "context" . "disableSidebar" true "displayPlaceholder" false) }}
+    <main id="content" class="hx:px-6 hx:pt-8 hx:pb-16 hx:md:px-12">
+      <div class="content">
+        <p>Sorry, we couldn't find that page. It may have moved, or the address may have been mistyped.</p>
+        <p><a href="{{ "/" | relURL }}">Go to the home page</a>, or use the menu to find what you're looking for.</p>
+      </div>
+    </main>
+  </div>
+{{ end }}

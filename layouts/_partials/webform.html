@@ -1,0 +1,31 @@
+{{ $name := .name }}
+{{ $cfg := index site.Params.webforms $name }}
+{{ if not $cfg }}
+  {{ errorf "webform partial: no [params.webforms.%s] configured in hugo.toml" $name }}
+{{ end }}
+<form class="fottp-form" action="https://api.web3forms.com/submit" method="POST">
+  <input type="hidden" name="access_key" value="{{ $cfg.access_key }}">
+  <input type="hidden" name="subject" value="{{ $cfg.subject }}">
+  <input type="checkbox" name="botcheck" style="display: none;" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+  <p>* Please fill in all the required fields.</p>
+  <p>
+    <label for="{{ $name }}-name">Name*</label><br>
+    <input type="text" id="{{ $name }}-name" name="name" required>
+  </p>
+  <p>
+    <label for="{{ $name }}-email">Email*</label><br>
+    <input type="email" id="{{ $name }}-email" name="email" required>
+  </p>
+  <p>
+    <label for="{{ $name }}-message">{{ $cfg.message_label }}</label><br>
+    <textarea id="{{ $name }}-message" name="message" rows="6" {{ if $cfg.message_required }}required{{ end }}></textarea>
+  </p>
+  <p>
+    <label class="webform-consent" for="{{ $name }}-consent">
+      <input type="checkbox" id="{{ $name }}-consent" name="consent" value="Agreed" required>
+      I hereby agree that this data will be stored and processed for the purpose of establishing contact. I am aware that I can revoke my consent at any time.*
+    </label>
+  </p>
+  <button type="submit" class="fottp-button">{{ $cfg.submit_label }}</button>
+</form>

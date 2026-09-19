@@ -1,51 +1,13 @@
-<!DOCTYPE html>
-<html lang="{{ .Site.Language.Locale }}">
-
-  <head>
-    {{ partial "headers.html" . }}
-    {{ partial "custom_headers.html" . }}
-  </head>
-
-  <body>
-
-    <div id="all">
-        {{ partial "top.html" . }}
-
-        {{ partial "nav.html" . }}
-
-        {{ partial "breadcrumbs.html" . }}
-
-        <div id="content">
-
-            <div class="container">
-
-                <div class="row">
-
-                    <div class="col-md-6">
-                        {{ with .Params.webform }}
-                          {{ partial "webform.html" (dict "name" .) }}
-                        {{ end }}
-                    </div>
-
-                    <div class="col-md-6">
-                        {{ .Content }}
-                    </div>
-
-                </div>
-                <!-- /.row -->
-
-            </div>
-            <!-- /.container -->
-
-        </div>
-        <!-- /#content -->
-
-        {{ partial "footer.html" . }}
-
-    </div>
-    <!-- /#all -->
-
-    {{ partial "scripts.html" . }}
-
-  </body>
-</html>
+{{ define "main" }}
+  {{ partial "page-banner.html" . }}
+  <div class="hx:mx-auto hextra-max-page-width">
+    {{- /* The phone menu panel lives in this partial (phones only here: no desktop side column). */ -}}
+    {{ partial "sidebar.html" (dict "context" . "disableSidebar" true "displayPlaceholder" false) }}
+    <main id="content" class="hx:px-6 hx:pt-8 hx:pb-8 hx:md:px-12">
+      <div class="fottp-contact">
+        <div class="fottp-contact-form">{{ with .Params.webform }}{{ partial "webform.html" (dict "name" .) }}{{ end }}</div>
+        <div class="content">{{ .Content }}</div>
+      </div>
+    </main>
+  </div>
+{{ end }}

@@ -1,0 +1,19 @@
+{{- /* Home page strip: the three newest news posts. Renders nothing until there is at least one post. */ -}}
+{{- $posts := first 3 (where site.RegularPages "Section" "news") -}}
+{{- if $posts }}
+<section class="fottp-latest" aria-labelledby="latest-news-title">
+  <h2 id="latest-news-title">Latest news</h2>
+  <div class="fottp-cards">
+    {{- range $posts }}
+    {{- $thumb := partial "news-thumb.html" . }}
+    <article class="fottp-card">
+      {{- if $thumb }}<a class="fottp-card-thumb" href="{{ .RelPermalink }}" tabindex="-1" aria-hidden="true">{{ $thumb }}</a>{{ end }}
+      <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+      <p class="fottp-date"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (site.Params.date_format | default "2 January 2006") }}</time></p>
+      <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 150 }}{{ end }}</p>
+    </article>
+    {{- end }}
+  </div>
+  <p><a href="{{ "news/" | relURL }}">More news &rarr;</a></p>
+</section>
+{{- end }}
