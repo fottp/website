@@ -48,7 +48,7 @@ theme = 'hugo-universal-theme'
     date_format = "2 January 2006"
 
     about_us = "<p>Friends of Telford Town Park was founded to unite people who cherish this unique green space, supporting restoration, activities and a community spirit that keeps the park vibrant and welcoming for all generations.</p>"
-    copyright = "&copy; Friends of Telford Town Park. All rights reserved."
+    copyright = "&copy; Friends of Telford Town Park. Registered charity in England &amp; Wales, no. 1219196. All rights reserved."
 
     contact_url = "/contact-us/"
     address = """<p>Telford Town Park
