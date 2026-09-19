@@ -1,0 +1,33 @@
+{
+  "repo": "imfing/hextra",
+  "tag": "v0.12.3",
+  "note": "The theme release this site is deliberately pinned to (a copy of it lives in themes/hextra/). Change this only together with re-running scripts/vendor_theme.py, after reading the release watcher's report.",
+  "overrides": [
+    "layouts/baseof.html",
+    "layouts/single.html",
+    "layouts/home.html",
+    "layouts/blog/single.html",
+    "layouts/blog/list.html",
+    "layouts/404.html",
+    "layouts/_markup/render-image.html",
+    "layouts/_partials/custom/footer.html",
+    "layouts/_partials/favicons.html",
+    "data/icons.yaml"
+  ],
+  "depends_on": [
+    "layouts/_partials/sidebar.html",
+    "layouts/_partials/navbar.html",
+    "layouts/_partials/footer.html",
+    "layouts/_partials/head.html",
+    "layouts/_partials/utils/icon.html",
+    "layouts/_partials/utils/sort-pages.html",
+    "layouts/_partials/utils/page-description.html",
+    "layouts/_partials/utils/format-date.html",
+    "layouts/_partials/utils/hugo-compat/language-direction.html",
+    "layouts/_partials/components/blog-pager.html",
+    "layouts/_partials/toc.html",
+    "assets/css/components/navbar.css",
+    "assets/css/variables.css",
+    "assets/js/core/menu.js"
+  ]
+}

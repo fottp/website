@@ -13,12 +13,12 @@ Hugo static site for charity FOTTP, live at https://www.fottp.org.uk, deployed v
 ## Layout
 - `hugo.toml`: menu, Web3Forms keys, theme params.
 - `content/`: Markdown, page bundles — images stay alongside their page, don't centralize.
-- `layouts/`: theme overrides (see Forms). `static/vendor/`: self-hosted, no CDNs. `static/css/custom.css`: theme's override point. `static/admin/`: Sveltia CMS.
-- `themes/hugo-universal-theme`: git submodule — `git submodule update --init` after clone.
+- `layouts/`, `assets/css/custom.css`, `data/`: our overrides of the theme (see HANDOFF.md "Theme"). Everything self-hosted, no CDNs. `static/`: CNAME, logo, favicons, `admin/` (Sveltia CMS).
+- `themes/hextra`: a copy of the Hextra theme (release pinned in `.github/theme-pin.json`), not a submodule. Never edit it; update with `scripts/vendor_theme.py`.
 - `import/`, `import-friendsoftelfordtownpark/`: scraped source, one level up, not committed.
 
 ## Forms — isolated from content/
-Web3Forms (the Contact and Membership forms each deliver to their own mailbox) live in `hugo.toml` + `layouts/partials/webform.html` + `layouts/page/contact-form.html`, never inline in content/, so Sveltia CMS (content/-only) can't see or break them. Follow this pattern for future forms.
+Web3Forms (the Contact and Membership forms each deliver to their own mailbox) live in `hugo.toml` + `layouts/_partials/webform.html` + `layouts/page/contact-form.html`, never inline in content/, so Sveltia CMS (content/-only) can't see or break them. Follow this pattern for future forms.
 
 ## Invariants
 - `static/CNAME` must be exactly `www.fottp.org.uk`.
@@ -29,6 +29,7 @@ Web3Forms (the Contact and Membership forms each deliver to their own mailbox) l
 
 ## Conventions
 - Small, focused commits, plain-English messages.
+- After any layout, theme or Hugo change: `hugo --minify --logLevel warn` must print no warnings, and check the phone menu on every page type.
 - Ask before adding third-party services (tracking/cookie-banner concerns).
 - Verify photo/fact provenance before publishing: no stock photos as real ones, no unconsented child photos, no uncertain archive dates/affiliations — confirm with gruntfutuk.
 

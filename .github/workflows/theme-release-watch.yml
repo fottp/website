@@ -1,0 +1,40 @@
+name: Watch for a new theme release
+
+# Once a week, compare the theme release we are pinned to (.github/theme-pin.json)
+# with the theme's latest release. If there is a newer one, open ONE issue listing
+# what changed in the files we copied or rely on. It changes nothing else.
+
+on:
+  schedule:
+    - cron: "23 6 * * 1"   # Mondays, 06:23 UTC
+  workflow_dispatch:        # or run it by hand from the Actions tab
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compare the pinned release with the latest
+        id: check
+        run: python3 scripts/check_theme_release.py --report report.md --github-output
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Open an issue (once per release)
+        if: steps.check.outputs.newer == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITLE: "Theme update available: ${{ steps.check.outputs.latest }}"
+        run: |
+          # --state all: don't reopen the same issue every week once it has been closed
+          existing="$(gh issue list --state all --search "\"$TITLE\" in:title" --json number --jq '.[0].number')"
+          if [ -z "$existing" ]; then
+            gh issue create --title "$TITLE" --body-file report.md
+          else
+            echo "An issue for this release already exists (#$existing); nothing to do."
+          fi
