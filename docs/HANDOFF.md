@@ -70,6 +70,8 @@ The top nav is configured in `hugo.toml` under `[menu]` in the same order as the
 
 Left disabled for now (all still open decisions, see below): `enableGoogleMaps`, `enableRecaptchaInContactForm`, `params.topbar` (would otherwise show contact details in plain text sitewide, undoing the Web3Forms change). No real FOTTP logo exists yet, so `disabled_logo = true` shows the charity name as text instead — TODO: swap in a real logo image and set `disabled_logo = false`.
 
+**Footer credit — `layouts/partials/footer.html` is a local copy of the theme's footer.** The theme's "Template by Bootstrapious" link pointed at bootstrapious.com, which no longer exists. The original template's licence (read from the Internet Archive copy of its page) allows free use "as long as you keep the link at the template footer pointing to our partner and us"; the only alternative was a paid Attribution-Free licence, which can no longer be bought. So the credit stays, and its link now points at the archived copy of the original page, which also states the licence conditions. Don't remove the credit. If the theme's footer changes upstream, re-copy it and re-apply that one link change.
+
 ## Non-technical editing — DECIDED: Sveltia CMS at /admin/
 Added 2026-09-15 so committee members can edit page content through a web form instead of Git/Markdown, without needing GitHub Desktop or VS Code at all.
 
