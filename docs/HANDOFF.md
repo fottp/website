@@ -121,6 +121,23 @@ _Verified 2026-09-19: an editor account edited "Become a Member", sent it for re
 
 **Gotcha:** the REST API's `mergeable_state` read `clean` for that blocked pull request when queried without logging in, so don't use it to judge whether the review rule is working; check the pull request page as a logged-in user.
 
+### Role-based accounts and handover (general pattern)
+Where a job belongs to a committee role rather than a person (secretary, treasurer…), an account can be named for the role and handed on, so access follows the role and no one person's own account becomes a single point of failure. It works for any service, not just GitHub: an **editor** account for the role, tied to a role mailbox on the charity's own domain (the address itself deliberately isn't listed here — this repo is public), used by **one person at a time — never shared between people**.
+
+**Rules**
+- **Least privilege:** role accounts are for editing (the `editors` team), never organisation owners. Owners are always named individuals (see People above).
+- **The mailbox is the recovery route,** so it must deliver to the current role holder and ideally also to a second trustee, so a lost phone or forgotten password isn't a lock-out.
+- **The current holder controls the security details:** their own 2FA device and their own password. Recovery codes are kept somewhere the charity controls (the charity's password manager, or held by a second trustee), not only on the holder's phone.
+- **Tokens always have an expiry** (and, for GitHub, an owner approves each one), so a forgotten token stops working by itself.
+- **Check the service's terms:** GitHub's are strict about one person per account, which is why a role account must have exactly one holder at a time.
+
+**Handover checklist** (when the role passes to someone new)
+1. *Outgoing holder:* tell a second trustee/owner; revoke any personal access tokens (GitHub → Settings → Developer settings) and sign out other sessions.
+2. *Mailbox:* point the role address at the new holder (and keep the second trustee on it).
+3. *Incoming holder:* sign in via "forgot password" from the mailbox and set a new password; set up 2FA on their own device, remove the old device and generate fresh recovery codes, storing them as above.
+4. *Incoming holder:* create a new fine-grained token (resource owner `fottp`, repo `website`, Contents and Pull requests: Read and write, with an expiry).
+5. *An org owner:* approve the new token and revoke the old one (org Settings → Third-party Access → Personal access tokens), and check the account is still in the `editors` team and nothing else.
+
 ## Open decisions (not yet made)
 - **Analytics**: none, or a cookieless option (Plausible / GoatCounter). Aim: no cookie banner.
 - **Language selector**: the old site's flag switcher is just IONOS's "Website Translator" WordPress plugin wrapping Google's client-side Website Translator widget (machine-translates the DOM on the fly, gated behind its own cookie consent) — no real translated content behind it. Deliberately not replicating this for now (adding it back would mean a third-party script and a cookie banner, against the no-tracking preference); revisit later if genuinely needed.
