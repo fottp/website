@@ -1,39 +1,35 @@
-# Friends of Telford Town Park (FOTTP) — public website
-
-Hugo static site for charity FOTTP, live at https://www.fottp.org.uk, deployed via GitHub Actions to GitHub Pages. Maintainer: gruntfutuk (GitHub username; not a trustee). Read `docs/HANDOFF.md` before starting work.
-
-**Proof-of-concept**, not a replacement, for real site https://www.fottp.co.uk (IONOS, run by a current trustee) and old WordPress archive https://friendsoftelfordtownpark.org (being harvested via its REST API). Both read-only — not ours to change. Full history in HANDOFF.md.
+# FOTTP public website
+Hugo site for charity FOTTP → https://www.fottp.org.uk (GitHub Pages). Maintainer: gruntfutuk (GitHub username; not a trustee). Read `docs/HANDOFF.md` first.
+Proof-of-concept beside https://www.fottp.co.uk (IONOS, run by a current trustee) and old WordPress archive https://friendsoftelfordtownpark.org — both read-only, never change them.
 
 ## Environment
-- Windows native (PowerShell/Git Bash); others use GitHub Desktop+VS Code or Sveltia CMS (`/admin/`) — keep toolchain simple for both.
+- Windows; editors use GitHub Desktop+VS Code or Sveltia CMS (`/admin/`) — keep toolchain simple.
 - Hugo **0.166.0 extended**, pinned in `.github/workflows/hugo.yml` — bump local and CI together.
-- Python 3.14+: `int | float` unions, `collections.abc`. Use **uv** (`.venv`), not pip. Photos: resize to 1600px max edge, JPEG q~82, before committing (the build then makes smaller responsive copies itself — see HANDOFF.md "Image resizing").
-- British English throughout.
+- Python 3.14+ via **uv**, not pip. British English.
+- Photos: ≤1600px, JPEG q~82 before committing.
 
 ## Layout
 - `hugo.toml`: menu, Web3Forms keys, theme params.
-- `content/`: Markdown, page bundles — images stay alongside their page, don't centralize.
-- `layouts/`, `assets/css/custom.css`, `data/`: our overrides of the theme (see HANDOFF.md "Theme"). Everything self-hosted, no CDNs. `static/`: CNAME, logo, favicons, `admin/` (Sveltia CMS).
-- `themes/hextra`: a copy of the Hextra theme (release pinned in `.github/theme-pin.json`), not a submodule. Never edit it; update with `scripts/vendor_theme.py`.
-- `import/`, `import-friendsoftelfordtownpark/`: scraped source, one level up, not committed.
+- `content/`: Markdown page bundles; images stay beside their page.
+- `layouts/`, `assets/css/custom.css`, `data/`: our theme overrides (HANDOFF.md "Theme"). Self-hosted only, no CDNs. `static/`: CNAME, logo, favicons, `admin/`.
+- `themes/hextra`: copy of the release pinned in `.github/theme-pin.json`, not a submodule. Never edit; update via `scripts/vendor_theme.py`.
+- `import*/`: scraped source, one level up, never committed.
 
-## Forms — isolated from content/
-Web3Forms (the Contact and Membership forms each deliver to their own mailbox) live in `hugo.toml` + `layouts/_partials/webform.html` + `layouts/page/contact-form.html`, never inline in content/, so Sveltia CMS (content/-only) can't see or break them. Follow this pattern for future forms.
+## Forms
+Web3Forms (Contact, Membership; each to its own mailbox) live in `hugo.toml`, `layouts/_partials/webform.html` and `layouts/page/contact-form.html` — never in content/, so Sveltia CMS can't break them. Same for new forms.
 
 ## Invariants
-- `static/CNAME` must be exactly `www.fottp.org.uk`.
+- `static/CNAME` exactly `www.fottp.org.uk`.
 - Never commit `public/`, `resources/_gen/`, `.hugo_build.lock`.
-- DNS/email hosted at Fastmail, managed by gruntfutuk — don't suggest Cloudflare.
-- Never put contact details in plain text sitewide or in content/ — route through the forms.
-- `git fetch`/`pull --rebase` before pushing. A concurrent gruntfutuk/CMS commit on main is expected — read the diff before rebasing.
+- DNS/email at Fastmail (gruntfutuk) — don't suggest Cloudflare.
+- No contact details in plain text sitewide or in content/ — use the forms.
+- `git fetch`/`pull --rebase` before pushing; expect concurrent CMS/gruntfutuk commits on main; read the diff first.
 
 ## Conventions
-- Small, focused commits, plain-English messages.
-- After any layout, theme or Hugo change: `hugo --minify --logLevel warn` must print no warnings, and check the phone menu on every page type.
-- Ask before adding third-party services (tracking/cookie-banner concerns).
-- Verify photo/fact provenance before publishing: no stock photos as real ones, no unconsented child photos, no uncertain archive dates/affiliations — confirm with gruntfutuk.
+- Small commits, plain-English messages.
+- After layout/theme/Hugo changes: `hugo --minify --logLevel warn` prints nothing; check the phone menu on every page type.
+- Ask before adding third-party services.
+- Verify photo/fact provenance: no stock photos as real, no unconsented child photos, no uncertain archive dates/affiliations — confirm with gruntfutuk.
 
-## Open (full list: docs/HANDOFF.md)
-- Queen's Award year unconfirmed (2016 vs June 2020) — don't publish until confirmed.
-- FOTTP's role in the Christmas/Santa Fun Run unconfirmed — don't publish it or the Midlands Air Ambulance cheque photo until confirmed.
-- `friendsoftelfordtownpark.org` archive curation (Chairman's Reports, photo galleries) paused, not finished.
+## Unconfirmed — don't publish
+- Queen's Award year (2016 vs June 2020).
