@@ -1,0 +1,64 @@
+{{ define "main" }}
+  {{ partial "page-banner.html" . }}
+  {{- /* The photos are listed in this page's front matter (`photos`: image, alt, caption), in the order to show them. */ -}}
+  {{- $photos := .Params.photos | default slice -}}
+  {{- $count := len $photos -}}
+  <link rel="stylesheet" href="{{ "vendor/photoswipe/photoswipe.css" | relURL }}">
+  <div class="hx:mx-auto hx:flex hextra-max-page-width">
+    {{ partial "sidebar.html" (dict "context" . "disableSidebar" true "displayPlaceholder" true) }}
+    <article class="hx:w-full hx:break-words hx:flex hx:min-h-[calc(100vh-var(--navbar-height))] hx:min-w-0 hx:justify-center hx:pb-8 hx:pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+      <main id="content" class="hx:w-full hx:min-w-0 hextra-max-content-width hx:px-6 hx:pt-8 hx:md:px-12">
+        {{- with .Params.description }}<p class="fottp-intro">{{ . }}</p>{{ end }}
+        <div class="content">{{ .Content }}</div>
+        <p class="fottp-date">{{ $count }} photo{{ if ne $count 1 }}s{{ end }}. Select one to see it larger, then use the arrow keys or swipe to move on.</p>
+
+        <ul class="fottp-photos" id="gallery" role="list" data-pswp-base="{{ "vendor/photoswipe/" | relURL }}">
+          {{- range $i, $p := $photos }}
+            {{- with $.Resources.Get $p.image }}
+              {{- $img := . }}
+              {{- $thumb := $img.Fill "360x360 q72" }}
+              {{- /* Every thumbnail needs a name a screen reader can read: real alt text if written, else the caption, else "Photo 3 of 40 in ...". */ -}}
+              {{- $name := $p.alt | default ($p.caption | default (printf "Photo %d of %d in %s" (add $i 1) $count $.Title)) }}
+          <li><a href="{{ $img.RelPermalink }}" data-pswp-width="{{ $img.Width }}" data-pswp-height="{{ $img.Height }}"{{ with $p.caption }} data-caption="{{ . }}"{{ end }}><img src="{{ $thumb.RelPermalink }}" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}" alt="{{ $name }}" loading="lazy" decoding="async"></a></li>
+            {{- else }}
+              {{- warnf "gallery: %s lists %q, which isn't in its folder" $.File.Path $p.image }}
+            {{- end }}
+          {{- end }}
+        </ul>
+
+        <p class="fottp-back"><a href="{{ "gallery/" | relURL }}">&larr; All collections</a></p>
+      </main>
+    </article>
+  </div>
+  <script type="module">
+    (async () => {
+      const grid = document.getElementById('gallery');
+      if (!grid || !grid.children.length) return;
+      const base = grid.dataset.pswpBase;
+      const { default: PhotoSwipeLightbox } = await import(base + 'photoswipe-lightbox.esm.min.js');
+      const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const lightbox = new PhotoSwipeLightbox({
+        gallery: '#gallery',
+        children: 'a',
+        pswpModule: () => import(base + 'photoswipe.esm.min.js'),
+        showHideAnimationType: still ? 'none' : 'zoom',
+        bgOpacity: 0.92,
+      });
+      // A caption along the bottom, taken from each link's data-caption (left out when there isn't one).
+      lightbox.on('uiRegister', () => {
+        lightbox.pswp.ui.registerElement({
+          name: 'fottp-caption', order: 9, isButton: false, appendTo: 'root', html: '',
+          onInit: (el, pswp) => {
+            pswp.on('change', () => {
+              const a = pswp.currSlide && pswp.currSlide.data.element;
+              const text = (a && a.dataset.caption) || '';
+              el.textContent = text;
+              el.hidden = !text;
+            });
+          },
+        });
+      });
+      lightbox.init();
+    })();
+  </script>
+{{ end }}

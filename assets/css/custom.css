@@ -108,6 +108,19 @@ a.fottp-button-secondary:hover { background: #f3f8f1; color: hsl(107 69% 19%); }
 .fottp-docs li { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.15rem 1rem; }
 .fottp-docs .fottp-date { margin: 0; }
 
+/* Gallery: a grid of square thumbnails that open in PhotoSwipe (vendored in static/vendor/photoswipe/) */
+.fottp-intro { font-size: 1.125rem; margin: 0 0 1rem; }
+.fottp-collections { margin-top: 1.5rem; }
+.fottp-photos { list-style: none; margin: 1rem 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); gap: 0.5rem; }
+.fottp-photos a { display: block; border-radius: 0.375rem; overflow: hidden; background: #e5e7eb; }
+.fottp-photos img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; transition: transform 0.2s; }
+.fottp-photos a:hover img, .fottp-photos a:focus-visible img { transform: scale(1.04); }
+.fottp-photos a:focus-visible { outline: 3px solid hsl(107 69% 30%); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .fottp-photos img { transition: none; } .fottp-photos a:hover img, .fottp-photos a:focus-visible img { transform: none; } }
+/* The caption along the bottom of the enlarged photo */
+.pswp__fottp-caption { position: absolute; left: 0; right: 0; bottom: 0; padding: 2rem 1rem 0.9rem; text-align: center; color: #fff; font-size: 1rem; line-height: 1.4; background: linear-gradient(transparent, rgba(0, 0, 0, 0.65)); pointer-events: none; }
+.pswp__fottp-caption[hidden] { display: none; }
+
 /* Accessibility fix for a Hextra flaw (present in its release and its development branch): on a phone,
    while the menu is closed, the theme marks the off-screen menu aria-hidden but its links can still be
    tabbed into. Hide it properly while closed; it shows again the moment the theme opens it. */

@@ -181,3 +181,34 @@ collections:
       - {label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "D MMMM YYYY", time_format: false, hint: "Only used to put the list in order (newest first); it isn't shown. Use the date it came out, or the first day of its season."}
       - {label: PDF file, name: file, widget: file, accept: ".pdf,application/pdf", hint: "The document itself. Drag it onto this box. Please remove any private email addresses or phone numbers of individuals first."}
       - {label: Number of pages, name: pages, widget: number, value_type: int, min: 1, required: false, hint: "Optional. Shown beside the title."}
+
+  # Photo galleries. One folder per collection holding its photos; the Gallery page shows a card for each, and
+  # each collection page is a grid that opens PhotoSwipe (a full-screen viewer) when a photo is chosen.
+  - name: gallery
+    label: Gallery
+    label_singular: Photo collection
+    folder: content/gallery
+    path: "{{slug}}/index"
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    create: true
+    media_folder: ""
+    public_folder: ""
+    fields:
+      - {label: Title, name: title, widget: string}
+      - {label: Summary, name: description, widget: text, required: false, hint: "One or two sentences, shown under the title on the Gallery page and at the top of the collection."}
+      - {label: Order on the Gallery page, name: weight, widget: number, value_type: int, required: false, hint: "Collections are listed lowest number first (10, 20, 30, and so on)."}
+      - {label: Cover photo, name: cover, widget: image, required: false, choose_url: false, hint: "The picture on this collection's card. Leave empty to use its first photo."}
+      - label: Photos
+        name: photos
+        widget: list
+        label_singular: Photo
+        summary: "{{fields.caption}} ({{fields.image}})"
+        thumbnail: image
+        hint: "In the order they appear. Drag a photo onto the Photo box (they are shrunk automatically). Please only add photos that people have agreed to have shown, and no photos of children unless the parent or carer has agreed."
+        fields:
+          - {label: Photo, name: image, widget: image, choose_url: false}
+          - {label: Description for screen readers (alt text), name: alt, widget: string, required: false, hint: "What the photo shows, in one sentence, for people who can't see it. Leave blank if you're not sure: it will say 'Photo 3 of 40'."}
+          - {label: Caption, name: caption, widget: string, required: false, hint: "Optional. Shown under the photo when it is enlarged."}
+      - {label: Introduction, name: body, widget: markdown, required: false, hint: "Optional. Extra text shown above the photos."}
