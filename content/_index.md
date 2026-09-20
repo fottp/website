@@ -36,4 +36,8 @@ Support vital conservation efforts including planting, habitat restoration, and 
 
 When visiting the park, you can explore QR-guided trails, use digital park maps, and enjoy interactive resources enhancing your experience.
 
+## Get to know us
+
+Meet the volunteers behind the Friends, and browse photos of the park past and present.
+
 [Meet the Team](/about-us/) · [See more photos of the park](/gallery/)
