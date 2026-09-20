@@ -167,6 +167,19 @@ Where a job belongs to a committee role rather than a person (secretary, treasur
 4. *Incoming holder:* create a new fine-grained token (resource owner `fottp`, repo `website`, Contents and Pull requests: Read and write, with an expiry).
 5. *An org owner:* approve the new token and revoke the old one (org Settings → Third-party Access → Personal access tokens), and check the account is still in the `editors` team and nothing else.
 
+## Events — DONE (2026-09-20)
+One page bundle per event under `content/events/<name>/index.md`, added and edited through the "Events" collection in Sveltia CMS (or as files). No third-party services, cookies or JavaScript.
+
+**Front matter:** `title`, `start` (`2026-10-10 11:00`, London time), optional `end`, `location` (default "Telford Town Park", set in `hugo.toml` `[params.events]`), `cost`, `description`, `image`/`image_alt`, `link_url`/`link_label`, and for weekly events `repeats: weekly`, `until`, `skip_dates`. A `start` with no time and no `end` time is shown and sent to calendars as an all-day event.
+
+**Weekly events** (currently just `wednesday-volunteering`): `start`/`end` are the *first* session; every later one is the same time a week on, so the clock time stays put across the summer-time changes. `skip_dates` removes a session (bank holiday), `until` ends the series. Only weekly repeats are supported; monthly would mean extending `layouts/_partials/events/occurrences.html` and the `RRULE` line in `ics-event.html`.
+
+**What it produces:** the Events page (`/events/`: upcoming, every week, past), a "Coming up" strip on the home page (next three; a weekly event counts once), an event page each with structured data for search engines, and calendar files: `/events/index.ics` (everything coming up, for subscribing) and `/events/<name>/index.ics` (one event, "Add to your calendar"). Templates are in `layouts/events/` and `layouts/_partials/events/`.
+
+**Nightly rebuild:** the site is static, so "upcoming" and "past" are only worked out when it is built. `.github/workflows/hugo.yml` therefore also runs at 00:20 UTC every night; without it a finished event would stay listed until the next edit. GitHub pauses scheduled runs after 60 days with no activity on a public repo — any push (including a CMS edit) restarts them. The same rebuild makes a future-dated news post appear on its day.
+
+**Not yet checked:** the Events form in Sveltia CMS itself (the config parses, but datetime fields, the weekly `select` and the skipped-dates list haven't been tried in the live `/admin/`), and the phone menu on the new pages. The old WordPress site's six events (2016–2018) were not imported.
+
 ## Open decisions (not yet made)
 - **Analytics**: none, or a cookieless option (Plausible / GoatCounter). Aim: no cookie banner.
 - **Language selector**: the old site's flag switcher is just IONOS's "Website Translator" WordPress plugin wrapping Google's client-side Website Translator widget (machine-translates the DOM on the fly, gated behind its own cookie consent) — no real translated content behind it. Deliberately not replicating this for now (adding it back would mean a third-party script and a cookie banner, against the no-tracking preference); revisit later if genuinely needed.
