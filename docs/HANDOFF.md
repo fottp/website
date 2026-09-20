@@ -1,340 +1,93 @@
-# Project handover — FOTTP website rebuild
+# FOTTP website — handover
 
-_Generated 14 September 2026 from the claude.ai planning session. Update this file as work progresses._
+_Updated 20 September 2026. This describes how the site is now and why; how it got here is in the Git history. Working conventions for anyone (or any tool) changing the repo are in `CLAUDE.md`._ Maintained by **gruntfutuk** (GitHub username; not a trustee of the charity).
 
-Maintained by **gruntfutuk** (GitHub username; not a trustee of the charity).
+## What this is
+`www.fottp.org.uk` is a proof-of-concept replacement for the charity's websites: a static [Hugo](https://gohugo.io) site kept in Git and hosted free on GitHub Pages. Committee members edit it through a web form (Sveltia CMS) or through Git, so the content isn't locked inside one person's account or tooling. It holds largely the same content as the charity's current site, plus material recovered from its older one. It uses no cookies, no trackers, no third-party scripts and no CDNs.
 
-## Goal
-`fottp.org.uk` is a **proof-of-concept** aiming to hold largely the same content as the charity's current definitive site, https://www.fottp.co.uk (an IONOS site-builder site built and run day-to-day by a current trustee) — but on an open-source, Git-based static-site approach, specifically so the content isn't locked away from the wider set of trustees the way it is when one person's tooling/account is the only way to edit it. Maintained in Git so committee members can edit it with GitHub Desktop and a text editor, or (as of 2026-09-15) via the Sveltia CMS at `/admin/` for non-technical editing — see below.
+## The sites it draws on
+Both are **read-only for us: never change them.**
 
-## Current state — infrastructure is COMPLETE and live
-| Component | Detail |
+**https://www.fottp.co.uk — the charity's current, definitive site.** Built on IONOS "MyWebsite Now" (a WordPress-based site builder) and run day to day by a current trustee. Domain registered 28 May 2026 with IONOS, expires 28 May 2027, registrant hidden. Five pages: home, about, partners, projects, contact. Its WordPress REST API is disabled, so the content was scraped from the rendered pages (`scrape_old_site.py`; it may need a browser-like User-Agent). Its extras were **not** carried over: an embedded contact form and Google Map, IONOS SiteAnalytics behind a cookie banner, and a flag "language selector" that is only IONOS's Website Translator plugin wrapping Google's browser-side machine translation, with its own cookie consent and no real translations behind it. The new site has Web3Forms forms, an OpenStreetMap map, no analytics and no translator. Plan: redirect or let it lapse once the new site is agreed.
+
+**https://friendsoftelfordtownpark.org — an older WordPress site the charity can no longer maintain.** WordPress 5.4.21 (five or more releases behind), the commercial ThemeForest theme "Barletta" plus a child theme, built with SiteOrigin Page Builder. Plugins include The Events Calendar, Contact Form 7, Custom Facebook Feed, Photo Gallery, Social Icons and PixelYourSite (a Facebook tracking pixel, which is the kind of thing the new site avoids). Hosting is split: DNS and email at IONOS, the website itself on a server run by Dawley Web Design (their own nginx, with custom plugins `dwd-carousel` and `dwd-custom-func`). That split and the ageing core are why it can't be kept up. Its REST API was open, so everything was saved as JSON: 50 pages, 85 posts, 6 events (2016–2018) and 1,278 media items, about 2 GB in all, into `import-friendsoftelfordtownpark/` (not in Git; scraper `scrape_friendsoftelfordtownpark.py`). What has moved across: **44 PDFs into the Archive, and 224 photos into the Gallery**. Its pages, posts and six events were not carried over.
+
+## Live setup
+| | |
 |---|---|
-| Domains | `fottp.org` and `fottp.org.uk` registered via DomainBox (gruntfutuk is a reseller there) |
-| DNS + email | Fastmail hosts DNS and MX for both domains. gruntfutuk has full control. MX stays at Fastmail. |
-| `fottp.org.uk` (primary) | Apex: A records 185.199.108-111.153, AAAA 2606:50c0:8000-8003::153 (GitHub Pages). `www` CNAME → `fottp.github.io`. Fastmail's default web A records were disabled. |
-| `fottp.org` | Left on Fastmail default web records; Fastmail "website redirect" sends it (302) to https://www.fottp.org.uk |
-| GitHub | Organisation **fottp** (2FA enforced; verified domains fottp.org and fottp.org.uk). Repo **fottp/website**, public. Owner: gruntfutuk's personal account. A second owner still needs adding once the committee decides who. |
-| Pages | Source = GitHub Actions. Custom domain `www.fottp.org.uk`, DNS check passed, TLS issued. "Enforce HTTPS" should be ticked if not already. |
-| Workflow | `.github/workflows/hugo.yml` — actions/checkout@v4, peaceiris/actions-hugo@v3 pinned 0.166.0 extended, configure-pages@v5, upload-pages-artifact@v3, deploy-pages@v4. Both jobs green. |
-| Verified | `curl -sI https://www.fottp.org.uk` → 200 from GitHub.com. Apex → 301 to www. |
-
-Git identity: commits use the GitHub noreply address (email-privacy protection is on). Line endings: Git for Windows autocrlf default; repo stores LF.
-
-## Old site facts (source for migration)
-- **https://www.fottp.co.uk is the charity's current, definitive site** — IONOS "MyWebsite Now" builder on WordPress; `server: IONOS Webserver`; domain registered 28 May 2026 via IONOS, expires 28 May 2027, registrant redacted (WHOIS privacy — this doesn't mean the site is unmaintained, it's actively built and run by a current trustee). Do not modify; it will be redirected or lapsed once `fottp.org.uk` is ready to take over.
-- **The WordPress REST API (`/wp-json/`) is disabled** for anonymous requests — returns "wp-json is disabled". Content must be scraped from the rendered HTML.
-- Pages are a handful of static ones (home, about, partners, projects, contact) plus images under `/wp-content/uploads/go-x/`. Embedded widgets: contact form, Google Maps, translator, IONOS SiteAnalytics with cookie consent — none of these need reproducing as-is.
-- Bot detection may 403 non-browser user agents; a browser-like User-Agent header may be needed.
-
-### A third site: https://friendsoftelfordtownpark.org — old, unmaintainable, being harvested for content
-Investigated 2026-09-15. This is **not** the current site and **not** what `fottp.org.uk` is replacing — it's an older site the charity can no longer maintain, and the goal is to recover any content from it worth keeping before it's lost, folding it into `fottp.org.uk` alongside what's already been migrated from fottp.co.uk.
-
-**Platform:** WordPress 5.4.21 (outdated — 5+ major releases behind), theme "Barletta" (a commercial ThemeForest theme) + child theme, built with the SiteOrigin Page Builder plugin. Notable plugins: The Events Calendar (real calendar/events functionality, a genuine feature gap versus fottp.co.uk and the new site), Contact Form 7, Custom Facebook Feed, Photo Gallery, Social Icons, and PixelYourSite (a Facebook-pixel/tracking plugin — worth knowing given this repo's no-tracking preference).
-
-**Hosting:** split across two providers. DNS and email are at IONOS (nameservers on IONOS's `ui-dns.*` cluster, MX at `mx00/mx01.ionos.co.uk`, SPF references IONOS). The actual website is hosted separately — the A record (`54.38.72.95`) reverse-resolves to `ns1.dawleywebdesign.email`, and the site's own code has custom plugins literally named `dwd-carousel`/`dwd-custom-func`, pointing to a local outfit called **Dawley Web Design** running their own nginx server with Let's Encrypt TLS and self-managing the WordPress install — separate from the domain/DNS/email arrangement at IONOS. This split (and the outdated WP core) is presumably why it "cannot be maintained" going forward.
-
-**Content scale — much bigger than fottp.co.uk, and its REST API is open** (a real advantage — content can be pulled as structured JSON via `/wp-json/wp/v2/pages`, `/wp-json/wp/v2/posts`, `/wp-json/wp/v2/media` with pagination, no HTML scraping needed): **50 pages, 85 posts, 1,278 media library items** (the media count will collapse a lot once WordPress's auto-generated thumbnail/medium/large/scaled size variants per upload are deduplicated down to originals). Content is recent — includes a post modified in 2025 and a page about a Queen's Award received March 2025.
-
-**Not yet done:** a full raw backup/export of this site's pages, posts and media hasn't been pulled yet. Given it "cannot be maintained," treat recovering a complete local copy as the priority before deciding what specifically gets folded into `fottp.org.uk`'s curated content — same pattern as the `import/` raw-scrape-then-curate approach used for fottp.co.uk.
-
-## Content migration — DONE
-All 5 old-site pages have been scraped (into `import/`, not committed) and tidied into Hugo page bundles under `content/`: home (`content/_index.md`), `about-us`, `contact-us`, `our-partners`, `our-projects`. Cleanup during tidying: stripped the old site's duplicated contact-form/map-consent widget boilerplate and JS gallery "Loading..." artefacts, and dropped stock photos left over from the builder template (a stock crowd scene, plus unrelated shots of Bath and the Lake District) rather than present them as photos of Telford Town Park. Genuine team/volunteer/partner photos were kept and renamed descriptively.
-
-Open gaps, flagged with `<!-- TODO -->` comments in the content itself:
-- `content/our-projects/index.md` — one project entry ("clearing overhanging trees") needs a real photo of that specific activity (old one was stock); the "Gallery" bullet list's named past sessions (Grange Pool, Kitchen Depot, poly tunnel, etc.) still need their own full-resolution photos — the old site's images for those were only ever captured as 50×67px thumbnails.
-- The "200+ members / 30+ events / 100+ projects" stats on the home page are carried over from the old site and should be verified with the committee before publishing.
-
-**Real photos added 2026-09-15** (gruntfutuk's own, resized to a 1600px max edge and recompressed before committing — originals were 2-8MB camera/phone files): four photos on the home page (pond/swans, a community fun run, misty pond, snow), a real "Out and about" photo on About Us (resolving that TODO), and a new "The Park We're Protecting" section on Our Projects with photos of the Abraham Darby monument, the old chimney, and a fishing lake.
-
-Two photos needed a quick check with gruntfutuk before use, both resolved: the fun-run photo isn't a FOTTP-organised event (just something gruntfutuk photographed at a public event in the park — captioned accordingly, not attributed to FOTTP), and the Facebook-sourced snowy photo is gruntfutuk's own (downloaded via Facebook since the original Olympus file wasn't to hand) — used as-is at 1080×1080, already web-sized by Facebook's own compression.
-
-**Map — DECIDED: OpenStreetMap.** Added 2026-09-15 to `content/contact-us/index.md` as a plain `<iframe>` embed of `openstreetmap.org/export/embed.html` — no API key, account or cookies needed, unlike Google Maps. Uses the same coordinates (52.6708325, -2.4477144) the old site's Google Maps embed used for the park.
-- Map embed is still a TODO on `content/contact-us/index.md` — see open decisions below.
-- **Two Web3Forms forms, split by mailbox — DONE.** The charity's plain-text email address was replaced with Web3Forms-backed HTML forms (2026-09-15, to stop the address being scraped/spammed). gruntfutuk runs two mailboxes handled by different people: a membership mailbox for membership sign-ups and a contact mailbox for general enquiries. Web3Forms ties one access key to one destination email, so there are two forms, both live with real access keys:
-  - `content/become-a-member/index.md` (linked from the homepage's "Become a Member" button) → the membership mailbox.
-  - `content/contact-us/index.md` (general enquiries, team bios) → the contact mailbox.
-
-  Needed `[markup.goldmark.renderer] unsafe = true` in `hugo.toml` so the raw `<form>` HTML in Markdown renders. Note: Web3Forms' dashboard concept of "a form" is just a config record (name + destination email) that issues an access key — it's unrelated to the actual HTML form, which lives in our Markdown.
-
-`import/` (the raw scrape) is kept locally only, not committed — useful as a reference while tidying but not needed once `content/` is done.
-
-Dependencies for `scrape_old_site.py`: managed as a proper **uv** project at `D:\websites\fottp.org.uk\` (not bare pip, not just a loose `.venv`) — `uv init` (creates `pyproject.toml` + `.venv`), then `uv add requests beautifulsoup4 markdownify`, then `uv run scrape_old_site.py`.
-
-## Theme — DECIDED: Hextra (switched 2026-09-19)
-History: Ananke → hugo-universal-theme (2026-09-15) → **[Hextra](https://github.com/imfing/hextra)** (2026-09-19).
-
-**Why Hextra:** MIT licensed with no visible credit needed (the previous theme's licence required a footer link to a defunct site); actively maintained (the previous theme was in maintenance mode: last commit March 2026, unreviewed pull requests, its main maintainer's last commit July 2025); ships pre-built CSS so no Node/Go is needed; and much lighter — about 26 KB of page code (gzipped) in 3 files and no font files, against about 116 KB in 16 files plus up to 488 KB of fonts. Measured on the real content: identical text on every page (checked word for word), all 374 internal links/images resolve, and **zero WCAG 2.x A/AA violations** (axe-core, all pages, desktop and phone, phone menu open) against 25 on the old theme.
-
-**What was kept from the old look:** the green title banner, the "Follow us" bar, the logo, the footer with About/Contact/charity number, the News list with photos, the home page "Latest news" strip, the two forms (same access keys), the map, the image resizing.
-
-**The theme is a copy in this repo, not a submodule.** `themes/hextra/` is an unmodified copy of one release (see `themes/hextra/VENDORED.md`); `.gitattributes` forces LF line endings on it. Reason: attached as a submodule, Windows Git converts the theme's line endings and breaks some of its templates (this actually happened in testing). **Never edit inside `themes/hextra/`** — the next update replaces it wholesale. Site changes go in the site's own `layouts/`, `assets/`, `data/` and `static/`, which override the theme's.
-
-**What we override and why** (the same list is in `.github/theme-pin.json` under `overrides`):
-- `layouts/baseof.html` — adds the "Follow us" bar above the navbar; page `lang` is `en-gb`, not `en`.
-- `layouts/single.html`, `home.html`, `blog/single.html`, `blog/list.html` — the green banner replaces the theme's breadcrumb and page-title H1; home adds the Latest news strip; the news list shows photo thumbnails and dates; a news post shows its lead photo and a back link.
-- `layouts/404.html` — the theme's own is a bare page with no navigation or title.
-- `layouts/_partials/custom/footer.html` (Hextra's footer hook) — About/Contact/charity number. `layouts/_partials/favicons.html` plus the icons in `static/` — Hextra's own are Hextra-branded; ours are made from the logo.
-- `data/icons.yaml` — a three-bar "hamburger" phone menu button (Hextra's has two; its own animation code already supports the extra bar).
-- `layouts/page/contact-form.html`, `layouts/_partials/webform.html`, `topbar.html`, `page-banner.html`, `latest-news.html`, `news-thumb.html`, `responsive-img.html`, `layouts/_shortcodes/osm-map.html`, `layouts/_markup/render-image.html` — the site's own pieces (no theme file shadowed).
-- `assets/css/custom.css` — brand colour (logo green as Hextra's primary colour), banner, top bar, forms, news, footer. Also one **accessibility fix for a Hextra flaw**: while the phone menu is closed the theme hides it from screen readers but its links can still be tabbed into; the rule hides it properly (present in Hextra's release and dev branch; recheck after updates).
-- `hugo.toml` — menu items use `pageRef` (so the theme highlights the current page and its phone menu lists just these); a site-wide `[[cascade]]` turns off the "On this page" contents panel; `disableKinds` removes the unused category/tag pages; the "Follow us" links are `[[menu.topbar]]` entries whose `params.icon` names a Hextra icon.
-
-**Gotchas learned building it:**
-- Hextra's **phone menu panel lives in `sidebar.html`**, which each page layout includes. Any layout that doesn't include it (ours for the form pages and the 404 page use the phone-only mode) gets a hamburger that opens nothing. Test the phone menu on every page type after changing layouts.
-- Hextra's release (v0.12.3) lacks page hooks that exist in its development branch (`custom/page-begin`, etc.); the overrides are built on the release files, not the development ones.
-- Hextra styles with pre-built Tailwind, so new class names in our templates have no styling until added to `custom.css`.
-- Serve a built copy with an unused port: a `hugo server` on 1313 for the real repo is easy to mistake for a test server.
-
-**Theme upkeep.** The site is **pinned**: `.github/theme-pin.json` records the release (`tag`), the theme files we override (`overrides`) and those our code relies on (`depends_on`). A static site with a pinned theme keeps working, so updating is a decision, not a chore.
-- `.github/workflows/theme-release-watch.yml` runs `scripts/check_theme_release.py` every Monday. If Hextra has published a newer release it opens **one** GitHub issue (never repeated for the same release) listing which of our overrides and dependencies changed between the pinned release and the new one, with links to the notes and the exact changes. It changes nothing else; run it by hand any time. (GitHub pauses scheduled workflows on a public repo after 60 days without activity; a manual run or any commit wakes it.)
-- To update: read the issue; run `python scripts/vendor_theme.py <tag>` (replaces `themes/hextra/`); re-apply our edits to any changed override; build with `hugo --minify --logLevel warn` (expect **no warnings**); check every page at desktop and phone width and open the phone menu on each page type; set `tag` in `.github/theme-pin.json`; commit together. Hugo itself is pinned at 0.166.0 in CI — bump it deliberately, and check for deprecation warnings when you do.
-- Hextra's minimum Hugo version is 0.146.0.
-
-## Image resizing — DONE (2026-09-19)
-Photos are shrunk **at build time**, so visitors download a copy that fits their screen instead of the full 1600px original. Editors and content are unaffected: they upload and insert photos as before, and the originals in Git stay as they are (still resize to ≤1600px before committing to keep the repo small).
-- `layouts/_markup/render-image.html` runs for every Markdown image. A JPEG/PNG **in the page's own folder** becomes a responsive `<img>` via `layouts/_partials/responsive-img.html`; anything else (remote address, `/static` path, SVG, GIF) is output as a plain `<img>`, as before.
-- `responsive-img.html` makes 480 / 800 / 1200px copies (only ones smaller than the original, never enlarged; quality 82) and offers them plus the original in a `srcset`; the browser picks one using `sizes` and the screen. `loading="lazy"` defers photos below the fold. `sizes` matches Hextra's text column (about 672px wide on desktop). The news thumbnails and lead image use the same partial (`news-thumb.html`, `blog/single.html`); thumbnails set `noOriginal` so a phone never picks the full-size file.
-- **`width`/`height` attributes are the ORIGINAL's size, deliberately.** An earlier version used the smaller copy's size, and because a `width` attribute sets the displayed size, photos shrank to 800px and stopped filling the column. Don't "correct" this.
-- Resized copies are generated into the built site only (cache: `resources/_gen/`, gitignored). Nothing to commit.
-- Measured in Chrome (image bytes actually downloaded, before → after, whole page scrolled): on a phone the home page went 1,579 KB → 529 KB (first screen 392 KB), Our Projects 3,673 KB → 1,719 KB, the 2 news posts about half; on desktop about 30% less overall (photos there are shown near full size, so less can be saved). Layout checked pixel-for-pixel against the old build. Resized copies could be made WebP (about a third smaller again) with a `<picture>` element — not done.
-
-## Non-technical editing — DECIDED: Sveltia CMS at /admin/
-Added 2026-09-15 so committee members can edit page content through a web form instead of Git/Markdown, without needing GitHub Desktop or VS Code at all.
-
-**Who can log in:** someone with a GitHub account (2FA on) who has accepted their invitation to the `fottp` organisation and is in the org's `editors` team, which has **Write** access to `fottp/website`.
-
-**How to log in:** go to `https://www.fottp.org.uk/admin/` and click "Sign In with Token", then create a fine-grained token on the GitHub page it opens and paste it into the CMS (it's saved in the browser). This avoids a separate OAuth app/proxy server (a third-party service CLAUDE.md would otherwise want sign-off on) at the cost of each editor doing this token setup themselves. **The link's pre-filled form is not enough on its own** — it creates a token for the editor's *own* account with no repositories, and the CMS then says "You don't have access to the 'website' repository". Before generating, change:
-- **Resource owner** → `fottp` (not the personal account).
-- **Repository access** → Only select repositories → `fottp/website`.
-- **Permissions** → Contents: Read and write; Pull requests: Read and write (Metadata: Read is automatic).
-
-The org requires administrator approval for fine-grained tokens, so the token does nothing until an owner approves it (org Settings → Third-party Access → Personal access tokens → Pending requests; check it lists only `fottp/website` and those permissions). Tokens expire (set an expiry when creating one) and need regenerating and re-approving when they do. Classic tokens are also allowed by the org but are broader (all repos the account can reach), so prefer fine-grained.
-
-_Verified 2026-09-19: a second account added to the `editors` team logged in this way._
-
-**How an editor makes a change** (Sveltia's editorial workflow; every change is a pull request on GitHub and nothing goes live until it is published):
-1. Open **Pages** or **News** in the CMS, edit an entry (or add a News post with the **+** button) and click **Save**.
-2. A box appears: click **Send for review** (or **Later** to keep it as a draft).
-3. Open the entry, and in the top right change **Status: In Review** to **Ready**. A **Publish** button then appears (alternatively use the Editorial Workflow board, below).
-4. Click **Publish**. The pull request is merged and its branch deleted, and the site rebuilds — the change is live within a minute or two.
-
-The **Editorial Workflow board** (Draft / In Review / Ready columns) is the branch-and-pencil icon, third from the left in the top-left corner. The icons have no hover labels. Cards can be dragged between columns, and each card offers the actions for its stage.
-
-**Never merge a CMS pull request on GitHub itself.** Only the CMS's Publish deletes the `cms/…` branch, and a branch left behind makes the CMS think the entry is still unpublished (this happened with the first test post: the CMS said "not published yet" for a live page until the leftover branches were deleted). If it happens, delete the leftover `cms/…` branch on GitHub and hard-refresh the CMS (Ctrl+F5). As a backstop the repo now has "Automatically delete head branches" turned on (Settings → General → Pull Requests), so merged branches should tidy themselves up, but still publish through the CMS. A hard refresh is also the fix if the CMS ever seems to use an old config (e.g. it tries to save straight to `main` and errors with "Changes must be made through a pull request").
-
-**Deleting a published entry:** per Sveltia's docs, Delete opens a pull request that removes it and the entry stays live, marked "Pending Deletion", until you use **Delete** on its card on the Editorial Workflow board (**Cancel** leaves it in place). Not yet tried here — the first test post was removed via GitHub's "Delete directory" and a normal pull request, which also works.
-
-_Verified 2026-09-19: an editor account edited "Become a Member", sent it for review, set it Ready and published it; the pull request touched only `content/become-a-member/index.md` and the site updated within moments._
-
-**CMS test results — Events, live `/admin/` at www.fottp.org.uk, 2026-09-20** (one editor, using the maintainer's account and the token the browser had stored):
-
-_Worked:_
-- Opening the existing weekly event, adding a location, saving, sending for review, setting Ready and Publish. The pull request merged, the CMS deleted its branch, the deploy run succeeded, and the location showed on the live event page and the Events list.
-- Existing values (`start`, `end`, `repeats: weekly`, an empty skipped-dates list) loaded and were saved back unchanged in the same format (`2026-09-23 09:00`), so the date-time fields and the Repeats select round-trip correctly.
-- After a failed save the draft was offered again once the CMS was refreshed, and could be re-submitted.
-- Adding a photo by dragging it onto the Photo field: it was stored beside the event's `index.md` (the page bundle) and its description was saved.
-
-_Problems and oddities:_
-- The first save failed with "Resource not accessible by personal access token". The CMS commits to a `cms/…` branch first and then opens the pull request, and the token lacked Pull requests: Read and write, so a stray branch was left behind. See "Troubleshooting" below. The browser keeps the token between visits, so an editor isn't asked for it again; Sign Out in the CMS clears it.
-- The photo picker (the button on the Photo field) only listed files already on the site, and no way to choose a file from the computer was found in it. Dragging a file onto the field works.
-- Saving through the CMS rewrites the front matter: YAML comments are removed, needless quotes dropped, and every unset optional field is written as `''` or `[]`. Hidden HTML comments in the page text survive. The site copes (checked by building the CMS's version of the file).
-- The photo uploaded was a 1600px PNG of 4.9 MB (the shrinking setting below didn't exist yet). It was replaced by hand with a 0.6 MB WebP (commit `8135f23`).
-
-_Not yet tested in the live CMS:_ choosing a new date and time with the pickers, adding a skipped date, creating a brand-new event, deleting an event, the photo-shrinking setting on a real upload, and `/admin/` on a phone.
-
-_Local repository mode_ (from Sveltia's documentation; tried once here, nothing further recorded): run `hugo server`, open `http://localhost:1313/admin/` in Chrome or Edge, click "Work with Local Repository" and choose the folder that contains `hugo.toml`. It writes straight to the files, does no Git operations and ignores the review workflow. Don't use "Sign In with Token" when testing locally: that goes to the real repository and creates real branches and pull requests.
-
-**Photos are shrunk on upload (2026-09-20):** `static/admin/config.yml` (`media_libraries`) makes the CMS scale any photo down to fit 1600px on its longest side (same shape, never enlarged) and save it as WebP at quality 82, so editors needn't resize first. WebP is the only output format Sveltia offers, so every upload is renamed `<name>.webp` (iPhone HEIC works too; an animated GIF would become a still). This is done in the browser and only applies to files added through the CMS; photos committed by hand still follow CLAUDE.md (≤1600px JPEG). Reason: a 1600px PNG photo was 5 MB, and Hugo keeps the source format when it makes the smaller copies, so visitors were getting 0.5–2.6 MB PNGs; the same photo as WebP is about 0.6 MB with 70–370 KB copies. As a second safeguard, `layouts/_partials/responsive-img.html` serves any PNG to visitors as WebP as well (transparency kept; checked on the seven partner logos, which are transparent PNGs, and they looked the same), so a PNG that arrives some other way, such as committed by hand, doesn't reach visitors as a multi-megabyte file. JPEGs are left alone, and the header logo and favicons are static files that never go through this. Files still sit in Git as they were added. To add a photo, drag it onto the Photo field (the picker dialog only showed files already on the site; see the test results above). The shrinking itself hasn't yet been tried on a real upload.
-
-**Troubleshooting a save that errors with "Resource not accessible by personal access token":** the editor's token can write files but not open pull requests. The CMS has then already committed to a `cms/…` branch but created no pull request. Fix: edit the token on GitHub so Pull requests is Read and write (see "How to log in"), delete the stray `cms/…` branch, hard-refresh the CMS and redo the edit. _Happened 2026-09-20 with the first token; fixed as above._
-
-**What's editable:** the 6 existing pages (Home, About Us, Our Partners, Our Projects, Contact Us, Become a Member) as a fixed list — title and body text, plus any images in the page's own content bundle (uploads stay alongside that page's other files, matching Hugo's existing page-bundle layout — no image reorganisation was needed for this). New page *types* aren't supported by this config; that would need a config.yml change first. (The one exception is **News**, added 2026-09-19: a `news` folder collection under `content/news/`, where each post is its own page bundle. The News page, the "Latest news" strip on the home page and the RSS feed all fill in automatically from those posts; the strip stays hidden until the first post exists.)
-
-**What's deliberately NOT editable via the CMS:** the two Web3Forms forms (access keys, hidden fields) on Contact Us and Become a Member. These were moved out of `content/` entirely into `hugo.toml` (`[params.webforms]`) and `layouts/_partials/webform.html` / `layouts/page/contact-form.html`, specifically so the CMS — which only ever reads/writes files under `content/` — has no path to see or break them. The CMS's Contact Us / Become a Member entries show a hint explaining the form is handled separately. See `static/admin/config.yml` for the full field config.
-## Access and review — DECIDED 2026-09-19 (ruleset on `main` created; part of it not yet tested)
-**People:** the GitHub organisation should have at least two **owners**, each a named person with their own GitHub account and 2FA (the org already enforces 2FA) — not a shared login, so the audit log shows who did what and nobody is the single point of failure. **Editors** are an org team with Write access to `fottp/website`; they sign in to `/admin/` with their own token (see above).
-
-**Why review, not just permissions:** GitHub can't limit a Write collaborator to one folder, so an editor's account can technically change any file (layouts, `hugo.toml`, the deploy workflow). Protection therefore comes from requiring an owner's review for anything that isn't page/news content:
-- `static/admin/config.yml` has `publish_mode: editorial_workflow` — each CMS save becomes a draft pull request, and "Publish" merges it.
-- `.github/CODEOWNERS` makes the owners code owners of everything **except** `/content/`.
-- Raw HTML is not enabled in Markdown (goldmark `unsafe` is off), so an editor can't inject scripts through content.
-
-**Branch ruleset to create on `main`** (repo Settings → Rules → Rulesets → New branch ruleset, target: default branch): enforcement Active; bypass list = Repository admin role (so owners can still push directly); rules: restrict deletions, block force pushes, require a pull request before merging with **0** required approvals and **Require review from Code Owners** ticked. Order matters — set `editorial_workflow` live first, or editors' direct saves will be rejected. Then add the second owner to `CODEOWNERS` (a code owner can't approve their own PR).
-
-**Status:** the ruleset requiring pull requests on `main` is active, and the content path is verified — an editor account edited, reviewed and published a page and a news post through the CMS with no approval needed, and a direct CMS save was correctly rejected before the editorial workflow was picked up.
-
-**Verified:** owners on the ruleset's bypass list can push directly to `main` — a Git push by an owner was accepted on 2026-09-19, with GitHub logging "Bypassed rule violations for refs/heads/main: Changes must be made through a pull request". An owner's direct *CMS* save was rejected once (before the editorial workflow config had loaded), so the CMS itself is not exempt: owners editing through the CMS follow the same Save → Send for review → Ready → Publish steps as editors.
-
-**Verified 2026-09-19 — changes outside `content/` are blocked for editors:** an editor account edited `docs/HANDOFF.md` on github.com. GitHub put the edit on a new branch rather than `main`, and the resulting pull request showed "Review required — Code owner review required by reviewers with write access" and "Merging is blocked — waiting on code owner review", with the code owner automatically requested as reviewer. The test pull request was closed unmerged and its branch deleted.
-
-**Still only indirectly confirmed:** that an editor's *direct push* to `main` is rejected — GitHub's web editor diverted the edit to a new branch, which is what it does for an account that can't write to a protected branch, but no push was actually attempted and refused.
-
-**Gotcha:** the REST API's `mergeable_state` read `clean` for that blocked pull request when queried without logging in, so don't use it to judge whether the review rule is working; check the pull request page as a logged-in user.
-
-### Role-based accounts and handover (general pattern)
-Where a job belongs to a committee role rather than a person (secretary, treasurer…), an account can be named for the role and handed on, so access follows the role and no one person's own account becomes a single point of failure. It works for any service, not just GitHub: an **editor** account for the role, tied to a role mailbox on the charity's own domain (the address itself deliberately isn't listed here — this repo is public), used by **one person at a time — never shared between people**.
-
-**Rules**
-- **Least privilege:** role accounts are for editing (the `editors` team), never organisation owners. Owners are always named individuals (see People above).
-- **The mailbox is the recovery route,** so it must deliver to the current role holder and ideally also to a second trustee, so a lost phone or forgotten password isn't a lock-out.
-- **The current holder controls the security details:** their own 2FA device and their own password. Recovery codes are kept somewhere the charity controls (the charity's password manager, or held by a second trustee), not only on the holder's phone.
-- **Tokens always have an expiry** (and, for GitHub, an owner approves each one), so a forgotten token stops working by itself.
-- **Check the service's terms:** GitHub's are strict about one person per account, which is why a role account must have exactly one holder at a time.
-
-**Handover checklist** (when the role passes to someone new)
-1. *Outgoing holder:* tell a second trustee/owner; revoke any personal access tokens (GitHub → Settings → Developer settings) and sign out other sessions.
-2. *Mailbox:* point the role address at the new holder (and keep the second trustee on it).
-3. *Incoming holder:* sign in via "forgot password" from the mailbox and set a new password; set up 2FA on their own device, remove the old device and generate fresh recovery codes, storing them as above.
-4. *Incoming holder:* create a new fine-grained token (resource owner `fottp`, repo `website`, Contents and Pull requests: Read and write, with an expiry).
-5. *An org owner:* approve the new token and revoke the old one (org Settings → Third-party Access → Personal access tokens), and check the account is still in the `editors` team and nothing else.
-
-## Events — DONE (2026-09-20)
-One page bundle per event under `content/events/<name>/index.md`, added and edited through the "Events" collection in Sveltia CMS (or as files). No third-party services, cookies or JavaScript.
-
-**Front matter:** `title`, `start` (`2026-10-10 11:00`, London time), optional `end`, `location` (default "Telford Town Park", set in `hugo.toml` `[params.events]`), `cost`, `description`, `image`/`image_alt`, `link_url`/`link_label`, and for weekly events `repeats: weekly`, `until`, `skip_dates`. A `start` with no time and no `end` time is shown and sent to calendars as an all-day event.
-
-**Weekly events** (currently just `wednesday-volunteering`): `start`/`end` are the *first* session; every later one is the same time a week on, so the clock time stays put across the summer-time changes. `skip_dates` removes a session (bank holiday), `until` ends the series. Only weekly repeats are supported; monthly would mean extending `layouts/_partials/events/occurrences.html` and the `RRULE` line in `ics-event.html`.
-
-**What it produces:** the Events page (`/events/`: upcoming, every week, past), a "Coming up" strip on the home page (next three; a weekly event counts once), an event page each with structured data for search engines, and calendar files: `/events/index.ics` (everything coming up, for subscribing) and `/events/<name>/index.ics` (one event, "Add to your calendar"). Templates are in `layouts/events/` and `layouts/_partials/events/`.
-
-**Nightly rebuild:** the site is static, so "upcoming" and "past" are only worked out when it is built. `.github/workflows/hugo.yml` therefore also runs at 00:20 UTC every night; without it a finished event would stay listed until the next edit. GitHub pauses scheduled runs after 60 days with no activity on a public repo — any push (including a CMS edit) restarts them. The same rebuild makes a future-dated news post appear on its day.
-
-**Checked in the live CMS (2026-09-20):** editing the weekly event and publishing it, and adding a photo; the details, and what is still untested, are under "CMS test results" in the Non-technical editing section. **Not yet checked on the site itself:** the phone menu on the new pages. The old WordPress site's six events (2016–2018) were not imported.
-
-## Archive of newsletters, reports and so on — BUILT 2026-09-20
-`/archive/` lists 44 PDFs recovered from the old WordPress site, in four groups: 27 Explore newsletters (Summer 2010 to Spring/Summer 2025), 8 chairman's reports, 3 minutes/agendas and 6 programmes, leaflets and plans. Each is a folder under `content/archive/<name>/` holding `index.md` (title, `category`, `date`, `file`, `pages`) and the PDF; the page lists them newest first with page count and file size and links straight to the PDF (the documents have no pages of their own: the section's `cascade` sets `build.render: never`, and `_index.md` overrides that for itself). Editors add documents in the CMS ("Archive" collection: drag a PDF onto the file box). `date` only orders the list and isn't shown, so the early issues' dates are approximate: their titles come from the cover.
-
-**Recovered by** `build_archive.py` (in the project folder above the repo, not committed), from `import-friendsoftelfordtownpark/media/`; the originals are untouched there. Re-running it rebuilds the document folders but leaves `content/archive/_index.md` (hand-written: the intro text and the build settings that stop each document getting its own page) alone. An earlier version deleted that file and it went live without it for a short while; after any re-run, check that the Archive page still has its intro and that `hugo` renders no per-document pages.
-
-**Left out:** posters, adverts and event flyers (about 35, several duplicated), registration and application forms (Santa Fun Run entry forms, membership form), the raffle adverts, four identical copies of Autumn/Winter 2020 (one kept), a duplicate of Summer 2024, the paginated print-layout copy of Summer 2015, the Word and web files, and the "IP3 annual report 2011–12" draft (not obviously FOTTP's). Issues missing from the run simply weren't on the old site.
-
-**Privacy:** the documents contain contact details. Public-service and organisational ones (park reception, police, Crimestoppers, council switchboard, the park's shared mailbox) and advertisers' business numbers (for example the Henshalls Group and Dawley Web Design adverts) are left alone. The private emails and phone numbers of named individuals (a former chairman, committee members, a photographer's advert, two council officers) are blacked out in 14 files (30 boxes), on the rule "no contact details" in CLAUDE.md, and the Archive page says so. The maintainer approved this, and approved publishing the newsletters with the photos and names of people, including children at events and school visits, that they already showed on the old site (they were not screened).
-
-**How it was checked:** redaction works on the text layer only, so anything baked into a picture wouldn't be caught. Each redacted file is re-read to confirm none of the listed details remain, and `build_archive.py` writes every box it draws to `staging-photos/redaction-audit.json`; all 30 were then compared by eye, original against redacted. **An earlier run got this wrong:** it blacked out the Henshalls Group and Dawley Web Design numbers (business lines, wrongly taken for a person's) and left a stray box over a photo. That showed up only when a page was viewed, so if the list of names or numbers in `build_archive.py` is ever changed, look at the result and don't rely on the text check. To publish a file unredacted, take a copy from the import folder.
-
-**Size:** the 44 PDFs total 58 MB, so the repository grows from about 17 MB to about 75 MB (Git keeps them in history for good). The 14 files over 2.5 MB had their pictures recompressed (RGB, at most 130 dpi, JPEG quality 72; pictures with transparency left alone), which took the total from 97 MB to 58 MB. The originals were CMYK JPEGs at about 200 dpi. Text and layout are unchanged, and the pages that shrank most were compared against the originals by eye.
-
-## Old-site photos — SELECTED AND STAGED 2026-09-20
-Decisions: start with the park/gardens/history photos and the sculpture trail; assume photos of people that were on the old site have consent, **except photos with children**, which are left out; no review or trustee sign-off step. `select_photos.py` and `process_photos.py` (project folder above the repo, not committed) worked from the recovered media library and wrote 223 web-ready photos to `staging-photos/photos/` (197 park, 26 sculpture trail; 84 MB from 713 MB of originals; JPEG quality 82, longest side at most 1600px, all camera metadata stripped) plus `staging-photos/manifest.json` (old media ID, original file name, size, the old pages that showed it, title if it had a real one, camera date).
-
-**Screening:** 323 photos were in those groups; 45 were too small, 25 near-duplicates and 2 PNGs, and the remaining 251 were each looked at by eye: 28 more were left out (8 with children or possibly a young person, 3 fancy-dress fun-run shots, the air-ambulance cheque photo held back per the note above, 13 that aren't photos of the park such as flyers, plans, a sponsor logo and showroom items). This was done from small contact sheets, so "no children" is a best effort: a child small in the background could have been missed.
-
-**Information about each photo is thin:** only about 50 of the 1,124 recovered images had a caption or alt text, and 127 of the 223 staged ones have a real title (most others are camera file names). The old galleries had no captions. So captions have to be written, and nothing here says who took what. 23 of the staged photos are old slide scans and one railway photo of unknown date and source; they are labelled `archive` in the manifest and should carry no date or credit.
-
-**Trimmed for the gallery:** at the maintainer's request the staged photos were shrunk again for the site: `trim_photos.py` makes `staging-photos/photos-web/` (JPEG quality 72, longest side at most 1200px: 43 MB, down from 84 MB; the 1600px set in `staging-photos/photos/` is left as it was, because the alt-text tool below reads it). Compared at 100% against the 1600px set, no artefacts show, even in foliage.
-
-**Alt-text suggestions:** `scripts/generate_alt_suggestions.py` (started by someone else, uses a local Ollama vision model, and is not part of the site build) reads `staging-photos/manifest.json` and writes suggested alt text to a separate JSON file for a person to review. Its draft for the 223 staged photos (`src/alt-suggestions-test.json`, model gemma3:4b, which marked 211 of them "needs review") is what the gallery's alt text is built from; a second run, over the ~900 old-site images that are not in the gallery, was still going when the gallery was built and is not used.
-
-**Alt text (2026-09-20):** the draft was not used as it came. Each of the 223 photos was looked at beside its draft; the draft was accurate in substance for most but got some plainly wrong: it called hippos "rhinoceroses", a gorilla "a bear" or "a giraffe" (the sculptures were the worst, and all 26 were rewritten), invented a "lobster", "shotguns", a "metal detector" and words on a flag, guessed a person's age, and claimed "in Telford Town Park" where nothing in the picture shows it. 85 alt texts were rewritten by hand, and the other 138 come from the draft after rules (`apply_alt.py`) removed location claims and "individuals", and fixed US spellings. Everything is in `staging-photos/alt-reviewed.json` (each marked `corrected` or `model`), and the corrections are in `alt-overrides.json`. Automated checks then found no age words, guns, children, locations (bar two legible signs) or empty texts. **Trust it as a careful first draft, not as ground truth:** the 138 model texts were each compared with their photo but only for glaring errors, so small inaccuracies may remain. Where a photo has a caption it stays a caption; alt text describes what can be seen and does not name people, dates or places. **Next time:** the maintainer plans to generate suggestions with a stronger model on a better GPU. `apply_alt.py` reads the same JSON format `generate_alt_suggestions.py` writes, so it can be pointed at new suggestions, but `alt-overrides.json` is keyed by each photo's position in the current staged manifest and only fits this set of 223 photos; a different set needs its own corrections. Still look at a sample against the photos, and ask the model not to state locations: the draft's most confident-sounding errors were the ones most likely to be missed.
-
-## Photo gallery (PhotoSwipe) — BUILT 2026-09-20
-`/gallery/` is a landing page with a card for each collection, and each collection (`content/gallery/<name>/index.md` plus its photos) is a grid of square thumbnails that opens in PhotoSwipe, a full-screen viewer with arrows, swipe, zoom, an Esc key and a caption. There are 7 collections and 224 photos: Around the park (60), Chelsea Gardens (42), Sensory Garden (22), History in the park (40), The gardens in earlier times (23, the archive slide scans, described as having no known date or photographer), Events in the park (11) and Sculpture trail (26). Photos were sorted by the old page that showed them.
-
-**How it works:** each collection's front matter has a `photos` list of `image`, `alt` and `caption`, in display order; the templates are `layouts/gallery/list.html` and `single.html`. Thumbnails (360px squares) are made by Hugo at build time; the viewer loads the full photo only when opened. Without JavaScript a thumbnail is simply a link to the photo. Every thumbnail gets a text name for screen readers: real alt text if written, else the caption, else "Photo 3 of 40 in Chelsea Gardens". 44 photos have captions, carried over from real old titles (with typos fixed, and "Submitted by …" credits kept); every photo has alt text (see "Alt text" just below), and it was not written by the photographers or the committee, so anyone who knows a photo is welcome to improve it in the CMS. Editors add and edit collections in the CMS ("Gallery": drag photos onto the Photo box, which shrinks them automatically).
-
-**PhotoSwipe** 5.4.4 (MIT, no dependencies, about 75 KB) is copied into `static/vendor/photoswipe/`, checked against the npm registry's checksum; see `VENDORED.md` there for how to update it. It's self-hosted like everything else here (no CDN).
-
-**Tested** in real Edge (Playwright), on a desktop and a 390px phone screen: opening by click and by keyboard, next/previous (arrows, and a swipe on the phone), captions showing and hiding, Esc closing and returning focus, no console errors, no failed requests, and no sideways scrolling. The menu was checked at widths from 768 to 1100px.
-
-**Built by** `build_gallery.py` (project folder above the repo, not committed): a one-off import that will not overwrite a collection that already exists, so nobody's caption edits are lost.
-
-**Phone menu:** the pages inside News, Events, Archive and Gallery are kept out of the phone menu with `sidebar.exclude` (each section's `_index.md`), so it lists just the 8 main pages. The Archive had briefly put 44 documents in it. The section pages carry `sidebar: exclude: false` because a `cascade` also applies to the page it sits in.
-
-**Size:** the photos add about 43 MB, so the repository grows from about 75 MB (after the archive) to about 120 MB.
-
-## Open decisions (not yet made)
-- **Analytics**: none, or a cookieless option (Plausible / GoatCounter). Aim: no cookie banner.
-- **Language selector**: the old site's flag switcher is just IONOS's "Website Translator" WordPress plugin wrapping Google's client-side Website Translator widget (machine-translates the DOM on the fly, gated behind its own cookie consent) — no real translated content behind it. Deliberately not replicating this for now (adding it back would mean a third-party script and a cookie banner, against the no-tracking preference); revisit later if genuinely needed.
-- **Housekeeping**: bump action versions (Node 20 deprecation warning: checkout, configure-pages, upload-artifact). Low priority; pipeline works.
-- **Second GitHub org owner** to be added.
-- **Old domain** fottp.co.uk: leave until the new site is agreed; then redirect or let lapse (May 2027).
-- **Queen's Award for Voluntary Service — year unconfirmed.** One archive page implied 2016, another June 2020 (possibly awarded twice). About Us names the award with no year; don't publish a specific year until gruntfutuk confirms.
-- **Christmas/Santa Fun Run — FOTTP's role unconfirmed.** A 2012 archive post (for RNIB/Guide Dogs) suggests FOTTP ran it, but gruntfutuk wasn't aware of this either. Don't publish it, and don't use the linked Midlands Air Ambulance cheque photo, until confirmed.
+| Domains | `fottp.org` and `fottp.org.uk`, registered via DomainBox (gruntfutuk is a reseller). `fottp.org` redirects to `www.fottp.org.uk` (Fastmail "website redirect"). |
+| DNS and email | **Fastmail**, for both domains (MX included). Don't move DNS elsewhere. |
+| Site | Apex `A` 185.199.108–111.153 and `AAAA` 2606:50c0:8000–8003::153 (GitHub Pages); `www` is a CNAME to `fottp.github.io`; the apex redirects to `www`; HTTPS enforced. `static/CNAME` must be exactly `www.fottp.org.uk`. |
+| GitHub | Organisation **fottp** (2FA required, domains verified), public repo **fottp/website**. Owner: gruntfutuk's account; a second owner is still to be added. |
+| Deploy | GitHub Actions (`.github/workflows/hugo.yml`): on every push to `main`, on demand, and **every night at 00:20 UTC**. Hugo **0.166.0 extended** is pinned there: bump it and the local copy together. A build takes under a minute. |
+| Git | Commits use the GitHub noreply address; the repo stores LF line endings. |
+
+The nightly rebuild matters because the site is static: "upcoming" and "past" events, and future-dated news, are only worked out when it is built. GitHub pauses scheduled runs on a public repo after 60 days without activity; any push, including a CMS edit, restarts them.
+
+## How the site is built
+**Layout.** `hugo.toml` (menu, form keys, theme settings); `content/` (Markdown page bundles, with photos beside their page); `layouts/`, `assets/css/custom.css`, `data/` (our changes to the theme); `static/` (CNAME, logo, favicons, the CMS in `admin/`, the photo viewer in `vendor/photoswipe/`). Never commit `public/`, `resources/_gen/` or `.hugo_build.lock`.
+
+### Theme
+**[Hextra](https://github.com/imfing/hextra), pinned at v0.12.3.** Chosen because it is MIT with no credit required (the previous theme's licence demanded a footer link to a defunct site), actively maintained, ships pre-built CSS (no Node or Go), is light (about 26 KB of page code), and scored **zero WCAG 2.x A/AA violations** (axe-core, every page, desktop and phone). It is a **copy** in `themes/hextra/`, not a submodule, because Windows Git rewrote its line endings and broke its templates; `.gitattributes` forces LF. **Never edit inside it.** Our changes live in the site's own `layouts/`, `assets/` and `static/`: the green title banner and "Follow us" bar, the home page news and events strips, the footer, favicons made from the logo, the forms, responsive images, the map, and the events, archive and gallery layouts. `.github/theme-pin.json` lists which theme files we override and depend on. `custom.css` also carries one fix for a Hextra flaw: while the phone menu is closed its links can still be tabbed into.
+### Theme upkeep
+- *Upkeep:* the pin means nothing changes unless we decide. `theme-release-watch.yml` runs every Monday and opens one GitHub issue if Hextra publishes a newer release, listing which of our overrides changed. To update: read it, run `python scripts/vendor_theme.py <tag>`, re-apply our edits, build with `hugo --minify --logLevel warn` (expect **no warnings**), check every page type at desktop and phone width with the phone menu open, set `tag` in the pin file, commit together. Hextra needs Hugo 0.146 or newer.
+- *Gotchas:* the phone menu is drawn by `sidebar.html`, so any layout that omits it gets a hamburger that opens nothing; Hextra's CSS is pre-built, so new class names need rules in `custom.css`; test servers should use an unused port, not 1313.
+- *Phone menu:* it should list only the 8 main pages. The pages inside News, Events, Archive and Gallery are kept out with `sidebar.exclude` in each section's `_index.md`; the section page itself says `exclude: false`, because a `cascade` also applies to the page it sits in (the same is true of the `build` settings on the Archive).
+
+### Images
+At build time Hugo makes 480, 800 and 1200px copies (never enlarged, quality 82) and the browser picks one (`layouts/_partials/responsive-img.html`). A PNG is served as WebP (transparency kept), so a multi-megabyte PNG never reaches a visitor; JPEGs stay JPEGs. The `width` and `height` attributes deliberately use the original's size: using the copy's shrinks photos and stops them filling the column. Photos uploaded in the CMS are **shrunk in the browser to at most 1600px and saved as WebP** at quality 82 (`media_libraries` in `static/admin/config.yml`; iPhone HEIC works, an animated GIF would become a still). Photos committed by hand should be at most 1600px JPEG at about quality 82. Gallery photos are 1200px at quality 72 with camera data stripped.
+
+### Forms and map
+Contact and Membership are Web3Forms forms, each to its own mailbox (a Web3Forms key ties to one destination address). The keys are in `hugo.toml`, the markup in `layouts/_partials/webform.html` and `layouts/page/contact-form.html`, **never in `content/`**, so the CMS can't see or break them; raw HTML in Markdown is off. No contact details appear in plain text anywhere on the site (to stop scraping): people use the forms. The map on Contact Us is an OpenStreetMap embed (`osm-map` shortcode): no key, account or cookies.
+
+### Sections
+- **News** (`content/news/<date>-<title>/`): posts with an optional photo. They fill the News page, the home page's "Latest news" strip and the RSS feed. A future date hides a post until that day.
+- **Events** (`content/events/<name>/`; `layouts/events/`, `layouts/_partials/events/`): fields `title`, `start` (`2026-10-10 11:00`, London time), optional `end`, `location` (default "Telford Town Park", in `hugo.toml`), `cost`, `description`, `image`, `link_url`, and for weekly events `repeats: weekly`, `until` and `skip_dates`. For a weekly event `start` and `end` are the *first* session; later ones keep the same clock time across summer time. The current one is `wednesday-volunteering`. Only weekly repeats exist; monthly would mean extending `occurrences.html` and the `RRULE` in `ics-event.html`. Outputs: the Events page (upcoming, every week, past), a "Coming up" strip on the home page, structured data for search engines, and calendar files (`/events/index.ics` to subscribe to; `/events/<name>/index.ics` per event).
+- **Archive** (`content/archive/<name>/`, one folder per PDF with `index.md`: `title`, `category`, `date`, `file`, `pages`): 44 PDFs in four groups (27 Explore newsletters 2010–2025, 8 chairman's reports, 3 minutes/agendas, 6 programmes and leaflets), listed newest first with page count and size; each links straight to its PDF and has no page of its own. `date` only orders the list and isn't shown. Left out: posters, adverts, registration and membership forms, raffle adverts, duplicates, Word files and a draft "IP3 annual report" (not obviously FOTTP's). Missing issues weren't on the old site. **Privacy:** the PDFs contain contact details. Private emails and phone numbers of named individuals (a former chairman, committee members, a photographer's advert, two council officers) are blacked out in 14 files; public-service and organisational numbers and advertisers' business lines are left. Redaction covers the text layer only, so `build_archive.py` logs every box and each was checked by eye; **after changing the list of names or numbers, look at the result, don't trust the text check.** The 14 largest files had their pictures recompressed (58 MB in all, from 97 MB).
+- **Gallery** (`content/gallery/<name>/`; `layouts/gallery/`): a landing page with a card per collection, and each collection is a grid of square thumbnails opening in **PhotoSwipe** 5.4.4 (MIT, no dependencies, about 75 KB, copied into `static/vendor/photoswipe/` and checked against the npm checksum; `VENDORED.md` there says how to update). Seven collections, 224 photos: Around the park (60), Chelsea Gardens (42), Sensory Garden (22), History in the park (40), The gardens in earlier times (23, old slide scans with no known date or photographer), Events in the park (11), Sculpture trail (26). Each collection's front matter lists `photos` (`image`, `alt`, `caption`) in display order. Without JavaScript a thumbnail is a plain link to the photo; every thumbnail has a screen-reader name (alt text, else caption, else "Photo 3 of 40 in …"). 44 photos have captions taken from real old titles; every photo has alt text (see the policies below). Known small quirk: a click made before the page's script has loaded opens the photo itself instead of the viewer.
+
+## Editing and access
+### Signing in and editing
+**Who and how.** An editor needs a GitHub account (2FA on), an accepted invitation to the `fottp` organisation and membership of its `editors` team (Write access to `fottp/website`). At `https://www.fottp.org.uk/admin/` they choose "Sign In with Token" and create a **fine-grained token** on the page it opens, changing three things or it won't work: **Resource owner** `fottp` (not their own account); **Repository access** only `fottp/website`; **Permissions** Contents *and* Pull requests both Read and write (Metadata: Read is automatic). The organisation requires an owner to approve each fine-grained token (org Settings → Third-party Access → Personal access tokens → Pending requests), and tokens expire and must be redone. The browser remembers the token; Sign Out clears it. This avoids a separate login service (which CLAUDE.md would want signed off).
+
+**Making a change.** Every save becomes a draft pull request and nothing is live until published: open an entry, **Save**, **Send for review**, set **Status** to **Ready**, then **Publish**. The site rebuilds and is live in a minute or two. The Editorial Workflow board (Draft / In Review / Ready) is the branch-and-pencil icon, third from the left at the top. **Never merge a CMS pull request on GitHub itself:** only Publish deletes its `cms/…` branch, and a leftover one makes the CMS think the entry is unpublished. (The repo also auto-deletes merged branches.)
+
+**What's editable:** the six pages (Home, About Us, Our Partners, Our Projects, Contact Us, Become a Member), News, Events, Archive and Gallery. **Not editable:** the two forms. Photos and PDFs are added by dragging them onto the field: the picker dialog only lists files already on the site. The CMS rewrites an entry's front matter when it saves (comments removed, unset fields written as `''` or `[]`); the site copes. Deleting a published entry opens a pull request that must then be confirmed on the workflow board; not yet tried.
+
+**If something goes wrong.**
+- *"Resource not accessible by personal access token" on save:* the token can write files but not open pull requests. Set Pull requests to Read and write on the token, delete the stray `cms/…` branch, hard-refresh the CMS (Ctrl+F5) and redo the edit.
+- *The CMS seems to use an old config, or says an entry is unpublished:* delete any leftover `cms/…` branch and hard-refresh.
+- *Local `hugo server` shows a page's front matter as text:* restart the server (it goes stale when a page's settings are edited while it runs).
+- *Local testing of the CMS:* run `hugo server`, open `/admin/` in Chrome or Edge and choose "Work with Local Repository", then pick the folder holding `hugo.toml`. It writes straight to files, does no Git operations and skips the review steps. **Don't** use "Sign In with Token" locally: that goes to the real repository.
+
+### Access and review
+GitHub can't confine an editor to one folder, so protection comes from review: the CMS runs in `editorial_workflow` mode; `.github/CODEOWNERS` makes the owners code owners of everything except `/content/`; and a branch ruleset on `main` requires a pull request with code-owner review (0 required approvals), blocks force pushes and deletion, and lets repository admins bypass it, so an owner's Git push goes straight through (GitHub logs "Bypassed rule violations"), while an owner editing in the CMS follows the same Save → Ready → Publish steps as anyone else. Verified: editors can publish content without approval; an editor's change outside `content/` is held for owner review. Only indirectly confirmed: that an editor's *direct push* to `main` is refused. Don't judge the rule from the API's `mergeable_state` (it reads `clean` when not logged in); check the pull request page. **People:** at least two named owners, none shared; editors in the `editors` team. Adding the second owner also means adding them to `CODEOWNERS` (a code owner can't approve their own change).
+
+### Role accounts and handover
+Where a job belongs to a role (secretary, treasurer…) an *editor* account (never an owner) can be tied to a role mailbox on the charity's domain (not listed here: this repo is public) and used by **one person at a time**, never shared. The mailbox is the recovery route, so it should reach the current holder and a second trustee; the holder controls their own 2FA and password, with recovery codes kept where the charity controls them; tokens always have an expiry. *Handover:* the outgoing holder revokes personal tokens and signs out other sessions; the mailbox is repointed; the incoming holder resets the password, sets up their own 2FA and new recovery codes, creates a new token (as above) and an owner approves it and revokes the old one, checking the account is in `editors` and nothing else.
+
+## Decisions and policies
+- **Contact details:** none in plain text on the site or in `content/`; use the forms.
+- **Photos from the old site:** treated as having consent (maintainer's decision), **except photos with children, which were left out.** The check was by eye on small images, so it is best effort: a child small in a background could have been missed. If anyone asks for a photo to be removed, take it off the site straight away; it will still be in Git's history, and removing it there means rewriting the history.
+- **Newsletters** are published as they appeared, including their photos and names (maintainer's decision).
+- **Provenance:** no stock photos passed off as real, no uncertain archive dates or affiliations. The slide scans and one old railway photo are labelled `archive` (no date, no credit).
+- **Alt text** for the gallery began as drafts from a local vision model (gemma3:4b), which got some things plainly wrong (hippos as rhinoceroses, a gorilla as a giraffe, invented objects and words, guessed ages, locations claimed where nothing showed them). Every photo was checked beside its draft: 85 texts were rewritten by hand (all 26 sculptures), and the other 138 are draft text cleaned by rules. **Treat it as a careful first draft.** Anyone who knows a photo is welcome to improve its text in the CMS.
+- **Unconfirmed, so not published:** the year of the Queen's Award for Voluntary Service (archive pages imply 2016 and June 2020); FOTTP's role in the Christmas/Santa Fun Run, and the Midlands Air Ambulance cheque photo that goes with it.
+- **Photo sources:** the home page's fun-run photo is gruntfutuk's own picture of a public event, not a FOTTP-organised one; the snowy pond photo is also gruntfutuk's own.
+
+## Recovery tools (in the project folder above the repo, **not in Git**)
+`D:\websites\fottp.org.uk\` also holds `import/` and `import-friendsoftelfordtownpark/` (the raw scrapes), `staging-photos/` and these scripts (run with `uv run`; Python 3.14):
+- `scrape_old_site.py`, `scrape_friendsoftelfordtownpark.py`: the two scrapers.
+- `build_archive.py`: makes `content/archive/` from the recovered PDFs (redaction, recompression). Re-running rebuilds the document folders but **leaves `_index.md` alone**; afterwards check the Archive page still has its intro and no per-document pages.
+- `select_photos.py`, `process_photos.py`, `trim_photos.py`, `build_gallery.py`, `apply_alt.py` with `alt-overrides.json`: choose, resize, trim, import into the gallery and set alt text. `process_photos.py` **deletes and rewrites `staging-photos/photos/` and the manifest**, so don't run it while another tool reads them. `build_gallery.py` won't overwrite a collection that exists (so no caption edits are lost). `alt-overrides.json` is keyed to this set of 223 photos only.
+- `scripts/generate_alt_suggestions.py` (in the repo folder, uncommitted): asks a local Ollama vision model for alt-text suggestions. A stronger model is planned for next time; look at a sample against the photos, and tell the model not to state locations.
+
+## Open items
+**Decisions:** analytics (none, or a cookieless option such as Plausible or GoatCounter, so no banner is needed); the second GitHub owner; what to do with `fottp.co.uk` (redirect or let it lapse in May 2027, after the new site is agreed); whether to keep the recovery tools in the repo; the translator, deliberately not replicated (it would need a third-party script and a cookie banner). **Housekeeping:** update the GitHub Actions versions (a Node 20 deprecation warning; checkout, configure-pages, upload-pages-artifact).
+
+**Content:** confirm the Queen's Award year and the Fun Run role; verify the home page figures (200+ members, 30+ events, 100+ projects); Our Projects still needs a real photo for "clearing overhanging trees" and full-size photos for its named past sessions; the Wednesday volunteering page has a TODO for what to bring; the old WordPress site's six events were not imported; the 138 rule-cleaned alt texts deserve a proper review.
+
+**Not yet tested in the live CMS:** the date pickers, skipped dates, creating or deleting an event, the Archive and Gallery forms, a live photo upload with the shrinking, and `/admin/` on a phone.
 
 ## Working preferences
-- Step-by-step: run one command, check output, then continue.
-- British English. Python 3.14+ idioms. Windows/PowerShell commands.
-- Don't move DNS off Fastmail. Don't touch the old IONOS site.
-
-## scrape_old_site.py (reference copy)
-```python
-from __future__ import annotations
-
-import re
-from pathlib import Path
-from urllib.parse import urljoin, urlparse
-
-import requests
-from bs4 import BeautifulSoup
-from markdownify import markdownify as md
-
-BASE = "https://www.fottp.co.uk/"
-OUT = Path(__file__).parent / "import"
-HEADERS = {"User-Agent": "Mozilla/5.0 (FOTTP content migration; contact via fottp.org.uk)"}
-
-session = requests.Session()
-session.headers.update(HEADERS)
-
-
-def fetch(url: str) -> BeautifulSoup:
-    r = session.get(url, timeout=30)
-    r.raise_for_status()
-    return BeautifulSoup(r.text, "html.parser")
-
-
-def discover_pages(home: BeautifulSoup) -> list[str]:
-    urls: set[str] = {BASE}
-    for a in home.select("nav a[href], header a[href]"):
-        href = urljoin(BASE, a["href"]).split("#")[0]
-        if urlparse(href).netloc == urlparse(BASE).netloc:
-            urls.add(href)
-    return sorted(urls)
-
-
-def slug_for(url: str) -> str:
-    path = urlparse(url).path.strip("/")
-    return path.replace("/", "-") or "home"
-
-
-def save_page(url: str) -> None:
-    soup = fetch(url)
-    slug = slug_for(url)
-    page_dir = OUT / slug
-    page_dir.mkdir(parents=True, exist_ok=True)
-
-    main = soup.find("main") or soup.body
-    for tag in main.select("script, style, noscript, nav, footer"):
-        tag.decompose()
-
-    for img in main.find_all("img"):
-        src = img.get("src") or img.get("data-src")
-        if not src:
-            continue
-        img_url = urljoin(url, src)
-        name = Path(urlparse(img_url).path).name
-        target = page_dir / name
-        if not target.exists():
-            data = session.get(img_url, timeout=30)
-            if data.ok:
-                target.write_bytes(data.content)
-        img["src"] = name
-
-    title = (soup.title.string or slug).split("|")[0].strip() if soup.title else slug
-    body = md(str(main), heading_style="ATX", strip=["span", "div"])
-    body = re.sub(r"\n{3,}", "\n\n", body).strip()
-
-    (page_dir / "index.md").write_text(
-        f"---\ntitle: \"{title}\"\nsource: \"{url}\"\n---\n\n{body}\n", encoding="utf-8"
-    )
-    (page_dir / "original.html").write_text(str(soup), encoding="utf-8")
-    print(f"saved {slug}: {title}")
-
-
-if __name__ == "__main__":
-    home = fetch(BASE)
-    pages = discover_pages(home)
-    print("pages found:", *pages, sep="\n  ")
-    for url in pages:
-        save_page(url)
-```
+Step by step: run one command, check the output, then continue. British English. Windows and PowerShell commands. Don't move DNS off Fastmail; don't touch the old sites. Before committing, look at exactly what is staged (`git diff --cached --name-only`): moves and renames staged earlier get swept into the next commit. After layout or Hugo changes, `hugo --minify --logLevel warn` must print nothing, and the phone menu should be opened on every page type.
