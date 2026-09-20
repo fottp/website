@@ -1,0 +1,25 @@
+{{- /* An event's date and time as a sentence, in words a visitor would say.
+
+       Params (dict): start, end, allDay, recurring — as from info.html, or one
+       entry of all.html. For a recurring event, `start` only needs to be any one
+       of its sessions.
+
+         Every Wednesday, 09:00–12:00
+         Saturday 21 April 2018, 10:00–13:00
+         Sunday 3 December 2017, 10:00
+         Saturday 21 April 2018            (all day)
+         Saturday 21 April – Sunday 22 April 2018 */ -}}
+{{- $s := .start -}}
+{{- $e := .end -}}
+{{- $sameDay := eq ($s.Format "2006-01-02") ($e.Format "2006-01-02") -}}
+{{- $times := $s.Format "15:04" -}}
+{{- if ne $s.Unix $e.Unix }}{{ $times = printf "%s–%s" ($s.Format "15:04") ($e.Format "15:04") }}{{ end -}}
+{{- if .recurring -}}
+  Every {{ $s.Format "Monday" }}{{ if not .allDay }}, {{ $times }}{{ end }}
+{{- else if .allDay -}}
+  {{- if $sameDay }}{{ $s.Format "Monday 2 January 2006" }}{{ else }}{{ $s.Format "Monday 2 January" }} – {{ $e.Format "Monday 2 January 2006" }}{{ end -}}
+{{- else if $sameDay -}}
+  {{ $s.Format "Monday 2 January 2006" }}, {{ $times }}
+{{- else -}}
+  {{ $s.Format "Monday 2 January 2006, 15:04" }} – {{ $e.Format "Monday 2 January 2006, 15:04" }}
+{{- end -}}

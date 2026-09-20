@@ -1,0 +1,4 @@
+{{- /* Everything still to come, for people who want to subscribe to it in their calendar app. */ -}}
+{{- $pages := slice -}}
+{{- range (partial "events/all.html").next }}{{ $pages = $pages | append .page }}{{ end -}}
+{{- partial "events/ics.html" $pages -}}

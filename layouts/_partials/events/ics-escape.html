@@ -1,0 +1,9 @@
+{{- /* Makes text safe to put in a calendar file (iCalendar) value: backslash,
+       semicolon, comma and line breaks all have special meanings there. */ -}}
+{{- $s := printf "%v" . -}}
+{{- $s = replace $s "\\" "\\\\" -}}
+{{- $s = replace $s ";" "\\;" -}}
+{{- $s = replace $s "," "\\," -}}
+{{- $s = replace $s "\r\n" "\\n" -}}
+{{- $s = replace $s "\n" "\\n" -}}
+{{- return $s -}}

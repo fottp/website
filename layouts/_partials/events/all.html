@@ -1,0 +1,46 @@
+{{- /* Every event on the site, sorted into what is coming up and what is over.
+       "Today" counts as coming up until the next rebuild, so an event is still
+       listed on the day it takes place.
+
+       Returns a dict of lists. Each item is a dict:
+         page, start, end, allDay, recurring, key (for sorting) and, for weekly
+         events, occurrences (the next few sessions).
+
+         upcoming   one-off events still to come, soonest first
+         weekly     weekly events with sessions still to come
+         next       upcoming + weekly together, by date of the next session — one
+                    item per weekly event, however many sessions it has
+         past       one-off events already over and weekly events that have ended,
+                    most recent first */ -}}
+{{- $today := partial "events/today.html" -}}
+{{- $upcoming := slice -}}
+{{- $weekly := slice -}}
+{{- $past := slice -}}
+{{- range where site.RegularPages "Section" "events" -}}
+  {{- $i := partial "events/info.html" . -}}
+  {{- $item := dict "page" . "start" $i.start "end" $i.end "allDay" $i.allDay "recurring" $i.recurring -}}
+  {{- if $i.recurring -}}
+    {{- $occ := partial "events/occurrences.html" (dict "page" . "limit" 8) -}}
+    {{- if $occ -}}
+      {{- $first := index $occ 0 -}}
+      {{- $item = merge $item (dict "start" $first.start "end" $first.end "occurrences" $occ "key" ($first.start.Format "2006-01-02T15:04")) -}}
+      {{- $weekly = $weekly | append $item -}}
+    {{- else if $i.until -}}
+      {{- /* Ended: filed under past events on the day it last could have run. */ -}}
+      {{- $last := partial "events/time.html" $i.until -}}
+      {{- $past = $past | append (merge $item (dict "start" $last "end" $last "key" ($last.Format "2006-01-02T15:04"))) -}}
+    {{- end -}}
+  {{- else -}}
+    {{- $item = merge $item (dict "key" ($i.start.Format "2006-01-02T15:04")) -}}
+    {{- if ge ($i.end.Format "2006-01-02") $today -}}
+      {{- $upcoming = $upcoming | append $item -}}
+    {{- else -}}
+      {{- $past = $past | append $item -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return (dict
+      "upcoming" (sort $upcoming "key")
+      "weekly" (sort $weekly "key")
+      "next" (sort ($upcoming | append $weekly) "key")
+      "past" (sort $past "key" "desc")) -}}

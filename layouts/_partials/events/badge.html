@@ -1,0 +1,7 @@
+{{- /* Little calendar-page icon for an event card: month over day number, or
+       "Every" over the weekday for a weekly event. Decorative: the date is
+       always written out in full beside it. Params (dict): start, recurring. */ -}}
+<span class="fottp-badge" aria-hidden="true">
+  <span class="fottp-badge-top">{{ if .recurring }}Every{{ else }}{{ .start.Format "Jan" }}{{ end }}</span>
+  <span class="fottp-badge-main{{ if .recurring }} fottp-badge-word{{ end }}">{{ if .recurring }}{{ .start.Format "Mon" }}{{ else }}{{ .start.Format "2" }}{{ end }}</span>
+</span>

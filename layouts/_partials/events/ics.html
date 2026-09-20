@@ -1,0 +1,23 @@
+{{- /* A complete calendar file (.ics) for a list of event pages.
+
+       Takes a list of event pages and returns the file's text: header, the
+       Europe/London timezone, one event per page, then the footer. Lines are
+       folded (long lines split with a leading space) and end in CRLF, as the
+       iCalendar standard (RFC 5545) requires — some calendar apps are strict. */ -}}
+{{- $lines := slice "BEGIN:VCALENDAR" "VERSION:2.0" "PRODID:-//Friends of Telford Town Park//fottp.org.uk//EN" "CALSCALE:GREGORIAN" "METHOD:PUBLISH" (printf "X-WR-CALNAME:%s" (partial "events/ics-escape.html" (printf "%s events" site.Title))) "X-WR-TIMEZONE:Europe/London" -}}
+{{- $lines = $lines | append (partial "events/ics-timezone.html") -}}
+{{- range . }}{{ $lines = $lines | append (partial "events/ics-event.html" .) }}{{ end -}}
+{{- $lines = $lines | append "END:VCALENDAR" -}}
+{{- /* Fold anything over 70 characters (the limit is 75 bytes; this leaves room for accents). */ -}}
+{{- $out := slice -}}
+{{- range $lines -}}
+  {{- $rest := . -}}
+  {{- $prefix := "" -}}
+  {{- range seq 0 80 -}}
+    {{- if le (strings.RuneCount $rest) 70 }}{{ $out = $out | append (printf "%s%s" $prefix $rest) }}{{ break }}{{ end -}}
+    {{- $out = $out | append (printf "%s%s" $prefix (substr $rest 0 70)) -}}
+    {{- $rest = substr $rest 70 -}}
+    {{- $prefix = " " -}}
+  {{- end -}}
+{{- end -}}
+{{- return (printf "%s\r\n" (delimit $out "\r\n")) -}}

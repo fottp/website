@@ -1,0 +1,32 @@
+{{- /* Everything the templates need to know about one event page, worked out
+       from its front matter (see content/events/ and static/admin/config.yml):
+
+         start, end   times in London. `end` defaults to `start`.
+         allDay       true when there are no times, only dates (start at 00:00
+                      and no end time). Shown as a date, sent to calendars as an all-day event.
+         recurring    true when `repeats: weekly`. `start`/`end` are then the FIRST
+                      session; every later one is the same time a week on.
+         until        last date a recurring event runs, "" for no end date.
+         skip         dates ("2006-01-02") with no session, e.g. a bank holiday.
+         length       how long each session lasts.
+
+       Stops the build with a clear message if the start is missing, rather than
+       publishing a broken page. */ -}}
+{{- if not .Params.start -}}
+  {{- errorf "events: %s has no `start` date and time" .File.Path -}}
+{{- end -}}
+{{- $start := partial "events/time.html" .Params.start -}}
+{{- $end := $start -}}
+{{- with .Params.end }}{{ $end = partial "events/time.html" . }}{{ end -}}
+{{- $until := "" -}}
+{{- with .Params.until }}{{ $until = (partial "events/time.html" .).Format "2006-01-02" }}{{ end -}}
+{{- $skip := slice -}}
+{{- range .Params.skip_dates }}{{ $skip = $skip | append ((partial "events/time.html" .).Format "2006-01-02") }}{{ end -}}
+{{- return (dict
+      "start" $start
+      "end" $end
+      "allDay" (and (eq ($start.Format "15:04") "00:00") (eq ($end.Format "15:04") "00:00"))
+      "recurring" (eq (.Params.repeats | default "") "weekly")
+      "until" $until
+      "skip" $skip
+      "length" ($end.Sub $start)) -}}

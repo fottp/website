@@ -1,0 +1,22 @@
+{{- /* Home page strip: the next three things happening (a weekly event counts once,
+       as its next session). Renders nothing if there is nothing to show. */ -}}
+{{- $next := first 3 (partial "events/all.html").next -}}
+{{- if $next }}
+<section class="fottp-latest" aria-labelledby="upcoming-events-title">
+  <h2 id="upcoming-events-title">Coming up</h2>
+  <div class="fottp-cards">
+    {{- range $next }}
+    <article class="fottp-card fottp-event-card">
+      {{ partial "events/badge.html" . }}
+      <h3><a href="{{ .page.RelPermalink }}">{{ .page.Title }}</a></h3>
+      <p class="fottp-date">{{ partial "events/when.html" . }}</p>
+      {{- if .recurring }}
+      <p class="fottp-date"><strong>Next:</strong> {{ .start.Format "Monday 2 January" }}</p>
+      {{- end }}
+      <p>{{ .page.Params.location | default site.Params.events.default_location }}</p>
+    </article>
+    {{- end }}
+  </div>
+  <p><a href="{{ "events/" | relURL }}">All events &rarr;</a></p>
+</section>
+{{- end }}

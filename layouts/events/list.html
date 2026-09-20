@@ -1,0 +1,77 @@
+{{ define "main" }}
+  {{ partial "page-banner.html" . }}
+  {{- $all := partial "events/all.html" -}}
+  {{- $cal := .OutputFormats.Get "calendar" -}}
+  <div class="hx:mx-auto hx:flex hextra-max-page-width">
+    {{ partial "sidebar.html" (dict "context" . "disableSidebar" true "displayPlaceholder" true) }}
+    <article class="hx:w-full hx:break-words hx:flex hx:min-h-[calc(100vh-var(--navbar-height))] hx:min-w-0 hx:justify-center hx:pb-8 hx:pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+      <main id="content" class="hx:w-full hx:min-w-0 hextra-max-content-width hx:px-6 hx:pt-8 hx:md:px-12">
+        <div class="content">{{ .Content }}</div>
+
+        <section aria-labelledby="upcoming-title">
+          <h2 id="upcoming-title" class="fottp-subhead">Upcoming events</h2>
+          {{- range $all.upcoming }}
+            {{- $thumb := partial "news-thumb.html" .page }}
+          <article class="fottp-event{{ if not $thumb }} fottp-no-thumb{{ end }}">
+            {{ partial "events/badge.html" . }}
+            <div class="fottp-event-body">
+              <h3><a href="{{ .page.RelPermalink }}">{{ .page.Title }}</a></h3>
+              <p class="fottp-date">{{ partial "events/when.html" . }}</p>
+              <p class="fottp-place">{{ .page.Params.location | default site.Params.events.default_location }}</p>
+              <p>{{ partial "utils/page-description" .page }}</p>
+            </div>
+            {{- if $thumb }}<a class="fottp-event-thumb" href="{{ .page.RelPermalink }}" tabindex="-1" aria-hidden="true">{{ $thumb }}</a>{{ end }}
+          </article>
+          {{- else }}
+          <p>There are no one-off events planned at the moment. Follow us on Facebook or Instagram (links at the top of the page) to hear about new ones, and see below for what happens every week.</p>
+          {{- end }}
+        </section>
+
+        {{- with $all.weekly }}
+        <section aria-labelledby="weekly-title">
+          <h2 id="weekly-title" class="fottp-subhead">Every week</h2>
+          {{- range . }}
+            {{- $thumb := partial "news-thumb.html" .page }}
+          <article class="fottp-event{{ if not $thumb }} fottp-no-thumb{{ end }}">
+            {{ partial "events/badge.html" . }}
+            <div class="fottp-event-body">
+              <h3><a href="{{ .page.RelPermalink }}">{{ .page.Title }}</a></h3>
+              <p class="fottp-date">{{ partial "events/when.html" . }}</p>
+              <p class="fottp-place">{{ .page.Params.location | default site.Params.events.default_location }}</p>
+              <p>{{ partial "utils/page-description" .page }}</p>
+              <p><strong>Next session:</strong> {{ .start.Format "Monday 2 January" }}</p>
+            </div>
+            {{- if $thumb }}<a class="fottp-event-thumb" href="{{ .page.RelPermalink }}" tabindex="-1" aria-hidden="true">{{ $thumb }}</a>{{ end }}
+          </article>
+          {{- end }}
+        </section>
+        {{- end }}
+
+        {{- with $cal }}
+        <section class="fottp-calendar" aria-labelledby="calendar-title">
+          <h2 id="calendar-title" class="fottp-subhead">Add our events to your calendar</h2>
+          <p>Keep your own calendar up to date with everything on this page, including the weekly sessions.</p>
+          <p class="fottp-actions">
+            {{- /* webcal:// opens the visitor's calendar app; Go's HTML templating only trusts http(s)/mailto links, so it must be marked safe or it becomes "#ZgotmplZ". */}}
+            <a class="fottp-button" href="{{ .Permalink | safeURL }}">Subscribe</a>
+            <a class="fottp-button fottp-button-secondary" href="{{ .RelPermalink }}" download>Download (.ics)</a>
+          </p>
+          <p class="fottp-date">If Subscribe does nothing on your device, copy this address into your calendar app instead (in Google Calendar: <em>Other calendars &rarr; From URL</em>): <code>{{ .RelPermalink | absURL }}</code></p>
+        </section>
+        {{- end }}
+
+        {{- with $all.past }}
+        <section aria-labelledby="past-title">
+          <h2 id="past-title" class="fottp-subhead">Past events</h2>
+          <ul class="fottp-dates">
+            {{- range . }}
+            <li><a href="{{ .page.RelPermalink }}">{{ .page.Title }}</a> <span class="fottp-date">{{ if .recurring }}ended {{ end }}{{ .start.Format "2 January 2006" }}</span></li>
+            {{- end }}
+          </ul>
+        </section>
+        {{- end }}
+      </main>
+    </article>
+    <div class="hx:max-xl:hidden hx:h-0 hx:w-64 hx:shrink-0"></div>
+  </div>
+{{ end }}

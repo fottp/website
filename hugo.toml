@@ -24,19 +24,24 @@ disableKinds = ['taxonomy', 'term']
     weight     = 2
 
 [[menu.main]]
+    name       = "Events"
+    pageRef    = "/events"
+    weight     = 3
+
+[[menu.main]]
     name       = "Our Projects"
     pageRef    = "/our-projects"
-    weight     = 3
+    weight     = 4
 
 [[menu.main]]
     name       = "Our Partners"
     pageRef    = "/our-partners"
-    weight     = 4
+    weight     = 5
 
 [[menu.main]]
     name       = "Contact Us"
     pageRef    = "/contact-us"
-    weight     = 5
+    weight     = 6
 
 # "Follow us" bar: used only for social links, not contact details — an email
 # address in plain text sitewide is exactly what the Web3Forms change
@@ -89,6 +94,13 @@ disableKinds = ['taxonomy', 'term']
         enable = false
     [params.blog.list]
         pagerSize = 10
+
+    # Events (layouts/events/, layouts/_partials/events/). Used when an event has no
+    # `location` of its own, and for the address in the search-engine data on each event page.
+    [params.events]
+        default_location = "Telford Town Park"
+        locality = "Telford"
+        postcode = "TF3 4EP"
 
 # Web3Forms access keys for the site's forms, rendered by
 # layouts/_partials/webform.html — kept out of content/ entirely so the

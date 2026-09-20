@@ -1,0 +1,27 @@
+{{- /* The next sessions of a weekly event, from today on, skipping any `skip_dates`
+       and stopping at `until`. Each is a dict with the session's start and end.
+
+       Params (dict):
+         page    (required)  the event page
+         limit               how many sessions to return, default 8
+
+       Weeks are stepped with AddDate, which keeps the clock time the same
+       across the changes to and from summer time. */ -}}
+{{- $i := partial "events/info.html" .page -}}
+{{- $limit := .limit | default 8 -}}
+{{- $today := partial "events/today.html" -}}
+{{- /* Jump most of the way to today rather than counting from the first session. */ -}}
+{{- $first := 0 -}}
+{{- $weeksGone := div (sub now.Unix $i.start.Unix) 604800 -}}
+{{- if gt $weeksGone 1 }}{{ $first = sub $weeksGone 1 }}{{ end -}}
+{{- $out := slice -}}
+{{- range seq 0 400 -}}
+  {{- $s := $i.start.AddDate 0 0 (mul 7 (add $first .)) -}}
+  {{- $day := $s.Format "2006-01-02" -}}
+  {{- if and $i.until (gt $day $i.until) }}{{ break }}{{ end -}}
+  {{- if and (ge $day $today) (not (in $i.skip $day)) -}}
+    {{- $out = $out | append (dict "start" $s "end" ($s.Add $i.length)) -}}
+    {{- if ge (len $out) $limit }}{{ break }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

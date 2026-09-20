@@ -1,0 +1,27 @@
+{{- /* Search-engine data (schema.org "Event") for an event page, so Google and
+       others can show it as an event. Params (dict): page, start, end, allDay.
+       A weekly event describes its next session. */ -}}
+{{- $p := .page -}}
+{{- $web := (.page.OutputFormats.Get "html").Permalink -}}
+{{- $place := $p.Params.location | default site.Params.events.default_location -}}
+{{- $where := dict "@type" "Place" "name" $place -}}
+{{- /* Only claim the park's address when the event is in the park. */ -}}
+{{- if or (not $p.Params.location) (strings.Contains (lower $p.Params.location) "town park") -}}
+  {{- $where = merge $where (dict "address" (dict "@type" "PostalAddress" "addressLocality" site.Params.events.locality "postalCode" site.Params.events.postcode "addressCountry" "GB")) -}}
+{{- end -}}
+{{- $fmt := cond .allDay "2006-01-02" "2006-01-02T15:04:05-07:00" -}}
+{{- $data := dict
+      "@context" "https://schema.org"
+      "@type" "Event"
+      "name" $p.Title
+      "url" $web
+      "startDate" (.start.Format $fmt)
+      "eventStatus" "https://schema.org/EventScheduled"
+      "eventAttendanceMode" "https://schema.org/OfflineEventAttendanceMode"
+      "location" $where
+      "organizer" (dict "@type" "Organization" "name" site.Title "url" site.Home.Permalink) -}}
+{{- /* Only give an end when the event has one. */ -}}
+{{- if ne .end.Unix .start.Unix }}{{ $data = merge $data (dict "endDate" (.end.Format $fmt)) }}{{ end -}}
+{{- with $p.Params.description | default ($p.Summary | plainify | htmlUnescape | chomp | truncate 300) }}{{ $data = merge $data (dict "description" .) }}{{ end -}}
+{{- with $p.Params.image }}{{ with $p.Resources.Get . }}{{ $data = merge $data (dict "image" .Permalink) }}{{ end }}{{ end -}}
+<script type="application/ld+json">{{ $data | jsonify | safeJS }}</script>

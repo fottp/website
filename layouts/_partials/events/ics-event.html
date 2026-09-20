@@ -1,0 +1,50 @@
+{{- /* One event as calendar-file (iCalendar) lines, from an event page.
+
+       A one-off event is a plain VEVENT. A weekly event is one VEVENT that
+       starts at its next session and repeats weekly (RRULE), with any skipped
+       dates and end date carried along, so a calendar app shows every session
+       without us listing them and honours cancellations. Returns a list of
+       unfolded lines (events/ics.html folds them), or an empty list for a weekly
+       event with no sessions left. */ -}}
+{{- $i := partial "events/info.html" . -}}
+{{- $start := $i.start -}}
+{{- $end := $i.end -}}
+{{- $lines := slice -}}
+{{- $go := true -}}
+{{- /* The event's web page, not this .ics file, whichever format we are being rendered in. */ -}}
+{{- $web := (.OutputFormats.Get "html").Permalink -}}
+{{- if $i.recurring -}}
+  {{- $occ := partial "events/occurrences.html" (dict "page" . "limit" 1) -}}
+  {{- if $occ }}{{ $start = (index $occ 0).start }}{{ $end = (index $occ 0).end }}{{ else }}{{ $go = false }}{{ end -}}
+{{- end -}}
+{{- if $go -}}
+  {{- $stamp := "20060102T150405" -}}
+  {{- $where := .Params.location | default site.Params.events.default_location -}}
+  {{- $about := .Params.description | default (.Summary | plainify | htmlUnescape | chomp | truncate 300) -}}
+  {{- $lines = $lines | append "BEGIN:VEVENT" (printf "UID:%s@www.fottp.org.uk" ($web | strings.TrimSuffix "/" | path.Base)) (printf "DTSTAMP:%s" (now.UTC.Format "20060102T150405Z")) -}}
+  {{- if $i.allDay -}}
+    {{- /* All-day events end on the day AFTER their last day in a calendar file. */ -}}
+    {{- $lines = $lines | append (printf "DTSTART;VALUE=DATE:%s" ($start.Format "20060102")) (printf "DTEND;VALUE=DATE:%s" (($end.AddDate 0 0 1).Format "20060102")) -}}
+  {{- else -}}
+    {{- $lines = $lines | append (printf "DTSTART;TZID=Europe/London:%s" ($start.Format $stamp)) (printf "DTEND;TZID=Europe/London:%s" ($end.Format $stamp)) -}}
+  {{- end -}}
+  {{- if $i.recurring -}}
+    {{- $rule := "RRULE:FREQ=WEEKLY" -}}
+    {{- with $i.until }}{{ $rule = printf "%s;UNTIL=%sT235959Z" $rule (replace . "-" "") }}{{ end -}}
+    {{- $lines = $lines | append $rule -}}
+    {{- /* Skipped dates that are still to come, written the same way as DTSTART. */ -}}
+    {{- $ex := slice -}}
+    {{- $from := $start.Format "2006-01-02" -}}
+    {{- range $i.skip -}}
+      {{- if ge . $from -}}
+        {{- $d := replace . "-" "" -}}
+        {{- if $i.allDay }}{{ $ex = $ex | append $d }}{{ else }}{{ $ex = $ex | append (printf "%sT%s" $d ($start.Format "150405")) }}{{ end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- with $ex }}{{ $lines = $lines | append (printf "EXDATE%s:%s" (cond $i.allDay ";VALUE=DATE" ";TZID=Europe/London") (delimit . ",")) }}{{ end -}}
+  {{- end -}}
+  {{- $lines = $lines | append (printf "SUMMARY:%s" (partial "events/ics-escape.html" .Title)) -}}
+  {{- with $about }}{{ $lines = $lines | append (printf "DESCRIPTION:%s" (partial "events/ics-escape.html" (printf "%s %s" . $web))) }}{{ end -}}
+  {{- $lines = $lines | append (printf "LOCATION:%s" (partial "events/ics-escape.html" $where)) (printf "URL:%s" $web) "END:VEVENT" -}}
+{{- end -}}
+{{- return $lines -}}

@@ -1,0 +1,5 @@
+{{- /* Today's date in London as "2006-01-02", for comparing with other dates in
+       that form. "Today" is when the site was last built (see the nightly
+       rebuild in .github/workflows/hugo.yml). */ -}}
+{{- $london := (time.AsTime "2000-01-01T00:00:00" "Europe/London").Location -}}
+{{- return (now.In $london).Format "2006-01-02" -}}

@@ -1,0 +1,9 @@
+{{- /* Turns a date or date-and-time written in an event's front matter into a
+       time in London, so "09:00" stays 09:00 whether the clocks are on summer
+       or winter time. Accepts "2026-09-23 09:00", "2026-09-23T09:00" (with or
+       without seconds) or just "2026-09-23" (midnight). Hugo hands all of these
+       over as text; time.AsTime is fussy, so pad it out to the one shape it takes. */ -}}
+{{- $s := replace (printf "%v" .) " " "T" -}}
+{{- if eq (len $s) 10 }}{{ $s = printf "%sT00:00:00" $s }}
+{{- else if eq (len $s) 16 }}{{ $s = printf "%s:00" $s }}{{ end -}}
+{{- return (time.AsTime $s "Europe/London") -}}

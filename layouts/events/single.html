@@ -1,0 +1,67 @@
+{{ define "main" }}
+  {{ partial "page-banner.html" . }}
+  {{- $i := partial "events/info.html" . -}}
+  {{- $today := partial "events/today.html" -}}
+  {{- /* `show` is the session this page is mainly about: a one-off event's own date,
+         or a weekly event's next session (or its last, once it has ended). */ -}}
+  {{- $sessions := slice -}}
+  {{- if $i.recurring }}{{ $sessions = partial "events/occurrences.html" (dict "page" . "limit" 8) }}{{ end -}}
+  {{- $show := $i -}}
+  {{- with $sessions }}{{ $show = merge $i (index . 0) }}{{ end -}}
+  {{- $over := cond $i.recurring (not $sessions) (lt ($i.end.Format "2006-01-02") $today) -}}
+  {{- $where := .Params.location | default site.Params.events.default_location -}}
+  {{- $cal := .OutputFormats.Get "calendar" -}}
+  <div class="hx:mx-auto hx:flex hextra-max-page-width">
+    {{ partial "sidebar.html" (dict "context" . "disableSidebar" true "displayPlaceholder" true) }}
+    {{ partial "toc.html" . }}
+    <article class="hx:w-full hx:break-words hx:flex hx:min-h-[calc(100vh-var(--navbar-height))] hx:min-w-0 hx:justify-center hx:pb-8 hx:pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+      <main id="content" class="hx:w-full hx:min-w-0 hextra-max-content-width hx:px-6 hx:pt-8 hx:md:px-12">
+        {{ if $over }}<p class="fottp-notice" role="note">{{ if $i.recurring }}This regular event has ended.{{ else }}This event has now taken place.{{ end }} <a href="{{ "events/" | relURL }}">See what's on next</a>.</p>{{ end }}
+
+        <dl class="fottp-facts">
+          <dt>When</dt>
+          <dd>{{ partial "events/when.html" $show }}</dd>
+          {{- if and $i.recurring (not $over) }}
+          <dt>Next session</dt>
+          <dd>{{ (index $sessions 0).start.Format "Monday 2 January 2006" }}</dd>
+          {{- end }}
+          <dt>Where</dt>
+          <dd>{{ $where }}</dd>
+          {{- with .Params.cost }}
+          <dt>Cost</dt>
+          <dd>{{ . }}</dd>
+          {{- end }}
+        </dl>
+
+        {{ with .Params.image }}{{ with $.Resources.Get . }}<p class="fottp-lead">{{ partial "responsive-img.html" (dict "img" . "alt" $.Params.image_alt "sizes" "(min-width: 1280px) 672px, (min-width: 768px) calc(100vw - 96px), calc(100vw - 48px)") }}</p>{{ end }}{{ end }}
+
+        <div class="content">
+          {{ .Content }}
+        </div>
+
+        {{- if and $i.recurring (not $over) }}
+        <h2 class="fottp-subhead">Coming up</h2>
+        <ul class="fottp-dates">
+          {{- range $sessions }}
+          <li>{{ .start.Format "Monday 2 January 2006" }}</li>
+          {{- end }}
+        </ul>
+        {{- /* Dates are "2006-01-02", so sorting them as text puts them in date order. */ -}}
+        {{- $upcomingSkips := slice -}}
+        {{- range sort $i.skip }}{{ if ge . $today }}{{ $upcomingSkips = $upcomingSkips | append ((partial "events/time.html" .).Format "Monday 2 January 2006") }}{{ end }}{{ end -}}
+        {{- with $upcomingSkips }}
+        <p class="fottp-date">No session on {{ delimit . ", " " and " }}.</p>
+        {{- end }}
+        {{- end }}
+
+        <p class="fottp-actions">
+          {{- with .Params.link_url }}<a class="fottp-button" href="{{ . }}">{{ $.Params.link_label | default "Find out more" }}</a>{{ end }}
+          {{- with $cal }}{{ if not $over }}<a class="fottp-button fottp-button-secondary" href="{{ .RelPermalink }}" download>Add to your calendar</a>{{ end }}{{ end }}
+        </p>
+
+        <p class="fottp-back"><a href="{{ "events/" | relURL }}">&larr; Back to all events</a></p>
+        {{ if not $over }}{{ partial "events/jsonld.html" (dict "page" . "start" $show.start "end" $show.end "allDay" $i.allDay) }}{{ end }}
+      </main>
+    </article>
+  </div>
+{{ end }}
