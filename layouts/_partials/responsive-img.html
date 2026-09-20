@@ -5,6 +5,13 @@
        only made smaller than the original, never enlarged, and the original is
        offered as the largest choice (unless noOriginal is set).
 
+       A PNG is served as WebP (quality 82) instead: Hugo would otherwise keep
+       the PNG format, and a PNG photo runs to megabytes. Transparency is kept,
+       and the logos and photos checked (2026-09-20) looked the same. That
+       includes the largest choice, so the visitor never downloads the PNG itself.
+       A JPEG stays a JPEG. If a crisp logo ever looks fuzzy this way, that is
+       the place to make an exception.
+
        Params (dict):
          img     (required)  image resource, e.g. from .Resources.Get
          alt                 alt text ("" for a purely decorative image)
@@ -18,16 +25,20 @@
 {{- $img := .img -}}
 {{- $widths := .widths | default (slice 480 800 1200) -}}
 {{- $src := $img -}}
+{{- /* `full` is the largest choice: the original, or for a PNG a WebP of the same size. */ -}}
+{{- $full := $img -}}
+{{- $format := " q82" -}}
+{{- if eq $img.MediaType.SubType "png" }}{{ $format = " webp q82" }}{{ $full = $img.Resize (printf "%dx%s" $img.Width $format) }}{{ $src = $full }}{{ end -}}
 {{- $srcset := slice -}}
 {{- range $widths -}}
   {{- if lt . $img.Width -}}
-    {{- $r := $img.Resize (printf "%dx q82" .) -}}
+    {{- $r := $img.Resize (printf "%dx%s" . $format) -}}
     {{- $srcset = $srcset | append (printf "%s %dw" $r.RelPermalink $r.Width) -}}
     {{- if le . 800 }}{{ $src = $r }}{{ end -}}
   {{- end -}}
 {{- end -}}
 {{- if or (not .noOriginal) (eq (len $srcset) 0) -}}
-  {{- $srcset = $srcset | append (printf "%s %dw" $img.RelPermalink $img.Width) -}}
+  {{- $srcset = $srcset | append (printf "%s %dw" $full.RelPermalink $img.Width) -}}
 {{- end -}}
 <img src="{{ $src.RelPermalink }}"
   {{- if gt (len $srcset) 1 }} srcset="{{ delimit $srcset ", " }}" sizes="{{ .sizes | default "100vw" }}"{{ end }}
