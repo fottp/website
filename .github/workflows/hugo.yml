@@ -3,6 +3,11 @@ name: Deploy Hugo site to Pages
 on:
   push:
     branches: [main]
+  # Rebuild every night just after midnight (UK time) so that events which have passed move to
+  # "Past events", weekly sessions roll on to the next date, and future-dated news appears on its day.
+  # GitHub pauses scheduled runs after 60 days with no activity on a public repo; any push restarts them.
+  schedule:
+    - cron: '20 0 * * *'
   workflow_dispatch:
 
 permissions:
