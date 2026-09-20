@@ -39,9 +39,14 @@ disableKinds = ['taxonomy', 'term']
     weight     = 5
 
 [[menu.main]]
+    name       = "Archive"
+    pageRef    = "/archive"
+    weight     = 6
+
+[[menu.main]]
     name       = "Contact Us"
     pageRef    = "/contact-us"
-    weight     = 6
+    weight     = 7
 
 # "Follow us" bar: used only for social links, not contact details — an email
 # address in plain text sitewide is exactly what the Web3Forms change

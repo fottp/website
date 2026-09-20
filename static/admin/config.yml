@@ -153,3 +153,31 @@ collections:
       - {label: Booking or information link, name: link_url, widget: string, required: false, hint: "Optional web address, starting https://. Shows as a button on the event's page."}
       - {label: Link button text, name: link_label, widget: string, required: false, hint: "Wording for that button, such as 'Book a place'. Blank shows 'Find out more'."}
       - {label: Content, name: body, widget: markdown}
+
+  # Archive of newsletters, reports and so on. One folder per document holding its details and the PDF;
+  # the Archive page (layouts/archive/) lists them, newest first, and links straight to each PDF.
+  - name: archive
+    label: Archive
+    label_singular: Archive document
+    folder: content/archive
+    path: "{{slug}}/index"
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    create: true
+    media_folder: ""
+    public_folder: ""
+    fields:
+      - {label: Title, name: title, widget: string, hint: "As it should appear in the list, for example 'Explore, Autumn 2026'."}
+      - label: Kind of document
+        name: category
+        widget: select
+        options:
+          - {label: "Explore newsletter", value: newsletters}
+          - {label: "Chairman's report", value: reports}
+          - {label: "Minutes or agenda", value: minutes}
+          - {label: "Programme, leaflet or plan", value: leaflets}
+        hint: "Decides which list it appears in."
+      - {label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "D MMMM YYYY", time_format: false, hint: "Only used to put the list in order (newest first); it isn't shown. Use the date it came out, or the first day of its season."}
+      - {label: PDF file, name: file, widget: file, accept: ".pdf,application/pdf", hint: "The document itself. Drag it onto this box. Please remove any private email addresses or phone numbers of individuals first."}
+      - {label: Number of pages, name: pages, widget: number, value_type: int, min: 1, required: false, hint: "Optional. Shown beside the title."}

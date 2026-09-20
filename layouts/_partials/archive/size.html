@@ -1,0 +1,15 @@
+{{- /* A document's file size for people to see before they open it: "812 KB" or "2.4 MB".
+       Takes an archive page (whose `file` front matter names the PDF in its own folder).
+       Returns "" if the file can't be found, so a typo never stops the build. */ -}}
+{{- $dir := replace .File.Dir "\\" "/" -}}
+{{- $path := path.Join "content" $dir .Params.file -}}
+{{- $out := "" -}}
+{{- if fileExists $path -}}
+  {{- $bytes := (os.Stat $path).Size -}}
+  {{- if ge $bytes 1048576 -}}
+    {{- $out = printf "%.1f MB" (div (float $bytes) 1048576) -}}
+  {{- else -}}
+    {{- $out = printf "%d KB" (int (math.Ceil (div (float $bytes) 1024))) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

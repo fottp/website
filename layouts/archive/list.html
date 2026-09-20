@@ -1,0 +1,47 @@
+{{ define "main" }}
+  {{ partial "page-banner.html" . }}
+  {{- /* The four kinds of document, in the order they are shown. `category` in each document's front matter picks one. */ -}}
+  {{- $kinds := slice
+        (dict "key" "newsletters" "title" "Explore newsletters" "intro" "Our newsletter, newest first.")
+        (dict "key" "reports" "title" "Chairman's reports" "intro" "The chairman's annual report to members.")
+        (dict "key" "minutes" "title" "Minutes and agendas" "intro" "")
+        (dict "key" "leaflets" "title" "Programmes, leaflets and plans" "intro" "") -}}
+  <div class="hx:mx-auto hx:flex hextra-max-page-width">
+    {{ partial "sidebar.html" (dict "context" . "disableSidebar" true "displayPlaceholder" true) }}
+    <article class="hx:w-full hx:break-words hx:flex hx:min-h-[calc(100vh-var(--navbar-height))] hx:min-w-0 hx:justify-center hx:pb-8 hx:pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+      <main id="content" class="hx:w-full hx:min-w-0 hextra-max-content-width hx:px-6 hx:pt-8 hx:md:px-12">
+        <div class="content">{{ .Content }}</div>
+
+        <p class="fottp-jump">Jump to:
+          {{- range $i, $k := $kinds }}{{ if $i }},{{ end }} <a href="#{{ $k.key }}">{{ $k.title }}</a>{{ end }}
+        </p>
+
+        {{- $all := .Pages -}}
+        {{- range $kinds }}
+          {{- $key := .key -}}
+          {{- $heading := .title -}}
+          {{- $docs := where $all "Params.category" $key -}}
+          {{- with $docs }}
+        <section aria-labelledby="{{ $key }}">
+          <h2 id="{{ $key }}" class="fottp-subhead">{{ $heading }}</h2>
+          <ul class="fottp-dates fottp-docs">
+            {{- range .ByDate.Reverse }}
+              {{- $pdf := .Resources.GetMatch .Params.file }}
+              {{- if $pdf }}
+            <li>
+              <a href="{{ $pdf.RelPermalink }}">{{ .Title }}</a>
+              <span class="fottp-date">PDF{{ with .Params.pages }}, {{ . }} page{{ if ne . 1 }}s{{ end }}{{ end }}{{ with partial "archive/size.html" . }}, {{ . }}{{ end }}</span>
+            </li>
+              {{- else }}
+                {{- warnf "archive: %s names the file %q, which isn't in its folder" .File.Path .Params.file }}
+              {{- end }}
+            {{- end }}
+          </ul>
+        </section>
+          {{- end }}
+        {{- end }}
+      </main>
+    </article>
+    <div class="hx:max-xl:hidden hx:h-0 hx:w-64 hx:shrink-0"></div>
+  </div>
+{{ end }}

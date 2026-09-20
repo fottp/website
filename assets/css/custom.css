@@ -102,6 +102,12 @@ a.fottp-button-secondary:hover { background: #f3f8f1; color: hsl(107 69% 19%); }
 .fottp-calendar { margin-top: 3rem; padding-top: 0.5rem; border-top: 1px solid #e0e0e0; }
 .fottp-calendar code { word-break: break-all; }
 
+/* Archive: one row per document, its details (PDF, pages, size) to the right when there's room */
+.fottp-jump { margin: 1.5rem 0 0; }
+.fottp-jump a { color: hsl(107 69% 24%); text-decoration: underline; }
+.fottp-docs li { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.15rem 1rem; }
+.fottp-docs .fottp-date { margin: 0; }
+
 /* Accessibility fix for a Hextra flaw (present in its release and its development branch): on a phone,
    while the menu is closed, the theme marks the off-screen menu aria-hidden but its links can still be
    tabbed into. Hide it properly while closed; it shows again the moment the theme opens it. */
