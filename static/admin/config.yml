@@ -16,6 +16,21 @@ publish_mode: editorial_workflow
 media_folder: static/images
 public_folder: /images
 
+# Photos are shrunk and converted when they are added, so editors don't have to resize them first
+# and a 5 MB phone photo or PNG never lands in Git. Anything bigger than 1600px on its longest side
+# is scaled down to fit (the shape is kept; smaller photos are never enlarged) and saved as WebP at
+# quality 82 (WebP is the only output format Sveltia offers). The file ends up named <name>.webp.
+# This also lets iPhone (HEIC) photos be uploaded. Caveat: an animated GIF would become a still image.
+media_libraries:
+  default:
+    config:
+      transformations:
+        raster_image:
+          format: webp
+          quality: 82
+          width: 1600
+          height: 1600
+
 collections:
   - name: pages
     label: Pages
