@@ -98,3 +98,43 @@ collections:
       - {label: Photo, name: image, widget: image, required: false, choose_url: false, hint: "Optional. Shown small next to the post on the News page and home page, and large at the top of the post."}
       - {label: Photo description, name: image_alt, widget: string, required: false, hint: "Describe what the photo shows, for people using screen readers. Only needed if you add a photo."}
       - {label: Content, name: body, widget: markdown}
+
+  # Events. One folder per event, like news. Past events move to "Past events" by themselves
+  # (the site is rebuilt every night), so there is never any need to delete them.
+  - name: events
+    label: Events
+    label_singular: Event
+    folder: content/events
+    path: "{{slug}}/index"
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    create: true
+    media_folder: ""
+    public_folder: ""
+    fields:
+      - {label: Title, name: title, widget: string}
+      - {label: Starts, name: start, widget: datetime, format: "YYYY-MM-DD HH:mm", date_format: "D MMMM YYYY", time_format: "HH:mm", hint: "Date and time the event starts. For an event that repeats every week, this is the FIRST session."}
+      - {label: Ends, name: end, widget: datetime, format: "YYYY-MM-DD HH:mm", date_format: "D MMMM YYYY", time_format: "HH:mm", required: false, hint: "Date and time it finishes. Leave blank if there is no set finish time. For an event that repeats every week, this is the end of the FIRST session (the same day as 'Starts')."}
+      - label: Repeats
+        name: repeats
+        widget: select
+        required: false
+        options:
+          - {label: "Every week, on the same day and time as the first session", value: weekly}
+        hint: "Leave empty for a one-off event."
+      - {label: Last session on or before, name: until, widget: datetime, format: "YYYY-MM-DD", date_format: "D MMMM YYYY", time_format: false, required: false, hint: "Only for events that repeat. Leave blank if it carries on until you say otherwise."}
+      - label: Weeks with no session
+        name: skip_dates
+        widget: list
+        required: false
+        field: {label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "D MMMM YYYY", time_format: false}
+        hint: "Only for events that repeat: add the date of any session that is NOT happening, such as a bank holiday. It disappears from the list and from people's calendars."
+      - {label: Where, name: location, widget: string, required: false, hint: "For example 'Sensory Garden, Telford Town Park'. If left blank the event is shown as at 'Telford Town Park'."}
+      - {label: Cost, name: cost, widget: string, required: false, hint: "For example 'Free' or '£3 per person'. Leave blank to show nothing."}
+      - {label: Summary, name: description, widget: text, required: false, hint: "One or two sentences shown on the Events page and the home page. If left blank, the start of the text below is used."}
+      - {label: Photo, name: image, widget: image, required: false, choose_url: false, hint: "Optional. Shown small beside the event on the Events page, and large at the top of the event's own page."}
+      - {label: Photo description, name: image_alt, widget: string, required: false, hint: "Describe what the photo shows, for people using screen readers. Only needed if you add a photo."}
+      - {label: Booking or information link, name: link_url, widget: string, required: false, hint: "Optional web address, starting https://. Shows as a button on the event's page."}
+      - {label: Link button text, name: link_label, widget: string, required: false, hint: "Wording for that button, such as 'Book a place'. Blank shows 'Find out more'."}
+      - {label: Content, name: body, widget: markdown}
