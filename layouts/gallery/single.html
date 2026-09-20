@@ -3,6 +3,8 @@
   {{- /* The photos are listed in this page's front matter (`photos`: image, alt, caption), in the order to show them. */ -}}
   {{- $photos := .Params.photos | default slice -}}
   {{- $count := len $photos -}}
+  {{- /* `thumbs: landscape` in a collection's front matter gives 3:2 thumbnails (good when the photos are landscape); the default is squares. */ -}}
+  {{- $landscape := eq (.Params.thumbs | default "square") "landscape" -}}
   <link rel="stylesheet" href="{{ "vendor/photoswipe/photoswipe.css" | relURL }}">
   <div class="hx:mx-auto hx:flex hextra-max-page-width">
     {{ partial "sidebar.html" (dict "context" . "disableSidebar" true "displayPlaceholder" true) }}
@@ -12,14 +14,17 @@
         <div class="content">{{ .Content }}</div>
         <p class="fottp-date">{{ $count }} photo{{ if ne $count 1 }}s{{ end }}. Select one to see it larger, then use the arrow keys or swipe to move on.</p>
 
-        <ul class="fottp-photos" id="gallery" role="list" data-pswp-base="{{ "vendor/photoswipe/" | relURL }}">
+        <ul class="fottp-photos{{ if $landscape }} fottp-landscape{{ end }}" id="gallery" role="list" data-pswp-base="{{ "vendor/photoswipe/" | relURL }}">
           {{- range $i, $p := $photos }}
             {{- with $.Resources.Get $p.image }}
               {{- $img := . }}
-              {{- $thumb := $img.Fill "360x360 q72" }}
+              {{- /* A small picture (under 400px wide) is shown whole inside its square, not cropped, so a logo doesn't lose half its words. */ -}}
+              {{- $small := lt $img.Width 400 }}
+              {{- $thumb := $img }}
+              {{- if not $small }}{{ if $landscape }}{{ $thumb = $img.Fill "480x320 q72" }}{{ else }}{{ $thumb = $img.Fill "360x360 q72" }}{{ end }}{{ end }}
               {{- /* Every thumbnail needs a name a screen reader can read: real alt text if written, else the caption, else "Photo 3 of 40 in ...". */ -}}
               {{- $name := $p.alt | default ($p.caption | default (printf "Photo %d of %d in %s" (add $i 1) $count $.Title)) }}
-          <li><a href="{{ $img.RelPermalink }}" data-pswp-width="{{ $img.Width }}" data-pswp-height="{{ $img.Height }}"{{ with $p.caption }} data-caption="{{ . }}"{{ end }}><img src="{{ $thumb.RelPermalink }}" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}" alt="{{ $name }}" loading="lazy" decoding="async"></a></li>
+          <li{{ if $small }} class="fottp-small"{{ end }}><a href="{{ $img.RelPermalink }}" data-pswp-width="{{ $img.Width }}" data-pswp-height="{{ $img.Height }}"{{ with $p.caption }} data-caption="{{ . }}"{{ end }}><img src="{{ $thumb.RelPermalink }}" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}" alt="{{ $name }}" loading="lazy" decoding="async"></a></li>
             {{- else }}
               {{- warnf "gallery: %s lists %q, which isn't in its folder" $.File.Path $p.image }}
             {{- end }}

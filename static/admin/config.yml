@@ -199,6 +199,14 @@ collections:
       - {label: Title, name: title, widget: string}
       - {label: Summary, name: description, widget: text, required: false, hint: "One or two sentences, shown under the title on the Gallery page and at the top of the collection."}
       - {label: Order on the Gallery page, name: weight, widget: number, value_type: int, required: false, hint: "Collections are listed lowest number first (10, 20, 30, and so on)."}
+      - label: Thumbnail shape
+        name: thumbs
+        widget: select
+        required: false
+        options:
+          - {label: "Square (the default)", value: square}
+          - {label: "Landscape (3:2), better when the photos are landscape", value: landscape}
+        hint: "The small pictures on this collection's page. Enlarged photos always show whole."
       - {label: Cover photo, name: cover, widget: image, required: false, choose_url: false, hint: "The picture on this collection's card. Leave empty to use its first photo."}
       - label: Photos
         name: photos
