@@ -30,10 +30,4 @@ photos:
   - image: 3330-march16-012-1.jpg
     alt: "Four people in orange overalls carry a large red geometric sculpture through a gate."
     caption: ""
-  - image: 4635-queens-awards-80dt-1-e1521108085400.jpg
-    alt: "A clear acrylic award depicts the Queen's Award for Voluntary Service with a royal crown."
-    caption: ""
-  - image: 4751-120469522-3911317625549147-6165686276147701962-o.jpg
-    alt: "A woman in a dark coat and a man in a high-visibility vest stand on a path beneath palm-like trees."
-    caption: ""
 ---

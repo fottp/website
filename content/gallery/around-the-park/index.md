@@ -180,7 +180,4 @@ photos:
   - image: 3198-dsc-9545.jpg
     alt: "Two people walk along a paved path through a green landscape."
     caption: ""
-  - image: 3310-downloaddec15-026-e1486987261897.jpg
-    alt: "A green flag flies from a flagpole against a blue sky, with an autumn-coloured tree beside it."
-    caption: ""
 ---
