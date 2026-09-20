@@ -8,7 +8,7 @@ skip_dates: []
 location: Chelsea Gardens (behind Library in Southwater) - meet towards the back inside (the FOTTP section)
 cost: ''
 description: Planned volunteer tasks in the park every Wednesday morning, 09:00 to 12:00.
-image: P9162486-2.png
+image: P9162486-2.webp
 image_alt: Team of volunteers discussing new planning
 link_url: ''
 link_label: ''
