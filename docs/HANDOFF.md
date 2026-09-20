@@ -18,11 +18,24 @@ Both are **read-only for us: never change them.**
 | Domains | `fottp.org` and `fottp.org.uk`, registered via DomainBox (gruntfutuk is a reseller). `fottp.org` redirects to `www.fottp.org.uk` (Fastmail "website redirect"). |
 | DNS and email | **Fastmail**, for both domains (MX included). Don't move DNS elsewhere. |
 | Site | Apex `A` 185.199.108–111.153 and `AAAA` 2606:50c0:8000–8003::153 (GitHub Pages); `www` is a CNAME to `fottp.github.io`; the apex redirects to `www`; HTTPS enforced. `static/CNAME` must be exactly `www.fottp.org.uk`. |
-| GitHub | Organisation **fottp** (2FA required, domains verified), public repo **fottp/website**. Owner: gruntfutuk's account; a second owner is still to be added. |
+| GitHub | Organisation **fottp** (2FA required, domains verified) on the **Free** plan, with the **public** repo **fottp/website**. Owner: gruntfutuk's account; a second owner is still to be added. A free Team account has been applied for through GitHub's non-profit programme, so the repo can go private: see "GitHub plan" below. |
 | Deploy | GitHub Actions (`.github/workflows/hugo.yml`): on every push to `main`, on demand, and **every night at 00:20 UTC**. Hugo **0.166.0 extended** is pinned there: bump it and the local copy together. A build takes under a minute. |
 | Git | Commits use the GitHub noreply address; the repo stores LF line endings. |
 
-The nightly rebuild matters because the site is static: "upcoming" and "past" events, and future-dated news, are only worked out when it is built. GitHub pauses scheduled runs on a public repo after 60 days without activity; any push, including a CMS edit, restarts them.
+The nightly rebuild matters because the site is static: "upcoming" and "past" events, and future-dated news, are only worked out when it is built. GitHub pauses scheduled runs on a *public* repo after 60 days without activity; any push, including a CMS edit, restarts them (this pause doesn't apply to private repos).
+
+### GitHub plan
+On the **Free** plan GitHub Pages can only publish from a **public** repository, which is why the repo is public today. The maintainer has **applied to GitHub's non-profit programme for a free Team account** (outcome pending). If it is granted, the repo can be made **private** and the site will still publish, because the Team plan allows Pages from private repos. The published site stays public either way: a private repo hides the source, not the website.
+
+**Do not make the repo private on the Free plan:** the site would stop publishing. Wait until the organisation is actually on the Team plan (org Settings → Billing and plans).
+
+*When the Team plan is in place:*
+1. Make the repo private (repo Settings → General → Danger zone → Change visibility).
+2. Check Settings → Pages still shows the site published from **GitHub Actions**, run the workflow once by hand (Actions → Deploy Hugo site to Pages → Run workflow) and confirm the live site updates.
+3. Check an editor can still sign in to `/admin/` and save a change. Editors' access comes from the `editors` team (Write) and their tokens are already limited to `fottp/website`, so nothing should change.
+4. Expect anything that reads the repo without signing in to stop working: raw file links, and unauthenticated GitHub API checks such as looking up a deploy's status.
+5. Private repos use the plan's allowance of Actions minutes. A build takes about a minute, so the nightly rebuild is well inside a Team allowance.
+6. Branch rules, code owners and the theme release watcher carry on as they are. Update this file (remove the "public" remarks, and the Free-plan notes above and in the setup table).
 
 ## How the site is built
 **Layout.** `hugo.toml` (menu, form keys, theme settings); `content/` (Markdown page bundles, with photos beside their page); `layouts/`, `assets/css/custom.css`, `data/` (our changes to the theme); `static/` (CNAME, logo, favicons, the CMS in `admin/`, the photo viewer in `vendor/photoswipe/`). Never commit `public/`, `resources/_gen/` or `.hugo_build.lock`.
@@ -64,7 +77,7 @@ Contact and Membership are Web3Forms forms, each to its own mailbox (a Web3Forms
 GitHub can't confine an editor to one folder, so protection comes from review: the CMS runs in `editorial_workflow` mode; `.github/CODEOWNERS` makes the owners code owners of everything except `/content/`; and a branch ruleset on `main` requires a pull request with code-owner review (0 required approvals), blocks force pushes and deletion, and lets repository admins bypass it, so an owner's Git push goes straight through (GitHub logs "Bypassed rule violations"), while an owner editing in the CMS follows the same Save → Ready → Publish steps as anyone else. Verified: editors can publish content without approval; an editor's change outside `content/` is held for owner review. Only indirectly confirmed: that an editor's *direct push* to `main` is refused. Don't judge the rule from the API's `mergeable_state` (it reads `clean` when not logged in); check the pull request page. **People:** at least two named owners, none shared; editors in the `editors` team. Adding the second owner also means adding them to `CODEOWNERS` (a code owner can't approve their own change).
 
 ### Role accounts and handover
-Where a job belongs to a role (secretary, treasurer…) an *editor* account (never an owner) can be tied to a role mailbox on the charity's domain (not listed here: this repo is public) and used by **one person at a time**, never shared. The mailbox is the recovery route, so it should reach the current holder and a second trustee; the holder controls their own 2FA and password, with recovery codes kept where the charity controls them; tokens always have an expiry. *Handover:* the outgoing holder revokes personal tokens and signs out other sessions; the mailbox is repointed; the incoming holder resets the password, sets up their own 2FA and new recovery codes, creates a new token (as above) and an owner approves it and revokes the old one, checking the account is in `editors` and nothing else.
+Where a job belongs to a role (secretary, treasurer…) an *editor* account (never an owner) can be tied to a role mailbox on the charity's domain (not listed here: this repo is currently public) and used by **one person at a time**, never shared. The mailbox is the recovery route, so it should reach the current holder and a second trustee; the holder controls their own 2FA and password, with recovery codes kept where the charity controls them; tokens always have an expiry. *Handover:* the outgoing holder revokes personal tokens and signs out other sessions; the mailbox is repointed; the incoming holder resets the password, sets up their own 2FA and new recovery codes, creates a new token (as above) and an owner approves it and revokes the old one, checking the account is in `editors` and nothing else.
 
 ## Decisions and policies
 - **Contact details:** none in plain text on the site or in `content/`; use the forms.
@@ -84,7 +97,7 @@ Where a job belongs to a role (secretary, treasurer…) an *editor* account (nev
 - `scripts/generate_alt_suggestions.py` (in the repo folder, uncommitted): asks a local Ollama vision model for alt-text suggestions. A stronger model is planned for next time; look at a sample against the photos, and tell the model not to state locations.
 
 ## Open items
-**Decisions:** analytics (none, or a cookieless option such as Plausible or GoatCounter, so no banner is needed); the second GitHub owner; what to do with `fottp.co.uk` (redirect or let it lapse in May 2027, after the new site is agreed); whether to keep the recovery tools in the repo; the translator, deliberately not replicated (it would need a third-party script and a cookie banner). **Housekeeping:** update the GitHub Actions versions (a Node 20 deprecation warning; checkout, configure-pages, upload-pages-artifact).
+**Decisions:** the GitHub non-profit application (pending: only make the repo private once the Team plan is in place, see "GitHub plan"); analytics (none, or a cookieless option such as Plausible or GoatCounter, so no banner is needed); the second GitHub owner; what to do with `fottp.co.uk` (redirect or let it lapse in May 2027, after the new site is agreed); whether to keep the recovery tools in the repo; the translator, deliberately not replicated (it would need a third-party script and a cookie banner). **Housekeeping:** update the GitHub Actions versions (a Node 20 deprecation warning; checkout, configure-pages, upload-pages-artifact).
 
 **Content:** confirm the Fun Run role; verify the home page figures (200+ members, 30+ events, 100+ projects); Our Projects still needs a real photo for "clearing overhanging trees" and full-size photos for its named past sessions; the Wednesday volunteering page has a TODO for what to bring; the old WordPress site's six events were not imported; the 138 rule-cleaned alt texts deserve a proper review.
 
