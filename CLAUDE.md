@@ -32,4 +32,4 @@ Web3Forms (Contact, Membership; each to its own mailbox) live in `hugo.toml`, `l
 - Verify photo/fact provenance: no stock photos as real, no unconsented child photos, no uncertain archive dates/affiliations — confirm with gruntfutuk.
 
 ## Unconfirmed — don't publish
-- Queen's Award year (2016 vs June 2020).
+- Santa Fun Run: FOTTP's role, and the air-ambulance cheque photo.
