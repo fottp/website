@@ -13,6 +13,8 @@ We're grateful for the support of local businesses and organisations who help us
 ![Lyreco](lyreco.png)
 ![Telford & Wrekin Council](telford-and-wrekin-council.png)
 
+Telford Town Park itself is owned and managed by Telford & Wrekin Council. For visiting information — opening times, facilities, and what's on — see the council's official [Telford Town Park website](https://www.telfordtownpark.co.uk/site/index.php).
+
 ## Get in touch
 
 Address: **TF3 4EP**
