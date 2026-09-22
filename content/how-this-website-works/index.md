@@ -52,11 +52,11 @@ Access to edit the website is restricted to committee members and other voluntee
 
 ## Accessibility
 
-The visual design was chosen carefully with accessibility in mind, including for visitors who use screen readers or other vision-support technology. Every photograph on the site — across the gallery, news, archive and every other page — has "alt text": a written description of what's in the image, so that anyone unable to see the photo itself can still understand what it shows. This is an ongoing piece of work as much as a finished one: descriptions are reviewed and improved over time, and anyone who spots one that could be better is welcome to suggest a correction.
+The visual design was chosen carefully with accessibility in mind, including for visitors who use screen readers or other vision-support technology, and every photograph on the site has "alt text" describing what it shows. Full details, including where we currently fall short, are on our [Accessibility Statement](/accessibility-statement/) page.
 
 ## Privacy by design
 
-No contact details appear anywhere on the site as plain text — enquiries go through the site's own contact forms instead, to discourage automated harvesting. The site currently uses no cookies, no visitor tracking or analytics, and no third-party scripts or content-delivery networks beyond the hosting platform itself.
+No contact details appear anywhere on the site as plain text — enquiries go through the site's own contact forms instead, to discourage automated harvesting. The site uses no cookies, no visitor tracking or analytics, and no third-party scripts or content-delivery networks beyond the hosting platform itself. What happens to the data you do send us, through those forms, is covered on our [Privacy & Cookies](/privacy-and-cookies/) page.
 
 ## Data and hosting location
 

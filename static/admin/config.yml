@@ -104,6 +104,24 @@ collections:
           - {label: Title, name: title, widget: string}
           - {label: Content, name: body, widget: markdown}
 
+      - name: privacy-and-cookies
+        label: Privacy & Cookies
+        file: content/privacy-and-cookies/index.md
+        media_folder: ""
+        public_folder: ""
+        fields:
+          - {label: Title, name: title, widget: string}
+          - {label: Content, name: body, widget: markdown}
+
+      - name: accessibility-statement
+        label: Accessibility Statement
+        file: content/accessibility-statement/index.md
+        media_folder: ""
+        public_folder: ""
+        fields:
+          - {label: Title, name: title, widget: string}
+          - {label: Content, name: body, widget: markdown}
+
   - name: news
     label: News
     label_singular: News post
