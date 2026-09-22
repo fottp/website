@@ -7,10 +7,15 @@
 
 /* "Follow us" bar above the navbar */
 .fottp-topbar { background: #555; color: #fff; font-size: 0.875rem; }
-.fottp-topbar-inner { margin: 0 auto; padding: 0.55rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+.fottp-topbar-inner { margin: 0 auto; padding: 0.55rem 1.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.4rem 0.75rem; }
+.fottp-topbar-left { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
 .fottp-social { display: inline-flex; gap: 0.9rem; }
 .fottp-social a { color: #fff; opacity: 0.85; display: inline-flex; }
 .fottp-social a:hover, .fottp-social a:focus-visible { opacity: 1; }
+
+/* TEMPORARY: preview-site badge in the topbar (site.Params.preview_notice in hugo.toml).
+   Same amber accent as .fottp-notice elsewhere on the site. Remove this rule when the notice goes. */
+.fottp-preview-badge { background: #b45309; color: #fff; padding: 0.2rem 0.65rem; border-radius: 999px; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.02em; text-transform: uppercase; white-space: nowrap; }
 
 /* Page title banner in the logo green, white text (3.75:1: large text) */
 .fottp-banner { background: #37971c; color: #fff; padding: 1.75rem 0; }

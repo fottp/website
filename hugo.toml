@@ -76,6 +76,10 @@ disableKinds = ['taxonomy', 'term']
 
     date_format = "2 January 2006"
 
+    # TEMPORARY: shown as a badge in the "Follow us" bar (layouts/_partials/topbar.html) while this
+    # proof-of-concept is a preview. Delete this line (or leave it blank) to remove it — no other change needed.
+    preview_notice = "PREVIEW of new website for FOTTP"
+
     # Shown in the footer (layouts/_partials/custom/footer.html).
     about_us = "<p>Friends of Telford Town Park was founded to unite people who cherish this unique green space, supporting restoration, activities and a community spirit that keeps the park vibrant and welcoming for all generations.</p>"
     copyright = "&copy; Friends of Telford Town Park. Registered charity in England &amp; Wales, no. 1219196. All rights reserved."
