@@ -78,7 +78,7 @@ disableKinds = ['taxonomy', 'term']
 
     # TEMPORARY: shown as a badge in the "Follow us" bar (layouts/_partials/topbar.html) while this
     # proof-of-concept is a preview. Delete this line (or leave it blank) to remove it — no other change needed.
-    preview_notice = "PREVIEW of new website for FOTTP"
+    preview_notice = "PREVIEW of new website"
 
     # Shown in the footer (layouts/_partials/custom/footer.html).
     about_us = "<p>Friends of Telford Town Park was founded to unite people who cherish this unique green space, supporting restoration, activities and a community spirit that keeps the park vibrant and welcoming for all generations.</p>"

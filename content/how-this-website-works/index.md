@@ -7,6 +7,10 @@ description: "A behind-the-scenes look at how the Friends of Telford Town Park w
 draft: false
 ---
 
+{{< callout type="warning" >}}
+**You're looking at a preview.** This is a possible new website for Friends of Telford Town Park (FOTTP) — it is not yet the charity's official site. It's currently being reviewed by the FOTTP committee and may change.
+{{< /callout >}}
+
 We're often asked how the website is put together and where it "lives", so here's an explanation — starting in plain English, with more technical detail further down for anyone who wants it.
 
 ## In short
