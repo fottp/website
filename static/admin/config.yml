@@ -95,6 +95,15 @@ collections:
             widget: markdown
             hint: "The membership form itself is managed by the site's developer and isn't editable here — this is just the page text above it."
 
+      - name: how-this-website-works
+        label: How This Website Works
+        file: content/how-this-website-works/index.md
+        media_folder: ""
+        public_folder: ""
+        fields:
+          - {label: Title, name: title, widget: string}
+          - {label: Content, name: body, widget: markdown}
+
   - name: news
     label: News
     label_singular: News post
