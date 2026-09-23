@@ -54,8 +54,8 @@ disableKinds = ['taxonomy', 'term']
     weight     = 8
 
 # "Follow us" bar: used only for social links, not contact details — an email
-# address in plain text sitewide is exactly what the Web3Forms change
-# on /contact-us/ was meant to avoid. `icon` is the name of a Hextra icon.
+# address in plain text sitewide is exactly what moving /contact-us/ to a
+# form was meant to avoid. `icon` is the name of a Hextra icon.
 [[menu.topbar]]
     weight = 1
     name = "Facebook"
@@ -116,19 +116,18 @@ disableKinds = ['taxonomy', 'term']
         locality = "Telford"
         postcode = "TF3 4EP"
 
-# Web3Forms access keys for the site's forms, rendered by
-# layouts/_partials/webform.html — kept out of content/ entirely so the
-# Sveltia CMS (which only ever touches content/) can't see or break them.
+# Settings for the site's forms, rendered by layouts/_partials/webform.html —
+# kept out of content/ entirely so the Sveltia CMS (which only ever touches
+# content/) can't see or break them. Posts go to forms.fottp.org.uk, a small
+# self-hosted relay (see docs/HANDOFF.md "Forms and map") that replaced
+# Web3Forms; the relay's own config decides the recipient, from-address and
+# subject for each form, keyed by name ("contact"/"membership" below).
 [params.webforms.contact]
-    access_key = "85114ca7-f06c-4478-8a03-88fb14dc6ec5"
-    subject = "New message from the FOTTP website contact form"
     message_label = "Message*"
     message_required = true
     submit_label = "Send message"
 
 [params.webforms.membership]
-    access_key = "8772a910-7df8-460c-acbf-24aa267f0895"
-    subject = "New membership enquiry from the FOTTP website"
     message_label = "Anything you'd like us to know? (optional)"
     message_required = false
     submit_label = "Send"

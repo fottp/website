@@ -3,9 +3,7 @@
 {{ if not $cfg }}
   {{ errorf "webform partial: no [params.webforms.%s] configured in hugo.toml" $name }}
 {{ end }}
-<form class="fottp-form" action="https://api.web3forms.com/submit" method="POST">
-  <input type="hidden" name="access_key" value="{{ $cfg.access_key }}">
-  <input type="hidden" name="subject" value="{{ $cfg.subject }}">
+<form class="fottp-form" action="https://forms.fottp.org.uk/{{ $name }}" method="POST">
   <input type="checkbox" name="botcheck" style="display: none;" tabindex="-1" autocomplete="off" aria-hidden="true">
 
   <p>* Please fill in all the required fields.</p>

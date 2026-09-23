@@ -19,7 +19,7 @@ We use it only to reply to you, or to get in touch about membership — nothing 
 
 ## How your information is handled
 
-Submitting a form sends your details straight from your browser to **[Web3Forms](https://web3forms.com/)**, a third-party form-processing service we use, which forwards it on by email to the relevant volunteer's mailbox. FOTTP doesn't otherwise store a copy on its own systems. Web3Forms is run by a company based in India, using server infrastructure in the US; it doesn't keep submissions itself, forwarding each one on and clearing its own server logs after about two months (see [Web3Forms' own privacy policy](https://web3forms.com/privacy)). More on why we use it, and the site's other technical choices, is on our [How This Website Works](/how-this-website-works/) page.
+Submitting a form sends your details straight from your browser to a small server we run ourselves, hosted in the UK, which emails it on to the relevant volunteer and doesn't otherwise keep a copy. That email is sent through Fastmail — the same provider that already runs the charity's own email and this site's domain, not a new third party — to an address that isn't published anywhere, so the volunteer actually responsible for it can change over time without any change needed here. FOTTP doesn't store a copy of your submission on its own systems beyond that. More on why we built it this way, and the site's other technical choices, is on our [How This Website Works](/how-this-website-works/) page.
 
 ## How long we keep it
 

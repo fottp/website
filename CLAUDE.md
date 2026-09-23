@@ -9,14 +9,14 @@ Proof-of-concept beside https://www.fottp.co.uk (IONOS, run by a current trustee
 - Photos: ≤1600px, JPEG q~82 before committing.
 
 ## Layout
-- `hugo.toml`: menu, Web3Forms keys, theme params.
+- `hugo.toml`: menu, form display text, theme params.
 - `content/`: Markdown page bundles; images stay beside their page.
 - `layouts/`, `assets/css/custom.css`, `data/`: our theme overrides (HANDOFF.md "Theme"). Self-hosted only, no CDNs. `static/`: CNAME, logo, favicons, `admin/`.
 - `themes/hextra`: copy of the release pinned in `.github/theme-pin.json`, not a submodule. Never edit; update via `scripts/vendor_theme.py`.
 - `import*/`: scraped source, one level up, never committed.
 
 ## Forms
-Web3Forms (Contact, Membership; each to its own mailbox) live in `hugo.toml`, `layouts/_partials/webform.html` and `layouts/page/contact-form.html` — never in content/, so Sveltia CMS can't break them. Same for new forms.
+Contact and Membership post to `forms.fottp.org.uk`, a small self-hosted relay (see `HANDOFF.md` "Forms and map") — not Web3Forms any more. Markup in `hugo.toml`, `layouts/_partials/webform.html` and `layouts/page/contact-form.html` — never in content/, so Sveltia CMS can't break them. Same for new forms.
 
 ## Invariants
 - `static/CNAME` exactly `www.fottp.org.uk`.
