@@ -17,7 +17,7 @@ We're often asked how the website is put together and where it "lives", so here'
 
 This website is a set of simple web pages, automatically assembled from plain text files and published to the internet using GitHub, a well-known, free hosting service used by millions of software and website projects worldwide. There's no traditional database and no server for a committee member to maintain — updates are made through an easy, browser-based editing tool, and the live site rebuilds itself automatically within a couple of minutes of any change being saved. The photo gallery, archive of past documents, news and events are all part of the same site, built the same way — nothing is hosted separately or bolted on from elsewhere.
 
-As an extra, informal safeguard — not something the charity provisions, funds or can rely on — a volunteer also keeps an unofficial backup copy of the site's content and history on their own equipment, separate from the main hosting.
+One of the charity's volunteers maintains a backup copy of the site on their own equipment, in the unlikely event of loss of this site.
 
 ## How updates get published
 
@@ -37,13 +37,13 @@ As an extra, informal safeguard — not something the charity provisions, funds 
 | **Version control** (the record of every edit) | Git — a free, open-source, and openly standardised system used to track changes, which underpins the content editor, the backups and the mirrors described below |
 | **Photo gallery, archive & events** | Built directly into the site itself using the same tools as everything else — not hosted or maintained separately. The gallery's photo viewer is PhotoSwipe — free, open-source software |
 | **Automated build & publish** | GitHub Actions — free to use, part of GitHub; rebuilds and republishes the site automatically whenever content changes, and every night regardless |
-| **Informal backup** | Forgejo — free, open-source software; an unofficial, best-effort mirror of the site's source and history, kept by a volunteer on their own personal equipment — not a service the charity operates, funds or can rely on |
+| **Backup** | Forgejo — free, open-source software; one of the charity's volunteers keeps a backup copy of the site's source and history on their own equipment |
 
 ## Keeping the site resilient
 
 The live site depends on one hosting provider, which is reliable but not something the charity controls directly.
 
-As an extra, informal safeguard — not something the charity provisions, funds, or can rely on — a volunteer separately keeps an unofficial mirror of the site's source and edit history on [Forgejo](https://forgejo.org/), an open-source, self-hosted alternative to GitHub, along with a standby copy of the built website, both on their own personal equipment. If it were ever needed, this could give a head start on bringing a working copy of the site back online elsewhere, but it isn't maintained to any guaranteed standard and shouldn't be treated as a formal backup.
+One of the charity's volunteers separately keeps a mirror of the site's source and edit history on [Forgejo](https://forgejo.org/), an open-source, self-hosted alternative to GitHub, along with a standby copy of the built website, both on their own equipment. If it were ever needed, this could give a head start on bringing a working copy of the site back online elsewhere.
 
 ## Who can make changes
 
@@ -75,7 +75,7 @@ No confidential or sensitive personal information is published on this public we
 - **Images:** automatically resized into multiple resolutions and converted to modern formats at build time, so visitors never download a full-size original unnecessarily
 - **DNS:** the domain's DNS records point to GitHub Pages; these are standard, publicly resolvable records that can be checked independently with tools such as `dig`, `nslookup`, or any online DNS lookup service
 - **TLS/HTTPS:** certificates are issued and renewed automatically by the hosting platform
-- **Informal backup:** a volunteer separately keeps an unofficial mirror of the repository on [Forgejo](https://forgejo.org/) — a fully open-source, self-hosted Git platform comparable to GitHub — plus a standby build of the site, both on their own personal infrastructure. This is a best-effort extra, not a charity-run or guaranteed backup
+- **Backup:** one of the charity's volunteers keeps a mirror of the repository on [Forgejo](https://forgejo.org/) — a fully open-source, self-hosted Git platform comparable to GitHub — plus a standby build of the site, both on their own infrastructure
 
 ## Questions
 
