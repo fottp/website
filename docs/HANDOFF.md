@@ -113,6 +113,7 @@ The scripts used to build the Archive and Gallery sections from the charity's tw
 - **The old site's translator** — deliberately not replicated; would need a third-party script and a cookie banner.
 - **ICO registration** — whether FOTTP needs to register with the ICO (Information Commissioner's Office) or already qualifies for the small-charity/not-for-profit exemption. `/privacy-and-cookies/` deliberately says nothing about registration status either way until this is confirmed.
 - **Domain and email ownership** — `fottp.org`/`fottp.org.uk` and their DNS/email are currently under the maintainer's personal DomainBox and Fastmail accounts, not the charity's. In progress (DomainBox support asked, 23 September 2026, about a charity-owned account); full status and plan in [`fottp/infrastructure`](https://github.com/fottp/infrastructure)'s `DOMAINS-AND-EMAIL.md`.
+- **Git hosting platform** — everything currently depends on GitHub (repo, Pages hosting, Actions, the CMS's sign-in). Not an active plan to move, but what's actually coupled to GitHub versus easily replaceable is written up in [`fottp/infrastructure`](https://github.com/fottp/infrastructure)'s `GIT-HOSTING.md`.
 - **Housekeeping** — update the GitHub Actions versions (a Node 20 deprecation warning; checkout, configure-pages, upload-pages-artifact).
 
 ### Content

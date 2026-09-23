@@ -21,6 +21,7 @@ Contact and Membership post to `forms.fottp.org.uk`, a small self-hosted relay (
 ## Invariants
 - `static/CNAME` exactly `www.fottp.org.uk`.
 - Never commit `public/`, `resources/_gen/`, `.hugo_build.lock`.
+- For anything touching moving off GitHub (repo, Pages, Actions, or the CMS's backend), read `fottp/infrastructure`'s `GIT-HOSTING.md` first — it covers what's actually coupled to GitHub versus easily replaceable, and it's not uniform across platforms.
 - DNS/email at Fastmail (gruntfutuk) — don't suggest Cloudflare. For anything touching domain ownership, DNS/email records, or moving providers, read `fottp/infrastructure`'s `DOMAINS-AND-EMAIL.md` first — full status and plan live there, not here.
 - No contact details in plain text sitewide or in content/ — use the forms.
 - `git fetch`/`pull --rebase` before pushing; expect concurrent CMS/gruntfutuk commits on main; read the diff first.
