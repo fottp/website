@@ -104,11 +104,30 @@ Where a job belongs to a role (secretary, treasurer…) an *editor* account (nev
 The scripts used to build the Archive and Gallery sections from the charity's two previous sites, and to maintain them since (the scrapers, the Archive PDF builder, the photo pipeline, alt-text tooling), live in [`fottp/infrastructure`](https://github.com/fottp/infrastructure) (private) under `recovery-tools/`, not in this repo. Not needed to run the site day to day.
 
 ## Open items
-**Decisions:** the GitHub non-profit application (pending: only make the repo private once the Team plan is in place, see "GitHub plan"); analytics (none, or a cookieless option such as Plausible or GoatCounter, so no banner is needed); the second GitHub owner; what to do with `fottp.co.uk` (redirect or let it lapse in May 2027, after the new site is agreed); the translator, deliberately not replicated (it would need a third-party script and a cookie banner); **whether FOTTP needs to register with the ICO (Information Commissioner's Office) or already qualifies for the small-charity/not-for-profit exemption** — `/privacy-and-cookies/` deliberately says nothing about registration status either way until this is confirmed. **Domain ownership:** `fottp.org` and `fottp.org.uk` are currently held under the maintainer's personal DomainBox reseller account (`kyberdomains`), not a charity-owned one — emailed DomainBox support (23 September 2026) asking whether a reseller account can be opened directly in the charity's name, whether the domains can be moved into it internally (rather than an external transfer), whether that avoids `fottp.org`'s current `clientTransferProhibited` status (the standard 60-day post-registration lock, due to clear ~8 November 2026), and whether the account can support more than one login. Awaiting reply. **Email has no equivalent dependency on the Fastmail account itself:** the domain's role addresses (e.g. `secretary@fottp.org.uk`) are plain Fastmail forwards to external inboxes (Outlook.com addresses the current chair manages, outside this setup entirely) — no mail is actually stored in Fastmail. So as long as the charity controls where the domain's nameservers point (the DomainBox item above), MX and the `fottp.org` → `www.fottp.org.uk` redirect (also currently a Fastmail feature) could be recreated at any provider with no data loss; nobody needs Fastmail account access for this. **Housekeeping:** update the GitHub Actions versions (a Node 20 deprecation warning; checkout, configure-pages, upload-pages-artifact).
 
-**Content:** confirm the Fun Run role; verify the home page figures (200+ members, 30+ events, 100+ projects); Our Projects still needs a real photo for "clearing overhanging trees" and full-size photos for its named past sessions; the Wednesday volunteering page has a TODO for what to bring; the old WordPress site's six events were not imported; the 138 alt texts that weren't rewritten by hand deserve a proper review.
+### Decisions
+- **GitHub non-profit application** — pending; only make the repo private once the Team plan is in place (see "GitHub plan" above).
+- **Analytics** — none, or a cookieless option such as Plausible or GoatCounter, so no banner is needed.
+- **Second GitHub owner** — not yet added.
+- **`fottp.co.uk`** — redirect it, or let it lapse in May 2027, once the new site is agreed.
+- **The old site's translator** — deliberately not replicated; would need a third-party script and a cookie banner.
+- **ICO registration** — whether FOTTP needs to register with the ICO (Information Commissioner's Office) or already qualifies for the small-charity/not-for-profit exemption. `/privacy-and-cookies/` deliberately says nothing about registration status either way until this is confirmed.
+- **Domain and email ownership** — `fottp.org`/`fottp.org.uk` and their DNS/email are currently under the maintainer's personal DomainBox and Fastmail accounts, not the charity's. In progress (DomainBox support asked, 23 September 2026, about a charity-owned account); full status and plan in [`fottp/infrastructure`](https://github.com/fottp/infrastructure)'s `DOMAINS-AND-EMAIL.md`.
+- **Housekeeping** — update the GitHub Actions versions (a Node 20 deprecation warning; checkout, configure-pages, upload-pages-artifact).
 
-**Not yet tested in the live CMS:** the date pickers, skipped dates, creating or deleting an event, the Archive and Gallery forms, a live photo upload with the shrinking, and `/admin/` on a phone.
+### Content
+- Confirm the Fun Run role.
+- Verify the home page figures (200+ members, 30+ events, 100+ projects).
+- Our Projects still needs a real photo for "clearing overhanging trees" and full-size photos for its named past sessions.
+- The Wednesday volunteering page has a TODO for what to bring.
+- The old WordPress site's six events were not imported.
+- The 138 alt texts that weren't rewritten by hand deserve a proper review.
+
+### Not yet tested in the live CMS
+- The date pickers, skipped dates, creating or deleting an event.
+- The Archive and Gallery forms.
+- A live photo upload with the shrinking.
+- `/admin/` on a phone.
 
 ## Working preferences
 Step by step: run one command, check the output, then continue. British English. Windows and PowerShell commands. Don't touch the old sites. Before committing, look at exactly what is staged (`git diff --cached --name-only`): moves and renames staged earlier get swept into the next commit. After layout or Hugo changes, `hugo --minify --logLevel warn` must print nothing, and the phone menu should be opened on every page type.
