@@ -10,8 +10,7 @@
 # The last matching pattern wins, and a pattern with no owner means "no review
 # needed", so `/content/` below opens up just that folder.
 #
-# TODO: add the second owner (or an org team, e.g. @fottp/website-owners) on
-# the first line once decided; a code owner can't approve their own changes.
+# A code owner can't approve their own changes, which is why there are two below.
 
-*           @gruntfutuk
+*           @gruntfutuk @adioan
 /content/

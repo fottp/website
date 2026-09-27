@@ -18,7 +18,7 @@ Both are **read-only for us: never change them.**
 | Domains | `fottp.org` and `fottp.org.uk`, registered via DomainBox (gruntfutuk is a reseller). `fottp.org` redirects to `www.fottp.org.uk` (Fastmail "website redirect"). |
 | DNS and email | **Fastmail**, for both domains (MX included). |
 | Site | Apex `A` 185.199.108–111.153 and `AAAA` 2606:50c0:8000–8003::153 (GitHub Pages); `www` is a CNAME to `fottp.github.io`; the apex redirects to `www`; HTTPS enforced. `static/CNAME` must be exactly `www.fottp.org.uk`. |
-| GitHub | Organisation **fottp** (2FA required, domains verified) on the **Free** plan, with the **public** repo **fottp/website**. Owner: gruntfutuk's account; a second owner is still to be added. A free Team account has been applied for through GitHub's non-profit programme, so the repo can go private: see "GitHub plan" below. |
+| GitHub | Organisation **fottp** (2FA required, domains verified) on the **Free** plan, with the **public** repo **fottp/website**. Owners: gruntfutuk's and adioan's accounts (adioan is also a charity trustee). A free Team account has been applied for through GitHub's non-profit programme, so the repo can go private: see "GitHub plan" below. |
 | Deploy | GitHub Actions (`.github/workflows/hugo.yml`): on every push to `main` (except one that only changes `docs/` or `CLAUDE.md`, which changes nothing on the site; tested on 20 September 2026: a docs-only push started no build), on demand, and **every night at 00:20 UTC**. Hugo **0.166.0 extended** is pinned there: bump it and the local copy together. A build takes under a minute. |
 | Git | Commits use the GitHub noreply address; the repo stores LF line endings. |
 
@@ -103,7 +103,6 @@ The scripts used to build the Archive and Gallery sections from the charity's tw
 ### Decisions
 - **GitHub non-profit application** — pending; only make the repo private once the Team plan is in place (see "GitHub plan" above).
 - **Analytics** — none, or a cookieless option such as Plausible or GoatCounter, so no banner is needed.
-- **Second GitHub owner** — not yet added.
 - **`fottp.co.uk`** — redirect it, or let it lapse in May 2027, once the new site is agreed.
 - **The old site's translator** — deliberately not replicated; would need a third-party script and a cookie banner.
 - **ICO registration** — whether FOTTP needs to register with the ICO (Information Commissioner's Office) or already qualifies for the small-charity/not-for-profit exemption. `/privacy-and-cookies/` deliberately says nothing about registration status either way until this is confirmed.
