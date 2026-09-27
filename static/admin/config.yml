@@ -60,7 +60,21 @@ collections:
         public_folder: ""
         fields:
           - {label: Title, name: title, widget: string}
-          - {label: Content, name: body, widget: markdown}
+          - {label: Introduction, name: description, widget: text, hint: "One or two sentences shown above the partner logos."}
+          - {label: About the park, name: council_note, widget: markdown, hint: "Shown above the partner logos, set apart by a rule — Telford & Wrekin Council owns and manages the park, so this stays more prominent than the partners below it."}
+          - label: Partners
+            name: partners
+            widget: list
+            label_singular: Partner
+            summary: "{{fields.name}}"
+            thumbnail: logo
+            hint: "In the order they're shown. Telford & Wrekin Council owns and manages the park, so it's kept first."
+            fields:
+              - {label: Name, name: name, widget: string, hint: "Shown as their name, and read out by screen readers, so there's no separate alt text to fill in."}
+              - {label: Logo, name: logo, widget: image, choose_url: false}
+              - {label: Website, name: url, widget: string, required: false, hint: "Optional, starting https://. Makes their logo and name a link to their site."}
+              - {label: What they do for FOTTP, name: description, widget: text, required: false, hint: "Optional. One sentence shown under their name — also what makes them findable by search."}
+          - {label: Content, name: body, widget: markdown, hint: "Shown below the partner logos."}
 
       - name: our-projects
         label: Our Projects

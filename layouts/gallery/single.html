@@ -24,7 +24,9 @@
               {{- if not $small }}{{ if $landscape }}{{ $thumb = $img.Fill "480x320 q72" }}{{ else }}{{ $thumb = $img.Fill "360x360 q72" }}{{ end }}{{ end }}
               {{- /* Every thumbnail needs a name a screen reader can read: real alt text if written, else the caption, else "Photo 3 of 40 in ...". */ -}}
               {{- $name := $p.alt | default ($p.caption | default (printf "Photo %d of %d in %s" (add $i 1) $count $.Title)) }}
-          <li{{ if $small }} class="fottp-small"{{ end }}><a href="{{ $img.RelPermalink }}" data-pswp-width="{{ $img.Width }}" data-pswp-height="{{ $img.Height }}"{{ with $p.caption }} data-caption="{{ . }}"{{ end }}><img src="{{ $thumb.RelPermalink }}" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}" alt="{{ $name }}" loading="lazy" decoding="async"></a></li>
+              {{- /* A stable id so search results (and anyone else) can link straight to this photo. */ -}}
+              {{- $anchor := partial "gallery/photo-anchor.html" (dict "image" $p.image) }}
+          <li id="{{ $anchor }}"{{ if $small }} class="fottp-small"{{ end }}><a href="{{ $img.RelPermalink }}" data-pswp-width="{{ $img.Width }}" data-pswp-height="{{ $img.Height }}"{{ with $p.caption }} data-caption="{{ . }}"{{ end }}><img src="{{ $thumb.RelPermalink }}" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}" alt="{{ $name }}" loading="lazy" decoding="async"></a></li>
             {{- else }}
               {{- warnf "gallery: %s lists %q, which isn't in its folder" $.File.Path $p.image }}
             {{- end }}
@@ -35,6 +37,22 @@
       </main>
     </article>
   </div>
+  <script>
+    {{- /* A search result links to a specific photo's #anchor (assets/json/search-data.json).
+           The browser scrolls it into view on its own, but only moves focus there if the target
+           is itself focusable — our <li> isn't, so without this a screen reader would have no way
+           to tell which photo the link was about. Focusing the photo's own link instead announces
+           it exactly as if the person had tabbed to it (its accessible name is the alt text), and
+           preventScroll avoids a second, possibly slightly different scroll on top of the
+           browser's own. */ -}}
+    (() => {
+      const grid = document.getElementById('gallery');
+      const id = decodeURIComponent(location.hash.slice(1));
+      if (!grid || !id) return;
+      const link = grid.querySelector('#' + CSS.escape(id) + ' a');
+      if (link) link.focus({ preventScroll: true });
+    })();
+  </script>
   <script type="module">
     (async () => {
       const grid = document.getElementById('gallery');

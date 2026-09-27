@@ -39,6 +39,16 @@
 @media (min-width: 768px) { .fottp-cards { grid-template-columns: repeat(3, 1fr); } }
 .fottp-card h3 { margin: 0.75rem 0 0.25rem; font-size: 1.125rem; font-weight: 700; }
 
+/* Our Partners: logos vary a lot in shape, so (unlike the photo/news thumbnails above) they're
+   shown uncropped at a consistent height rather than cropped to fill the card. */
+.fottp-partner-logo { display: block; max-height: 3.5rem; width: auto; max-width: 100%; }
+/* Sets the note about the park itself apart from the partner logos below it, the same way
+   .fottp-latest sets the home page's news strip apart from what's above. */
+.fottp-partners-note { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #e0e0e0; }
+/* The specific partner a search result links to (its #anchor) — same reasoning and outline as
+   .fottp-photos li:target above. */
+.fottp-partner:target { outline: 3px solid hsl(107 69% 30%); outline-offset: 4px; border-radius: 0.375rem; }
+
 /* Contact / membership pages: form beside the text */
 .fottp-contact { display: grid; gap: 2rem; }
 @media (min-width: 768px) { .fottp-contact { grid-template-columns: 1fr 1fr; } }
@@ -126,6 +136,9 @@ a.fottp-button-secondary:hover { background: #f3f8f1; color: hsl(107 69% 19%); }
 .fottp-photos a:hover img, .fottp-photos a:focus-visible img { transform: scale(1.04); }
 .fottp-photos a:focus-visible { outline: 3px solid hsl(107 69% 30%); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .fottp-photos img { transition: none; } .fottp-photos a:hover img, .fottp-photos a:focus-visible img { transform: none; } }
+/* The specific photo a search result links to (its #anchor) — otherwise landing on the page gives
+   no visible sign of which one matched. Same outline as the focus-visible style just above. */
+.fottp-photos li:target a { outline: 3px solid hsl(107 69% 30%); outline-offset: 2px; }
 /* The caption along the bottom of the enlarged photo */
 .pswp__fottp-caption { position: absolute; left: 0; right: 0; bottom: 0; padding: 2rem 1rem 0.9rem; text-align: center; color: #fff; font-size: 1rem; line-height: 1.4; background: linear-gradient(transparent, rgba(0, 0, 0, 0.65)); pointer-events: none; }
 .pswp__fottp-caption[hidden] { display: none; }
