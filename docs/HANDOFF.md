@@ -1,16 +1,30 @@
 # FOTTP website — handover
 
-_Updated 23 September 2026. This describes how the site is now and why; how it got here is in the Git history. Working conventions for anyone (or any tool) changing the repo are in `CLAUDE.md`._ Maintained by **gruntfutuk** (GitHub username; not a trustee of the charity).
+_Updated 27 September 2026. This describes how the site is now and why; how it got here is in the Git history. Working conventions for anyone (or any tool) changing the repo are in `CLAUDE.md`._ Maintained by **gruntfutuk** (GitHub username; not a trustee of the charity).
 
 ## What this is
-`www.fottp.org.uk` is a proof-of-concept replacement for the charity's websites: a static [Hugo](https://gohugo.io) site kept in Git and hosted free on GitHub Pages. Committee members and other volunteers who have been given authorised access edit it through a web form (Sveltia CMS) or through Git, so the content isn't locked inside one person's account or tooling. It holds largely the same content as the charity's current site, plus material recovered from its older one. It uses no cookies, no trackers, no third-party scripts and no CDNs.
+`www.fottp.org.uk` is a proof-of-concept replacement for the charity's websites: a static [Hugo](https://gohugo.io) site kept in Git and hosted free on GitHub Pages. Committee members and other volunteers who have been given authorised access edit it through a web form (Sveltia CMS) or through Git, so the content isn't locked inside one person's account or tooling.
+
+It holds largely the same content as the charity's current site, plus material recovered from its older one. It uses no cookies, no trackers, no third-party scripts and no CDNs.
 
 ## The sites it draws on
 Both are **read-only for us: never change them.**
 
-**https://www.fottp.co.uk — the charity's current, definitive site.** Built on IONOS "MyWebsite Now" (a WordPress-based site builder) and run day to day by a current trustee. Domain registered 28 May 2026 with IONOS, expires 28 May 2027, registrant hidden. Five pages: home, about, partners, projects, contact. Its WordPress REST API is disabled, so the content was scraped from the rendered pages (`scrape_old_site.py`; it may need a browser-like User-Agent). Its extras were **not** carried over: an embedded contact form and Google Map, IONOS SiteAnalytics behind a cookie banner, and a flag "language selector" that is only IONOS's Website Translator plugin wrapping Google's browser-side machine translation, with its own cookie consent and no real translations behind it. The new site has its own self-hosted form relay (see "Forms and map" below) rather than an embedded form, an OpenStreetMap map, no analytics and no translator. Plan: redirect or let it lapse once the new site is agreed.
+**https://www.fottp.co.uk — the charity's current, definitive site.** Built on IONOS "MyWebsite Now" (a WordPress-based site builder) and run day to day by a current trustee. Domain registered 28 May 2026 with IONOS, expires 28 May 2027, registrant hidden. Five pages: home, about, partners, projects, contact.
 
-**https://friendsoftelfordtownpark.org — an older WordPress site the charity can no longer maintain.** WordPress 5.4.21 (five or more releases behind), the commercial ThemeForest theme "Barletta" plus a child theme, built with SiteOrigin Page Builder. Plugins include The Events Calendar, Contact Form 7, Custom Facebook Feed, Photo Gallery, Social Icons and PixelYourSite (a Facebook tracking pixel, which is the kind of thing the new site avoids). Hosting is split: DNS and email at IONOS, the website itself on a server run by Dawley Web Design (their own nginx, with custom plugins `dwd-carousel` and `dwd-custom-func`). That split and the ageing core are why it can't be kept up. Its REST API was open, so everything was saved as JSON: 50 pages, 85 posts, 6 events (2016–2018) and 1,278 media items, about 2 GB in all, into `import-friendsoftelfordtownpark/` (not in Git; scraper `scrape_friendsoftelfordtownpark.py`). What has moved across: **44 PDFs into the Archive, and 224 photos into the Gallery**. Its pages, posts and six events were not carried over.
+Its WordPress REST API is disabled, so the content was scraped from the rendered pages (`scrape_old_site.py`; it may need a browser-like User-Agent).
+
+Its extras were **not** carried over: an embedded contact form and Google Map, IONOS SiteAnalytics behind a cookie banner, and a flag "language selector" that is only IONOS's Website Translator plugin wrapping Google's browser-side machine translation, with its own cookie consent and no real translations behind it. The new site has its own self-hosted form relay (see "Forms and map" below) rather than an embedded form, an OpenStreetMap map, no analytics and no translator.
+
+Plan: redirect or let it lapse once the new site is agreed.
+
+**https://friendsoftelfordtownpark.org — an older WordPress site the charity can no longer maintain.** WordPress 5.4.21 (five or more releases behind), the commercial ThemeForest theme "Barletta" plus a child theme, built with SiteOrigin Page Builder. Plugins include The Events Calendar, Contact Form 7, Custom Facebook Feed, Photo Gallery, Social Icons and PixelYourSite (a Facebook tracking pixel, which is the kind of thing the new site avoids).
+
+Hosting is split: DNS and email at IONOS, the website itself on a server run by Dawley Web Design (their own nginx, with custom plugins `dwd-carousel` and `dwd-custom-func`). That split and the ageing core are why it can't be kept up.
+
+Its REST API was open, so everything was saved as JSON: 50 pages, 85 posts, 6 events (2016–2018) and 1,278 media items, about 2 GB in all, into `import-friendsoftelfordtownpark/` (not in Git; scraper `scrape_friendsoftelfordtownpark.py`).
+
+What has moved across: **44 PDFs into the Archive, and 224 photos into the Gallery**. Its pages, posts and six events were not carried over.
 
 ## Live setup
 | | |
@@ -27,7 +41,9 @@ The nightly rebuild matters because the site is static: "upcoming" and "past" ev
 This document describes how things currently are, not a full runbook for changing them. Step-by-step technical detail for rebuilding this setup elsewhere, moving to a different host, domain registrar or DNS/email provider, or reverting the form relay to a hosted service instead, is kept in [`fottp/infrastructure`](https://github.com/fottp/infrastructure) (private) rather than here.
 
 ### GitHub plan
-On the **Free** plan GitHub Pages can only publish from a **public** repository, which is why the repo is public today. The maintainer has **applied to GitHub's non-profit programme for a free Team account** (outcome pending). If it is granted, the repo can be made **private** and the site will still publish, because the Team plan allows Pages from private repos. The published site stays public either way: a private repo hides the source, not the website.
+On the **Free** plan GitHub Pages can only publish from a **public** repository, which is why the repo is public today. The maintainer has **applied to GitHub's non-profit programme for a free Team account** (outcome pending).
+
+If it is granted, the repo can be made **private** and the site will still publish, because the Team plan allows Pages from private repos. The published site stays public either way: a private repo hides the source, not the website.
 
 **Do not make the repo private on the Free plan:** the site would stop publishing. Wait until the organisation is actually on the Team plan (org Settings → Billing and plans).
 
@@ -43,17 +59,30 @@ On the **Free** plan GitHub Pages can only publish from a **public** repository,
 **Layout.** `hugo.toml` (menu, form keys, theme settings); `content/` (Markdown page bundles, with photos beside their page); `layouts/`, `assets/css/custom.css`, `data/` (our changes to the theme); `static/` (CNAME, logo, favicons, the CMS in `admin/`, the photo viewer in `vendor/photoswipe/`). Never commit `public/`, `resources/_gen/` or `.hugo_build.lock`.
 
 ### Theme
-**[Hextra](https://github.com/imfing/hextra), pinned at v0.12.3.** Chosen because it is MIT with no credit required (the previous theme's licence demanded a footer link to a defunct site), actively maintained, ships pre-built CSS (no Node or Go), is light (about 26 KB of page code), and scored **zero WCAG 2.x A/AA violations** (axe-core, every page, desktop and phone). It is a **copy** in `themes/hextra/`, not a submodule, because Windows Git rewrote its line endings and broke its templates; `.gitattributes` forces LF. **Never edit inside it.** Our changes live in the site's own `layouts/`, `assets/` and `static/`: the green title banner and "Follow us" bar, the home page news and events strips, the footer, favicons made from the logo, the forms, responsive images, the map, and the events, archive and gallery layouts. `.github/theme-pin.json` lists which theme files we override and depend on. `custom.css` also carries one fix for a Hextra flaw: while the phone menu is closed its links can still be tabbed into.
+**[Hextra](https://github.com/imfing/hextra), pinned at v0.12.3.** Chosen because it is MIT with no credit required (the previous theme's licence demanded a footer link to a defunct site), actively maintained, ships pre-built CSS (no Node or Go), is light (about 26 KB of page code), and scored **zero WCAG 2.x A/AA violations** (axe-core, every page, desktop and phone).
+
+It is a **copy** in `themes/hextra/`, not a submodule, because Windows Git rewrote its line endings and broke its templates; `.gitattributes` forces LF. **Never edit inside it.**
+
+Our changes live in the site's own `layouts/`, `assets/` and `static/`: the green title banner and "Follow us" bar, the home page news and events strips, the footer, favicons made from the logo, the forms, responsive images, the map, and the events, archive and gallery layouts. `.github/theme-pin.json` lists which theme files we override and depend on.
+
+`custom.css` also carries one fix for a Hextra flaw: while the phone menu is closed its links can still be tabbed into.
+
 ### Theme upkeep
 - *Upkeep:* the pin means nothing changes unless we decide. `theme-release-watch.yml` runs every Monday and opens one GitHub issue if Hextra publishes a newer release, listing which of our overrides changed. To update: read it, run `python scripts/vendor_theme.py <tag>`, re-apply our edits, build with `hugo --minify --logLevel warn` (expect **no warnings**), check every page type at desktop and phone width with the phone menu open, set `tag` in the pin file, commit together. Hextra needs Hugo 0.146 or newer.
 - *Gotchas:* the phone menu is drawn by `sidebar.html`, so any layout that omits it gets a hamburger that opens nothing; Hextra's CSS is pre-built, so new class names need rules in `custom.css`; test servers should use an unused port, not 1313.
 - *Phone menu:* it should list only the 8 main pages. The pages inside News, Events, Archive and Gallery are kept out with `sidebar.exclude` in each section's `_index.md`; the section page itself says `exclude: false`, because a `cascade` also applies to the page it sits in (the same is true of the `build` settings on the Archive).
 
 ### Images
-At build time Hugo makes 480, 800 and 1200px copies (never enlarged, quality 82) and the browser picks one (`layouts/_partials/responsive-img.html`). A PNG is served as WebP (transparency kept), so a multi-megabyte PNG never reaches a visitor; JPEGs stay JPEGs. The `width` and `height` attributes deliberately use the original's size: using the copy's shrinks photos and stops them filling the column. Photos uploaded in the CMS are **shrunk in the browser to at most 1600px and saved as WebP** at quality 82 (`media_libraries` in `static/admin/config.yml`; iPhone HEIC works, an animated GIF would become a still). Photos committed by hand should be at most 1600px JPEG at about quality 82. Gallery photos are 1200px at quality 72 with camera data stripped.
+At build time Hugo makes 480, 800 and 1200px copies (never enlarged, quality 82) and the browser picks one (`layouts/_partials/responsive-img.html`). A PNG is served as WebP (transparency kept), so a multi-megabyte PNG never reaches a visitor; JPEGs stay JPEGs. The `width` and `height` attributes deliberately use the original's size: using the copy's shrinks photos and stops them filling the column.
+
+Photos uploaded in the CMS are **shrunk in the browser to at most 1600px and saved as WebP** at quality 82 (`media_libraries` in `static/admin/config.yml`; iPhone HEIC works, an animated GIF would become a still). Photos committed by hand should be at most 1600px JPEG at about quality 82. Gallery photos are 1200px at quality 72 with camera data stripped.
 
 ### Forms and map
-Contact and Membership post to `forms.fottp.org.uk`, a small self-hosted relay that replaced Web3Forms (September 2026) — Web3Forms is closed-source and the alternative was worth building. The markup is in `layouts/_partials/webform.html` and `layouts/page/contact-form.html`, **never in `content/`**, so the CMS can't see or break them; raw HTML in Markdown is off. `hugo.toml`'s `[params.webforms.*]` only holds per-form display text now (labels, button text) — the relay's own config decides recipients, from-address and subject, keyed by form name (`contact`/`membership`, matching the URL path each form posts to). No contact details appear in plain text anywhere on the site (to stop scraping): people use the forms. The map on Contact Us is an OpenStreetMap embed (`osm-map` shortcode): no key, account or cookies.
+Contact and Membership post to `forms.fottp.org.uk`, a small self-hosted relay that replaced Web3Forms (September 2026) — Web3Forms is closed-source and the alternative was worth building.
+
+The markup is in `layouts/_partials/webform.html` and `layouts/page/contact-form.html`, **never in `content/`**, so the CMS can't see or break them; raw HTML in Markdown is off. `hugo.toml`'s `[params.webforms.*]` only holds per-form display text now (labels, button text) — the relay's own config decides recipients, from-address and subject, keyed by form name (`contact`/`membership`, matching the URL path each form posts to).
+
+No contact details appear in plain text anywhere on the site (to stop scraping): people use the forms. The map on Contact Us is an OpenStreetMap embed (`osm-map` shortcode): no key, account or cookies.
 
 **The relay itself** lives entirely outside this repo, on Oracle Cloud (Always Free tier, no cost). Full
 deployment detail, the current live setup and mail-flow reasoning are in
@@ -67,11 +96,19 @@ deployment detail, the current live setup and mail-flow reasoning are in
 
 ## Editing and access
 ### Signing in and editing
-**Who and how.** An editor needs a GitHub account (2FA on), an accepted invitation to the `fottp` organisation and membership of its `editors` team (Write access to `fottp/website`). At `https://www.fottp.org.uk/admin/` they choose "Sign In with Token" and create a **fine-grained token** on the page it opens, changing three things or it won't work: **Resource owner** `fottp` (not their own account); **Repository access** only `fottp/website`; **Permissions** Contents *and* Pull requests both Read and write (Metadata: Read is automatic). The organisation requires an owner to approve each fine-grained token (org Settings → Third-party Access → Personal access tokens → Pending requests), and tokens expire and must be redone. The browser remembers the token; Sign Out clears it. This avoids a separate login service (which CLAUDE.md would want signed off).
+**Who and how.** An editor needs a GitHub account (2FA on), an accepted invitation to the `fottp` organisation and membership of its `editors` team (Write access to `fottp/website`).
 
-**Making a change.** Every save becomes a draft pull request and nothing is live until published: open an entry, **Save**, **Send for review**, set **Status** to **Ready**, then **Publish**. The site rebuilds and is live in a minute or two. The Editorial Workflow board (Draft / In Review / Ready) is the branch-and-pencil icon, third from the left at the top. **Never merge a CMS pull request on GitHub itself:** only Publish deletes its `cms/…` branch, and a leftover one makes the CMS think the entry is unpublished. (The repo also auto-deletes merged branches.)
+At `https://www.fottp.org.uk/admin/` they choose "Sign In with Token" and create a **fine-grained token** on the page it opens, changing three things or it won't work: **Resource owner** `fottp` (not their own account); **Repository access** only `fottp/website`; **Permissions** Contents *and* Pull requests both Read and write (Metadata: Read is automatic).
 
-**What's editable:** the nine pages (Home, About Us, Our Partners, Our Projects, Contact Us, Become a Member, How This Website Works, Privacy & Cookies, Accessibility Statement), News, Events, Archive and Gallery. **Not editable:** the two forms. Photos and PDFs are added by dragging them onto the field: the picker dialog only lists files already on the site. The CMS rewrites an entry's front matter when it saves (comments removed, unset fields written as `''` or `[]`); the site copes. Deleting a published entry opens a pull request that must then be confirmed on the workflow board; not yet tried.
+The organisation requires an owner to approve each fine-grained token (org Settings → Third-party Access → Personal access tokens → Pending requests), and tokens expire and must be redone. The browser remembers the token; Sign Out clears it. This avoids a separate login service (which CLAUDE.md would want signed off).
+
+**Making a change.** Every save becomes a draft pull request and nothing is live until published: open an entry, **Save**, **Send for review**, set **Status** to **Ready**, then **Publish**. The site rebuilds and is live in a minute or two. The Editorial Workflow board (Draft / In Review / Ready) is the branch-and-pencil icon, third from the left at the top.
+
+**Never merge a CMS pull request on GitHub itself:** only Publish deletes its `cms/…` branch, and a leftover one makes the CMS think the entry is unpublished. (The repo also auto-deletes merged branches.)
+
+**What's editable:** the nine pages (Home, About Us, Our Partners, Our Projects, Contact Us, Become a Member, How This Website Works, Privacy & Cookies, Accessibility Statement), News, Events, Archive and Gallery. **Not editable:** the two forms. Photos and PDFs are added by dragging them onto the field: the picker dialog only lists files already on the site.
+
+The CMS rewrites an entry's front matter when it saves (comments removed, unset fields written as `''` or `[]`); the site copes. Deleting a published entry opens a pull request that must then be confirmed on the workflow board; not yet tried.
 
 **If something goes wrong.**
 - *"Resource not accessible by personal access token" on save:* the token can write files but not open pull requests. Set Pull requests to Read and write on the token, delete the stray `cms/…` branch, hard-refresh the CMS (Ctrl+F5) and redo the edit.
@@ -80,10 +117,46 @@ deployment detail, the current live setup and mail-flow reasoning are in
 - *Local testing of the CMS:* run `hugo server`, open `/admin/` in Chrome or Edge and choose "Work with Local Repository", then pick the folder holding `hugo.toml`. It writes straight to files, does no Git operations and skips the review steps. **Don't** use "Sign In with Token" locally: that goes to the real repository.
 
 ### Access and review
-GitHub can't confine an editor to one folder, so protection comes from review: the CMS runs in `editorial_workflow` mode; `.github/CODEOWNERS` makes the owners code owners of everything except `/content/`; and a branch ruleset on `main` requires a pull request with code-owner review (0 required approvals), blocks force pushes and deletion, and lets repository admins bypass it, so an owner's Git push goes straight through (GitHub logs "Bypassed rule violations"), while an owner editing in the CMS follows the same Save → Ready → Publish steps as anyone else. Verified: editors can publish content without approval; an editor's change outside `content/` is held for owner review. Only indirectly confirmed: that an editor's *direct push* to `main` is refused. Don't judge the rule from the API's `mergeable_state` (it reads `clean` when not logged in); check the pull request page. **People:** at least two named owners, none shared; editors in the `editors` team. Adding the second owner also means adding them to `CODEOWNERS` (a code owner can't approve their own change).
+
+**The terms, untangled:**
+
+| Term in this doc | What it actually is | Who it is, right now |
+|---|---|---|
+| **Owner** | Our plain-English name for a GitHub **Organization Owner** of `fottp` | gruntfutuk, adioan |
+| **Organization Admin** | GitHub's own internal name for that *exact same* role — it only shows up when reading the ruleset's settings directly | the same two people |
+| **Code owner** | Whoever `.github/CODEOWNERS` names for a given file path — a separate, file-based assignment, not a GitHub role | currently the same two people, for everything except `/content/` |
+| **Editor** | A member of the `editors` GitHub team — Write access to the repo, but not an Owner | CMS users, e.g. committee members |
+
+"Owner" and "Organization Admin" are the same people wearing the same hat — just two names for one role, plain-English versus GitHub's own term. "Code owner" is a *different* mechanism entirely (a file, not a role) that happens, by our own choice, to name the same two people.
+
+**What that combination actually means for a pull request:**
+
+```
+                     changes ONLY /content/         changes anything else
+                    ────────────────────────       ────────────────────────
+  Editor opens it   No code owner is assigned      Needs an Owner to review
+                     to /content/, so no review     it before it can merge
+                     is required — merges freely
+  ─────────────────────────────────────────────────────────────────────────
+  Owner opens it    Same as an editor — no          Needs a code-owner
+                     review required                review too — but an
+                                                     Owner can bypass that
+                                                     one requirement and
+                                                     merge their own PR
+```
+
+Either way, a pull request always has to exist — the only thing that differs is whether someone else has to approve it before it merges.
+
+Verified: editors can publish content without approval; an editor's change outside `content/` is held for owner review; an owner's direct push to `main` is refused. Only indirectly confirmed: that an editor's *direct push* to `main` is refused. Don't judge the rule from the API's `mergeable_state` (it reads `clean` when not logged in); check the pull request page.
+
+**People:** two named owners (gruntfutuk, adioan), none shared; editors in the `editors` team. Adding a further owner also means adding them to `CODEOWNERS` (a code owner can't approve their own change).
 
 ### Role accounts and handover
-Where a job belongs to a role (secretary, treasurer…) an *editor* account (never an owner) can be tied to a role mailbox on the charity's domain (not listed here: this repo is currently public) and used by **one person at a time**, never shared. The mailbox is the recovery route, so it should reach the current holder and a second trustee; the holder controls their own 2FA and password, with recovery codes kept where the charity controls them; tokens always have an expiry. *Handover:* the outgoing holder revokes personal tokens and signs out other sessions; the mailbox is repointed; the incoming holder resets the password, sets up their own 2FA and new recovery codes, creates a new token (as above) and an owner approves it and revokes the old one, checking the account is in `editors` and nothing else.
+Where a job belongs to a role (secretary, treasurer…) an *editor* account (never an owner) can be tied to a role mailbox on the charity's domain (not listed here: this repo is currently public) and used by **one person at a time**, never shared.
+
+The mailbox is the recovery route, so it should reach the current holder and a second trustee; the holder controls their own 2FA and password, with recovery codes kept where the charity controls them; tokens always have an expiry.
+
+*Handover:* the outgoing holder revokes personal tokens and signs out other sessions; the mailbox is repointed; the incoming holder resets the password, sets up their own 2FA and new recovery codes, creates a new token (as above) and an owner approves it and revokes the old one, checking the account is in `editors` and nothing else.
 
 ## Decisions and policies
 - **Contact details:** none in plain text on the site or in `content/`; use the forms.
