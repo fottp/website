@@ -27,9 +27,9 @@ We have a wonderfully committed team here at the Friends of Telford Town Park.
 
 ![Volunteers at the Friends' Sensory Garden in Telford Town Park](sensory-garden.jpg)
 
-### Adrian Namara
+### Adrian Nimara
 
-![Adrian Namara](adrian-namara.jpg)
+![Adrian Nimara](adrian-namara.jpg)
 
 I was driving for Simmonds Transport when the company started collaborating with FOTTP. Getting to know the volunteers, I admired their dedication to maintaining and improving the park, so I've joined straight away. I am now semi-retired and it gives me immense joy to spend my free time working in the park along the Friends.
 
