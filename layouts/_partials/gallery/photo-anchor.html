@@ -1,0 +1,9 @@
+{{- /* A stable per-photo anchor id, derived from its filename (already unique within a
+       collection — Hugo resolves each photo's `image` to a resource in the page bundle) so it
+       doesn't change if photos are reordered or captions are edited. Shared by the photo grid
+       (layouts/gallery/single.html) and the search index (assets/json/search-data.json), which
+       must agree on it — change this in one place, not both.
+
+       @param {string} image A photo's `image` filename, e.g. "2514-dscn3215.jpg".
+*/ -}}
+{{- anchorize (strings.TrimSuffix (path.Ext .image) .image) -}}

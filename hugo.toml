@@ -53,6 +53,15 @@ disableKinds = ['taxonomy', 'term']
     pageRef    = "/contact-us"
     weight     = 8
 
+# The desktop navbar only shows the search box if a menu.main entry asks for it this way — the
+# phone menu (layouts/_partials/sidebar.html, part of the theme) shows it regardless, at the top,
+# so this doesn't create a duplicate there; sidebar.html skips any menu entry of this type.
+[[menu.main]]
+    name       = "Search"
+    weight     = 9
+    [menu.main.params]
+        type = "search"
+
 # "Follow us" bar: used only for social links, not contact details — an email
 # address in plain text sitewide is exactly what moving /contact-us/ to a
 # form was meant to avoid. `icon` is the name of a Hextra icon.
@@ -104,8 +113,15 @@ disableKinds = ['taxonomy', 'term']
     [params.theme]
         default = "light"
         displayToggle = false
+    # FlexSearch: entirely client-side (indexes/searches in the browser, no server, no
+    # cookies). `flexsearch.js` points at our own vendored copy (assets/js/vendor/flexsearch/,
+    # see VENDORED.md there) instead of the theme's default CDN fetch, so search stays
+    # self-hosted like the rest of the site.
     [params.search]
-        enable = false
+        enable = true
+        type = "flexsearch"
+        [params.search.flexsearch]
+            js = "js/vendor/flexsearch/flexsearch.bundle.min.js"
     [params.blog.list]
         pagerSize = 10
 

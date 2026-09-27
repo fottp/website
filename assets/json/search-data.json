@@ -1,0 +1,122 @@
+{{- /* Overrides the theme's version (themes/hextra/assets/json/search-data.json) to close two
+       gaps: it only indexes Kind "page"/"section" pages with a non-empty Markdown body, which
+       misses the home page (Kind "home") and anything that's front-matter-only — Archive's PDFs
+       and Gallery's photo collections, whose real content is in front matter (category, photo
+       alt text/captions), not the page body. Archive's documents also carry `build.list: local`
+       (content/archive/_index.md), which keeps them out of .Site.Pages even though they do have
+       a Kind of "page" and their own .Content — so they're fetched from the section directly
+       rather than relying on .Site.Pages picking them up. Gallery photos are also given their own
+       per-photo anchor, matching layouts/gallery/single.html, so a match links straight to the
+       photo rather than just the collection. See .github/theme-pin.json. */ -}}
+
+{{- $indexType := site.Params.search.flexsearch.index | default "content" -}}
+
+{{- if not (in (slice "content" "summary" "heading" "title" ) $indexType) -}}
+  {{- errorf "unknown flexsearch index type: %s" $indexType -}}
+{{- end -}}
+
+{{- $pages := where .Site.Pages "Kind" "in" (slice "home" "page" "section") -}}
+{{- $pages = where $pages "Params.excludeSearch" "!=" true -}}
+{{- $pages = where $pages "Content" "!=" "" -}}
+
+{{- $archiveDocs := slice -}}
+{{- with site.GetPage "archive" -}}
+  {{- $archiveDocs = where .Pages "Params.excludeSearch" "!=" true -}}
+{{- end -}}
+
+{{- $galleryCollections := slice -}}
+{{- with site.GetPage "gallery" -}}
+  {{- $galleryCollections = where .Pages "Params.excludeSearch" "!=" true -}}
+{{- end -}}
+
+{{- /* The category headings shown on the Archive page (layouts/archive/list.html's $kinds), so a
+       search for e.g. "newsletter" or "AGM" finds the right documents even when those words
+       aren't in every title. Keep the two lists in sync if the headings change. */ -}}
+{{- $archiveLabels := dict
+      "newsletters" "Explore newsletter"
+      "reports"     "Chairman's report"
+      "minutes"     "Minutes and agenda"
+      "leaflets"    "Programme, leaflet or plan"
+-}}
+
+{{- $output := dict -}}
+
+{{- range $index, $page := $pages -}}
+  {{- $pageTitle := $page.LinkTitle | default $page.File.BaseFileName -}}
+  {{- $pageLink := $page.RelPermalink -}}
+  {{- $data := partial "utils/fragments" (dict "context" $page "type" $indexType) -}}
+  {{- /* Our Partners' logos and its "About the park" note are structured front matter
+         (Params.partners, Params.council_note), not part of .Content above, so each needs its own
+         fragment too — the note under the page's own title (same convention fragments.html uses
+         for a lead paragraph with no heading of its own), each partner keyed the same way as
+         layouts/page/partners.html's card ids, so a match links straight to that partner. This is
+         a no-op for every other page (neither param is set on any other page).
+
+         Note the argument order: Hugo's `merge` gives precedence to its SECOND argument, and
+         piping puts the piped value there — so `$data | merge (dict "" $x)` would let fragments.html's
+         own (here, empty) "" entry win over $x. `merge $data (dict "" $x)` the other way round, so
+         our value wins instead. */ -}}
+  {{- with $page.Params.council_note -}}
+    {{- $data = merge $data (dict "" (strings.TrimSpace (. | plainify))) -}}
+  {{- end -}}
+  {{- range $partner := $page.Params.partners -}}
+    {{- $anchor := anchorize $partner.name -}}
+    {{- $text := strings.TrimSpace (printf "%s %s" $partner.name ($partner.description | default "")) -}}
+    {{- $data = $data | merge (dict (printf "%s#" $anchor) $text) -}}
+  {{- end -}}
+  {{- $output = $output | merge (dict $pageLink (dict "title" $pageTitle "data" $data)) -}}
+{{- end -}}
+
+{{- /* Archive documents have no page of their own to link to (build.list: local above means
+       "the list on this page links straight to the PDF" — layouts/archive/list.html does the
+       same), so the search result links to the PDF resource directly. */ -}}
+{{- range $index, $page := $archiveDocs -}}
+  {{- $pdf := $page.Resources.GetMatch $page.Params.file -}}
+  {{- if $pdf -}}
+    {{- $pageTitle := $page.LinkTitle | default $page.File.BaseFileName -}}
+    {{- $label := index $archiveLabels ($page.Params.category | default "") -}}
+    {{- $data := dict "" (strings.TrimSpace (printf "%s %s" $pageTitle $label)) -}}
+    {{- $output = $output | merge (dict $pdf.RelPermalink (dict "title" $pageTitle "data" $data)) -}}
+  {{- else -}}
+    {{- warnf "search-data: archive doc %s names the file %q, which isn't in its folder" $page.File.Path $page.Params.file -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Each photo gets its own fragment, keyed "anchor#" (an empty title after the "#", same
+       convention fragments.html uses for a page's lead paragraph) so flexsearch.js's title
+       fallback (`text || data[route].title`) shows the collection's name while the excerpt is
+       that photo's own alt text/caption — and so a match links straight to that photo
+       (route + "#anchor") via layouts/gallery/single.html's matching id, not just the
+       collection page. */ -}}
+{{- range $index, $page := $galleryCollections -}}
+  {{- $pageTitle := $page.LinkTitle | default $page.File.BaseFileName -}}
+  {{- $pageLink := $page.RelPermalink -}}
+  {{- $data := dict "" (strings.TrimSpace (printf "%s %s" $pageTitle ($page.Params.description | default ""))) -}}
+  {{- range $page.Params.photos -}}
+    {{- $text := strings.TrimSpace (.alt | default (.caption | default "")) -}}
+    {{- if ne $text "" -}}
+      {{- $anchor := partial "gallery/photo-anchor.html" (dict "image" .image) -}}
+      {{- $data = $data | merge (dict (printf "%s#" $anchor) $text) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $output = $output | merge (dict $pageLink (dict "title" $pageTitle "data" $data)) -}}
+{{- end -}}
+
+{{/* Extract glossary data entries */}}
+{{- $glossaryEntries := dict -}}
+{{- $siteData := partial "utils/hugo-compat/site-data.html" . -}}
+{{- with (index $siteData .Site.Language.Lang "termbase") -}}
+  {{- range . -}}
+    {{- $entry := cond (.abbr) (printf "%s %s %s" .abbr .term .definition) (printf "%s %s" .term .definition) -}}
+    {{- $glossaryEntries = $glossaryEntries | merge (dict .term $entry) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $glossary := dict
+  "title" "Glossary"
+  "data" $glossaryEntries
+-}}
+
+{{- $output = $output | merge (dict (relLangURL "glossary") $glossary )}}
+
+{{- $output | jsonify -}}

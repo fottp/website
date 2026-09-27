@@ -1,0 +1,63 @@
+{{ define "main" }}
+  {{ partial "page-banner.html" . }}
+  <div class="hx:mx-auto hx:flex hextra-max-page-width">
+    {{ partial "sidebar.html" (dict "context" . "disableSidebar" true "displayPlaceholder" true) }}
+    <article class="hx:w-full hx:break-words hx:flex hx:min-h-[calc(100vh-var(--navbar-height))] hx:min-w-0 hx:justify-center hx:pb-8 hx:pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+      <main id="content" class="hx:w-full hx:min-w-0 hextra-max-content-width hx:px-6 hx:pt-8 hx:md:px-12">
+        {{- with .Params.description }}<p class="fottp-intro">{{ . }}</p>{{ end -}}
+
+        {{- /* Why the park exists to have Friends of it, kept separate from (and more prominent
+               than) the partner logos below — a rule marks where it ends. */ -}}
+        {{- with .Params.council_note }}<div class="content fottp-partners-note">{{ . | markdownify }}</div>{{ end -}}
+
+        {{- /* One card per partner, in front-matter order (Telford & Wrekin Council first). Each
+               gets a stable id from its name so search results can link straight to it, matching
+               assets/json/search-data.json. The logo is decorative (alt="") because its name is
+               already shown as visible text right beside it; where there's a link, the logo's own
+               link is hidden from the tab order and screen readers to avoid a second, redundant
+               stop at the same destination (the name link just after it is the real one) — same
+               pattern as layouts/gallery/list.html's cards. */ -}}
+        <div class="fottp-cards fottp-partners">
+          {{- range $partner := .Params.partners }}
+            {{- with $.Resources.Get $partner.logo }}
+              {{- $logo := . }}
+              {{- $anchor := anchorize $partner.name }}
+              {{- /* Only needed without a url below: makes the card focusable by the script at
+                     the bottom of this file, without adding it to the normal tab order. */ -}}
+          <article class="fottp-card fottp-partner" id="{{ $anchor }}"{{ if not $partner.url }} tabindex="-1"{{ end }}>
+            {{- if $partner.url }}
+            <a class="fottp-partner-logo" href="{{ $partner.url }}" tabindex="-1" aria-hidden="true"><img src="{{ $logo.RelPermalink }}" width="{{ $logo.Width }}" height="{{ $logo.Height }}" alt="" loading="lazy" decoding="async"></a>
+            {{- else }}
+            <img class="fottp-partner-logo" src="{{ $logo.RelPermalink }}" width="{{ $logo.Width }}" height="{{ $logo.Height }}" alt="" loading="lazy" decoding="async">
+            {{- end }}
+            <h3>{{ if $partner.url }}<a href="{{ $partner.url }}">{{ $partner.name }}</a>{{ else }}{{ $partner.name }}{{ end }}</h3>
+            {{- with $partner.description }}<p>{{ . }}</p>{{ end }}
+          </article>
+            {{- else }}
+              {{- warnf "our-partners: %s lists %q, which isn't in its folder" $.File.Path $partner.logo }}
+            {{- end }}
+          {{- end }}
+        </div>
+
+        <div class="content">{{ .Content }}</div>
+      </main>
+    </article>
+    <div class="hx:max-xl:hidden hx:h-0 hx:w-64 hx:shrink-0"></div>
+  </div>
+  <script>
+    {{- /* Same reasoning as layouts/gallery/single.html's script: a search result links to a
+           specific partner's #anchor, and the browser scrolls it into view but won't move focus
+           there unless the target itself is focusable. Focuses the partner's name link if it has
+           one (announced exactly as if tabbed to); otherwise the card itself, which is why it
+           gets tabindex="-1" above when there's no link — focusable programmatically, but not
+           part of the normal tab order. */ -}}
+    (() => {
+      const id = decodeURIComponent(location.hash.slice(1));
+      if (!id) return;
+      const card = document.querySelector('.fottp-partners article#' + CSS.escape(id));
+      if (!card) return;
+      const link = card.querySelector('h3 a');
+      (link || card).focus({ preventScroll: true });
+    })();
+  </script>
+{{ end }}

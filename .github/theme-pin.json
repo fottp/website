@@ -12,10 +12,15 @@
     "layouts/_markup/render-image.html",
     "layouts/_partials/custom/footer.html",
     "layouts/_partials/favicons.html",
-    "data/icons.yaml"
+    "data/icons.yaml",
+    "assets/json/search-data.json",
+    "assets/js/flexsearch.js"
   ],
   "depends_on": [
     "layouts/_partials/sidebar.html",
+    "layouts/_partials/scripts/search.html",
+    "layouts/_partials/utils/fragments.html",
+    "layouts/_partials/utils/hugo-compat/site-data.html",
     "layouts/_partials/navbar.html",
     "layouts/_partials/footer.html",
     "layouts/_partials/head.html",
