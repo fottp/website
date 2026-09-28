@@ -72,4 +72,10 @@ photos:
   - image: 4081-pict0035-2crop.jpg
     alt: "A wooden pergola stands within a landscaped garden area, surrounded by trees and shrubs."
     caption: ""
+  - image: 4057-pict0010-2crop.jpg
+    alt: "Looking down on round fountain pools and domed green structures, with children and adults walking on the paving around them."
+    caption: ""
+  - image: 4061-pict0014crop.jpg
+    alt: "Children and adults walk along paths past a small fountain among lush planting."
+    caption: ""
 ---

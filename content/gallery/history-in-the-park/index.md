@@ -123,4 +123,7 @@ photos:
   - image: 3264-020414-001.jpg
     alt: "A person uses a wheelbarrow to move materials on a grassy area."
     caption: ""
+  - image: 3244-2013-114.jpg
+    alt: "Three volunteers in high-visibility vests stand beside a small excavation trench by a taped-off path, with a child walking behind."
+    caption: ""
 ---

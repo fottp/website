@@ -27,4 +27,16 @@ photos:
   - image: sakura-blossom-at-night.jpg
     alt: "A cherry tree in pink blossom lit up at night, with a green light beside it."
     caption: "The gardens lit up at night"
+  - image: sakura-crowd-in-garden.jpg
+    alt: "Festival-goers, some in kimonos, gather under white cherry blossom while a couple sit by a bed of primulas."
+    caption: ""
+  - image: sakura-kimono.jpg
+    alt: "A woman in a purple floral kimono stands on the path by the bandstand, with other visitors behind her."
+    caption: ""
+  - image: sakura-silhouette-cutting.jpg
+    alt: "A silhouette artist cuts a portrait of a young woman seated on a chair in a green tent."
+    caption: "Silhouette cutting"
+  - image: sakura-taiko-audience.jpg
+    alt: "Taiko drummers in red jackets perform on a wooden deck under cherry trees, watched by a seated crowd including children."
+    caption: "Taiko drumming"
 ---
