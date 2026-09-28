@@ -54,6 +54,12 @@ Our volunteers are always helping us restore our beloved park! Photos from these
 
 Telford Town Park was once a huge industrial site, and much of that heritage still survives alongside its green space today. The chimney is one of the park's most prominent landmarks: built in 1873 on the site of an earlier 18th-century ironworks, it stands 62 metres tall. The Abraham Darby monument marks 300 years since Darby's ironworking innovations put the area on the map. These are reminders of why our restoration work matters — protecting both the park's nature and its history for the future.
 
+Telford Town Park was developed by Telford Development Corporation in the 1970s, to give the people of the new town a "green lung" in its centre, and was handed over to the local authority to manage in 1992. The north of the park, next to the town centre and Southwater, holds the Chelsea and Maxell Gardens, the play areas, the Arena and the Visitor Centre. The south, stretching towards Stirchley, Dawley and Aqueduct, is important for both wildlife and history, and much of it is a Local Nature Reserve: pools, pit mounds, heathland, woodland and meadows that grew up naturally on land left behind by industry, alongside the Stirchley Chimney site, which opened to the public on 21 August 2012 after restoration. The Silkin Way, a long-distance walking and cycling route, runs through the park, linking it to the Ironbridge Gorge to the south and Apley Castle to the north.
+
+The area's recorded history goes back to the 12th century, when monks owned and farmed it; the name Stirchley comes from a meadow for livestock. The only relic of that time in the park is the Norman Chapel near the Withy Pool, which was carefully taken apart and moved there from its original site, where the House of Fraser store was later built. Much later, the Shropshire Canal through the park proved unsuccessful and was abandoned in favour of the railway from Coalport to Wellington. The last passenger train ran in 1952, and many of the railway's old fence posts can still be seen along its route.
+
+To explore it yourself, follow the heritage and nature trails on the council's [Telford Town Park website](https://www.telfordtownpark.co.uk/info/34/walking_trails), which has leaflets to download.
+
 ![The Abraham Darby 300th anniversary monument in the park](abraham-darby-monument.jpg)
 
 ![The monument seen across the meadow](monument-meadow.jpg)
