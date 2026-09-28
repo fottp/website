@@ -15,11 +15,11 @@ With the support of Simmonds Transport, the Friends are involved in a major proj
 
 ![Freshly painted picnic benches near Grange Pool](crannog-benches.jpg)
 
-### 19 August — Restoring the Chelsea and Maxel gardens
+### 19 August — Restoring the Chelsea and Maxell Gardens
 
 The Friends of Telford Town Park were hard at work in the gardens and then enjoying a well-earned cup of tea and a chat.
 
-Thank you to everyone for helping to keep the Chelsea and Maxel gardens looking great.
+Thank you to everyone for helping to keep the Chelsea and Maxell Gardens looking great.
 
 ![Volunteers clearing a path in Telford Town Park](chelsea-maxel-gardens.jpg)
 
@@ -49,6 +49,20 @@ Our volunteers are always helping us restore our beloved park! Photos from these
 - Building the poly tunnel
 - Clearing the snake and lizard sanctuary with Fujitsu
 - Clearing the Stirchley old school entrance with Fujitsu
+
+## Earlier projects
+
+### 2010 — Reopening the Crannog
+
+With a £2,760 "Awards for All" grant from the Big Lottery, the Friends replaced the old broken bridge to the Crannog on Grange Pool (Shropshire Council installed it), cleared the site and laid a path to the far end. In October 2010 the Friends and Telford Green Gym built a living willow hide there for watching the birds on the pool, and the Friends produced the [Crannog leaflet](/archive/crannog-leaflet/crannog-leaflet.pdf).
+
+### Slag works survey
+
+The Friends worked with archaeologist Paul Belford of Nexus Heritage on what was believed to be the first survey ever made of a slag-crushing plant, where waste slag from the local iron furnaces was turned into road-making material. The site is beside the easternmost footpath running south from Stirchley Chimney, and can be seen from the path.
+
+### 2014–2015 — Telford, Our New Town
+
+The Friends helped Telford & Wrekin Libraries with "Telford, Our New Town", a Heritage Lottery-funded project to create a digital archive of Telford's development in the 1960s–1980s, drawing on the Telford Development Corporation archive at Shropshire Archives. The libraries made a [film about the project](https://youtu.be/Ip3O1aUYVm4) in 2015.
 
 ## The Park We're Protecting
 

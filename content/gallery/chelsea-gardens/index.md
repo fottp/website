@@ -132,4 +132,10 @@ photos:
   - image: projects-kitchen-depot-1.jpg
     alt: "A volunteer in a high-visibility vest and a man in a black sweatshirt raise mugs beneath the red Chelsea Gardens arch."
     caption: "Kitchen building with Kitchen Depot"
+  - image: 3225-2013-085.jpg
+    alt: "Volunteers in high-visibility vests stack paving bricks by a green shed, one in a red cap smiling at the camera."
+    caption: ""
+  - image: 3668-img-0973.jpg
+    alt: "A woman and a young girl read an information board beside a woodchip path while another woman watches."
+    caption: ""
 ---

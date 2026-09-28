@@ -30,4 +30,10 @@ photos:
   - image: 3330-march16-012-1.jpg
     alt: "Four people in orange overalls carry a large red geometric sculpture through a gate."
     caption: ""
+  - image: 194-marchpastarena.jpg
+    alt: "Soldiers march past in formation on the Arena, watched by a crowd including a boy holding a Union flag."
+    caption: "March past on the Arena"
+  - image: 3195-dsc0230.jpg
+    alt: "A smiling young girl in a striped dress holds up a certificate on a path in the park."
+    caption: ""
 ---

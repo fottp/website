@@ -81,4 +81,7 @@ photos:
   - image: 3639-img-0945.jpg
     alt: "Two people in high-visibility vests hold a red giraffe sculpture in the back of a white van, with a poster beside them."
     caption: ""
+  - image: 3302-march16-016.jpg
+    alt: "Green and red gorilla sculptures on the grass, with a man holding a small child and another child standing nearby."
+    caption: ""
 ---
