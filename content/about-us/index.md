@@ -17,9 +17,11 @@ The park has won the Green Flag Award and "Best UK Park" at the Fields in Trust 
 
 ### Milestones
 
-- **23 November 2011** — After five years of campaigning by the Friends, including three applications for village green status, the deeds were signed making the Arena a Queen Elizabeth II Field, protected from development by Fields in Trust.
+- **October 2010** — The Friends reopened the Crannog on Grange Pool as a nature-watching site, with a new bridge paid for by a £2,760 "Awards for All" lottery grant, a new path and a living willow hide. More in [Earlier projects](/our-projects/#earlier-projects).
+- **23 November 2011** — After five years of campaigning by the Friends, including three applications for village green status, the deeds were signed making the Arena a Queen Elizabeth II Field, protected from development by Fields in Trust. A plaque marking it was unveiled at the top of the steps down into the Arena on 19 July 2012.
 - **28 November 2013** — Jolly Green Day, a free outdoor event the Friends held on the Arena with Telford Green Spaces Partnership on 17 August, won Fields in Trust's national "Have a Field Day" award at a ceremony at Lord's Cricket Ground.
 - **13 September 2014** — The Friends' Sensory Garden in the Chelsea Gardens was opened by the Mayor and David Wassell MBE, creator of the Chelsea Gardens. It was designed by the Friends' gardening group with landscape architect Teresa Rham, on the site of the old rose garden.
+- **2015** — Telford Town Park was named UK's Best Park 2015 at the Fields in Trust awards.
 - **2016** — The musical fountain in the Chelsea Gardens, silent for years, was restored with a £49,440 grant from the Suez Communities Trust.
 - **2017** — The Friends built a bug hotel in the Chelsea Gardens with a grant from the People's Postcode Lottery.
 - **21 April 2018** — The Friends held the first Sakura (cherry blossom) festival in the Maxell Cherry Garden, as part of Telford's 50th anniversary. The same year they started the memory leaf tree in the Sensory Garden, which raised almost £500 for charities.
@@ -29,6 +31,12 @@ The park has won the Green Flag Award and "Best UK Park" at the Fields in Trust 
 - **24 May 2023** — The Lord-Lieutenant opened the new Coronation Garden in the Chelsea Gardens, created by the Friends with funding from Telford & Wrekin Council's King's Coronation Celebration Fund.
 - **29 September 2023** — The Friends celebrated 20 years of service at the Ramada Hotel, joined by the High Sheriff of Shropshire, Mandy Thorn MBE.
 - **August 2026** — The Friends became a [registered charity](/news/2026-09-19-registered-charity/) in England & Wales (no. 1219196).
+
+### Chairs
+
+- **Chris Pettman** — the Friends' longest-serving chair, from 2006 to 2024, apart from a spell from April 2014
+- **John Trubshaw** — elected at the AGM on 9 April 2014
+- **Adrian Smith** — chair since 2024
 
 ![HRH The Princess Royal touring the Chelsea Gardens with a FOTTP volunteer](royal-visit.jpg)
 
