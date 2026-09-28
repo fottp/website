@@ -9,7 +9,7 @@ Have a look at some of our vital restoration and maintenance efforts. We work ti
 
 ### 2024 — The Crannog Project
 
-With the support of Simmonds Transport, the Friends are involved in a major project to repair and improve the Crannog and the area around Grange Pool — including repairing the seating area and bridge, painting benches and tables, clearing pathways, and planting hedgerow trees to support the banks.
+With the support of Simmonds Transport, the Friends are involved in a major project to repair and improve the Crannog and the area around Grange Pool — including repairing the seating area and bridge, painting benches and tables, clearing pathways, and planting hedgerow trees to support the banks. [Read more about the Crannog project](/news/2026-09-23-crannog-regeneration-project/).
 
 ![Volunteers planting new hedgerow trees near the Crannog](crannog-planting.jpg)
 
