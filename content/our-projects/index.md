@@ -15,11 +15,11 @@ With the support of Simmonds Transport, the Friends are involved in a major proj
 
 ![Freshly painted picnic benches near Grange Pool](crannog-benches.jpg)
 
-### 19 August — Restoring the Chelsea and Maxel gardens
+### 19 August — Restoring the Chelsea and Maxell Gardens
 
 The Friends of Telford Town Park were hard at work in the gardens and then enjoying a well-earned cup of tea and a chat.
 
-Thank you to everyone for helping to keep the Chelsea and Maxel gardens looking great.
+Thank you to everyone for helping to keep the Chelsea and Maxell Gardens looking great.
 
 ![Volunteers clearing a path in Telford Town Park](chelsea-maxel-gardens.jpg)
 
