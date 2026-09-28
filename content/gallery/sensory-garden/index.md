@@ -69,4 +69,7 @@ photos:
   - image: 3300-may-03-05-14.jpg
     alt: "A raised wooden bed is filled with young plants in pots, situated within a landscaped area."
     caption: ""
+  - image: projects-kitchen-depot-2.jpg
+    alt: "Two men holding mugs lean on the Friends' Sensory Garden information board, surrounded by pink and red flowers."
+    caption: "Kitchen building with Kitchen Depot"
 ---
