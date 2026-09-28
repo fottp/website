@@ -92,7 +92,9 @@ disableKinds = ['taxonomy', 'term']
     # Shown in the footer (layouts/_partials/custom/footer.html).
     about_us = "<p>Friends of Telford Town Park was founded to unite people who cherish this unique green space, supporting restoration, activities and a community spirit that keeps the park vibrant and welcoming for all generations.</p>"
     copyright = "&copy; Friends of Telford Town Park. Registered charity in England &amp; Wales, no. 1219196. All rights reserved."
-    address = """<p>Telford Town Park
+    address = """<p>Telford Town Park Visitor Centre
+        <br>Telford Town Park
+        <br>Hinkshay Road
         <br>Telford
         <br>TF3 4EP
       </p>
