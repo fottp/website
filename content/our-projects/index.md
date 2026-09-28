@@ -41,7 +41,7 @@ Thanks for all who helped out!
 
 ## Gallery
 
-Our volunteers are always helping us restore our beloved park! Past work sessions include:
+Our volunteers are always helping us restore our beloved park! Photos from these past work sessions are in the [Around the park gallery](/gallery/around-the-park/):
 
 - Tidying Grange Pool with Simmonds
 - Bench painting with Fujitsu
@@ -49,8 +49,6 @@ Our volunteers are always helping us restore our beloved park! Past work session
 - Building the poly tunnel
 - Clearing the snake and lizard sanctuary with Fujitsu
 - Clearing the Stirchley old school entrance with Fujitsu
-
-<!-- TODO: the old site's gallery images were only ever captured as small (50x67px) thumbnails by the JS lightbox widget — need full-resolution photos re-sourced for these specific past sessions -->
 
 ## The Park We're Protecting
 

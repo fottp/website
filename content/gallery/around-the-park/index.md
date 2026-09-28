@@ -180,4 +180,88 @@ photos:
   - image: 3198-dsc-9545.jpg
     alt: "Two people walk along a paved path through a green landscape."
     caption: ""
+  - image: projects-grange-pool-simmonds-1.jpg
+    alt: "A volunteer in an olive polo shirt and denim shorts leans on a spade beside the freshly cleared edge of a woodland path."
+    caption: "Tidying Grange Pool with Simmonds Transport"
+  - image: projects-grange-pool-simmonds-2.jpg
+    alt: "Three volunteers dig and scrape leaves and soil from a curved brick edging beside a woodland path."
+    caption: "Tidying Grange Pool with Simmonds Transport"
+  - image: projects-grange-pool-simmonds-3.jpg
+    alt: "A volunteer in a blue top and gloves carries a spade along a shaded path between dense green bushes."
+    caption: "Tidying Grange Pool with Simmonds Transport"
+  - image: projects-grange-pool-simmonds-4.jpg
+    alt: "Volunteers rake and level a newly cleared earth path beside a grass verge while others work further along it."
+    caption: "Tidying Grange Pool with Simmonds Transport"
+  - image: projects-bench-painting-fujitsu-1.jpg
+    alt: "Two volunteers paint metal benches set against raised timber flower beds, with red flowers behind a rope fence."
+    caption: "Bench painting with Fujitsu"
+  - image: projects-bench-painting-fujitsu-2.jpg
+    alt: "A volunteer in a sun hat stands beside a black metal bench part-way through repainting, in front of raised flower beds."
+    caption: "Bench painting with Fujitsu"
+  - image: projects-bench-painting-fujitsu-3.jpg
+    alt: "Close-up of a metal bench half repainted, its grey slats being covered in glossy black paint."
+    caption: "Bench painting with Fujitsu"
+  - image: projects-bench-painting-fujitsu-4.jpg
+    alt: "A freshly painted black bench beside a path, with a small \"Caution! Wet paint\" sign on the ground in front of it."
+    caption: "Bench painting with Fujitsu"
+  - image: projects-bench-painting-fujitsu-5.jpg
+    alt: "Two volunteers paint a green picnic table and benches beside a path, with grass and trees behind."
+    caption: "Bench painting with Fujitsu"
+  - image: projects-bench-painting-fujitsu-6.jpg
+    alt: "A volunteer in a black hoodie paints a long green metal bench beside a path, with a paint tin and a mug on the ground."
+    caption: "Bench painting with Fujitsu"
+  - image: projects-bench-painting-fujitsu-7.jpg
+    alt: "A volunteer in a blue jacket paints a green metal bench beneath trees, next to a litter bin."
+    caption: "Bench painting with Fujitsu"
+  - image: projects-bench-painting-fujitsu-8.jpg
+    alt: "A long curved green metal bench, freshly painted, with a paint pot resting on its seat."
+    caption: "Bench painting with Fujitsu"
+  - image: projects-kitchen-depot-3.jpg
+    alt: "Two men toast with mugs in a small kitchen with new white units, a wall clock and a hot-water urn."
+    caption: "Kitchen building with Kitchen Depot"
+  - image: projects-kitchen-depot-4.jpg
+    alt: "A newly fitted kitchen with white cupboards and drawers, a dark worktop, a wall clock and a hot-water urn."
+    caption: "Kitchen building with Kitchen Depot"
+  - image: projects-poly-tunnel-1.jpg
+    alt: "A volunteer in a checked shirt stands with a spade in a long raised timber bed in a fenced growing area in winter."
+    caption: "Building the poly tunnel"
+  - image: projects-poly-tunnel-2.jpg
+    alt: "A long raised timber bed, freshly dug, with a spade and an orange glove resting on its edge, in a fenced growing area."
+    caption: "Building the poly tunnel"
+  - image: projects-snake-lizard-sanctuary-1.jpg
+    alt: "A smiling volunteer in a black padded jacket cuts back thick scrub with loppers."
+    caption: "Clearing the snake and lizard sanctuary with Fujitsu"
+  - image: projects-snake-lizard-sanctuary-2.jpg
+    alt: "Three volunteers dig and rake bare earth on a cleared woodland slope in winter sunshine."
+    caption: "Clearing the snake and lizard sanctuary with Fujitsu"
+  - image: projects-snake-lizard-sanctuary-3.jpg
+    alt: "Four volunteers with loppers work around a bushy tree on overgrown ground."
+    caption: "Clearing the snake and lizard sanctuary with Fujitsu"
+  - image: projects-stirchley-old-school-1.jpg
+    alt: "Six volunteers in gloves stand smiling with rakes and loppers in a woodland clearing."
+    caption: "Clearing the Stirchley old school entrance with Fujitsu"
+  - image: projects-stirchley-old-school-2.jpg
+    alt: "A volunteer stands on top of a brick wall beside a road, cutting back overgrown bushes."
+    caption: "Clearing the Stirchley old school entrance with Fujitsu"
+  - image: projects-stirchley-old-school-3.jpg
+    alt: "Seen from across the road, a volunteer on top of a long brick wall trims the trees growing behind it."
+    caption: "Clearing the Stirchley old school entrance with Fujitsu"
+  - image: projects-stirchley-old-school-4.jpg
+    alt: "A long brick wall beside a road with dense trees rising behind it."
+    caption: "Clearing the Stirchley old school entrance with Fujitsu"
+  - image: projects-stirchley-old-school-5.jpg
+    alt: "A volunteer in a high-visibility vest stands in a newly cleared patch of woodland."
+    caption: "Clearing the Stirchley old school entrance with Fujitsu"
+  - image: projects-stirchley-old-school-6.jpg
+    alt: "A volunteer in a tracksuit top uses long-handled loppers on thick undergrowth."
+    caption: "Clearing the Stirchley old school entrance with Fujitsu"
+  - image: projects-stirchley-old-school-7.jpg
+    alt: "A volunteer cuts back leafy branches with loppers in shady woodland."
+    caption: "Clearing the Stirchley old school entrance with Fujitsu"
+  - image: projects-stirchley-old-school-8.jpg
+    alt: "A volunteer in a high-visibility vest and sun hat cuts ivy and branches from the top of a brick wall beside a path."
+    caption: "Clearing the Stirchley old school entrance with Fujitsu"
+  - image: projects-stirchley-old-school-9.jpg
+    alt: "Two volunteers with long pruners laugh on overgrown brick steps as they clear ivy and branches."
+    caption: "Clearing the Stirchley old school entrance with Fujitsu"
 ---

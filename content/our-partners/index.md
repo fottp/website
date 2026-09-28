@@ -41,6 +41,6 @@ partners:
 
 ## Get in touch
 
-Address: **TF3 4EP**
+Address: **Telford Town Park Visitor Centre, Hinkshay Road, Telford TF3 4EP**
 
 Want to get in touch? [Contact us](/contact-us/).

@@ -129,4 +129,7 @@ photos:
   - image: 3679-img-0887.jpg
     alt: "A tall wooden frame filled with natural materials stands on woodchip, with a man in a high-visibility vest beside it."
     caption: ""
+  - image: projects-kitchen-depot-1.jpg
+    alt: "A volunteer in a high-visibility vest and a man in a black sweatshirt raise mugs beneath the red Chelsea Gardens arch."
+    caption: "Kitchen building with Kitchen Depot"
 ---
