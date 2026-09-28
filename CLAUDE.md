@@ -30,7 +30,7 @@ Contact and Membership post to `forms.fottp.org.uk`, a small self-hosted relay (
 - Small commits, plain-English messages.
 - After layout/theme/Hugo changes: `hugo --minify --logLevel warn` prints nothing; check the phone menu on every page type.
 - Ask before adding third-party services.
-- Verify photo/fact provenance: no stock photos as real, no child photos unless already published on fottp.co.uk or friendsoftelfordtownpark.org, no uncertain archive dates/affiliations — confirm with gruntfutuk.
+- Verify photo/fact provenance: no stock photos as real, photos with minors only if already published on fottp.co.uk or friendsoftelfordtownpark.org (otherwise be careful and confirm first), no uncertain archive dates/affiliations — confirm with gruntfutuk.
 
 ## Unconfirmed — don't publish
 - Santa Fun Run: FOTTP's role, and the air-ambulance cheque photo.
