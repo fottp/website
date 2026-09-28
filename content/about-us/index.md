@@ -13,9 +13,22 @@ Friends of Telford Town Park was founded to unite people who cherish this unique
 
 Friends of Telford Town Park was founded in 2003 by a small group of three people who felt the park needed extra care and attention, and was formally constituted in July 2004. Telford Town Park covers around 150 hectares (400 acres) — one of the largest urban parks in Europe, and often called "the jewel in the crown of Telford."
 
-Over the years the Friends have been recognised with a national Fields in Trust award (2013), the Green Flag Award for the park, "Best UK Park" at the Fields in Trust awards, and the Queen's Award for Voluntary Service (2020) — and celebrated 20 years of service in 2023. Photos of the awards are in the [Recognition and awards gallery](/gallery/recognition-and-awards/).
+The park has won the Green Flag Award and "Best UK Park" at the Fields in Trust awards. Photos of the awards are in the [Recognition and awards gallery](/gallery/recognition-and-awards/).
 
-On 28 September 2020, the Friends were delighted to welcome HRH The Princess Royal to the Town Park, where she was shown around the Chelsea and Maxell Gardens and planted a commemorative tree.
+### Milestones
+
+- **23 November 2011** — After five years of campaigning by the Friends, including three applications for village green status, the deeds were signed making the Arena a Queen Elizabeth II Field, protected from development by Fields in Trust.
+- **28 November 2013** — Jolly Green Day, a free outdoor event the Friends held on the Arena with Telford Green Spaces Partnership on 17 August, won Fields in Trust's national "Have a Field Day" award at a ceremony at Lord's Cricket Ground.
+- **13 September 2014** — The Friends' Sensory Garden in the Chelsea Gardens was opened by the Mayor and David Wassell MBE, creator of the Chelsea Gardens. It was designed by the Friends' gardening group with landscape architect Teresa Rham, on the site of the old rose garden.
+- **2016** — The musical fountain in the Chelsea Gardens, silent for years, was restored with a £49,440 grant from the Suez Communities Trust.
+- **2017** — The Friends built a bug hotel in the Chelsea Gardens with a grant from the People's Postcode Lottery.
+- **21 April 2018** — The Friends held the first Sakura (cherry blossom) festival in the Maxell Cherry Garden, as part of Telford's 50th anniversary. The same year they started the memory leaf tree in the Sensory Garden, which raised almost £500 for charities.
+- **June 2020** — The Friends received the Queen's Award for Voluntary Service.
+- **28 September 2020** — HRH The Princess Royal visited the Town Park, where she was shown around the Chelsea and Maxell Gardens and planted a commemorative tree.
+- **30 September 2022** — Covid had made a celebration impossible in 2020, so the Queen's Award was formally presented at the Holiday Inn Telford by Anna Turner, Lord-Lieutenant of Shropshire.
+- **24 May 2023** — The Lord-Lieutenant opened the new Coronation Garden in the Chelsea Gardens, created by the Friends with funding from Telford & Wrekin Council's King's Coronation Celebration Fund.
+- **29 September 2023** — The Friends celebrated 20 years of service at the Ramada Hotel, joined by the High Sheriff of Shropshire, Mandy Thorn MBE.
+- **August 2026** — The Friends became a [registered charity](/news/2026-09-19-registered-charity/) in England & Wales (no. 1219196).
 
 ![HRH The Princess Royal touring the Chelsea Gardens with a FOTTP volunteer](royal-visit.jpg)
 
