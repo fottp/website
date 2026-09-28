@@ -191,6 +191,10 @@ The scripts used to build the Archive and Gallery sections from the charity's tw
 - The Wednesday volunteering page has a TODO for what to bring.
 - The old WordPress site's six events were not imported.
 - The 138 alt texts that weren't rewritten by hand deserve a proper review.
+- **Park size.** About Us says about 150 hectares (400 acres). The council's own site says 150 ha on its cycling page and 170 ha on its walking trails page, and the old WordPress site said 1.7 km² (420 acres), of which about 70.7 ha is a Local Nature Reserve. Confirm one figure and use it everywhere.
+- **Stirchley Chimney.** Our Projects says it was built in 1873 and is 62 metres tall (from the old WordPress site). The council's site says about 209 feet (64 m) and dates the ironworks to 1790. Check the height.
+- **Heritage details left out** of Our Projects' "The Park We're Protecting" because they couldn't be checked (all from the old site's 2012 "Heritage" post): a brickworks company at the chimney site that went into liquidation before making a single brick, leaving brick-making to the two brickworks near Randlay car park (it isn't clear which site is meant); the last freight train through the park in 1956; and the railway being "often operated in conjunction with the Great Western Railway".
+- **Milestones left out** of About Us because their date is missing or unclear: the Queen's Award presentation at the Cavalier Centre near Much Wenlock on 27 July (year not stated; the formal presentation on 30 September 2022 is included); the year of "Best UK Park" at the Fields in Trust awards (a December; 2014 or 2015); which years the park won the Green Flag Award (the old site said the fourth year running in 2015); the "Awards for All" grant of £2,760 to reinstate the Crannog bridge; and the date of the mining memorial in the park.
 
 ### Not yet tested in the live CMS
 - The date pickers, skipped dates, creating or deleting an event.
