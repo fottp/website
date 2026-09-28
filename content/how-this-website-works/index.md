@@ -51,7 +51,7 @@ Access to edit the website is restricted to committee members and other voluntee
 
 ## Accessibility
 
-The visual design was chosen carefully with accessibility in mind, including for visitors who use screen readers or other vision-support technology, and every photograph on the site has "alt text" describing what it shows. Full details, including where we currently fall short, are on our [Accessibility Statement](/accessibility-statement/) page.
+The visual design was chosen carefully with accessibility in mind, including for visitors who use screen readers or other vision-support technology, and every photograph on the site has "alt text" describing what it shows. A search result that points to a specific gallery photo moves keyboard/screen-reader focus straight to that photo, so it's clear which one matched. Full details, including where we currently fall short, are on our [Accessibility Statement](/accessibility-statement/) page.
 
 ## Privacy by design
 
@@ -72,6 +72,7 @@ No confidential or sensitive personal information is published on this public we
 - **Forms:** a small relay we wrote and host ourselves, replacing a third-party service we used at first — plain [Python](https://www.python.org/), using only its own standard library, so nothing is pulled in from anyone else's code and there's nothing for a dependency-vulnerability scanner to ever need to flag. It runs on a small free-tier server we host in the UK, with [Caddy](https://caddyserver.com/) (MIT-licensed, open source) handling HTTPS in front of it, and forwards each submission on by email through Fastmail rather than storing it. It's a small, self-contained piece of the site — just two forms — so it could be changed again without touching anything else
 - **Map:** an OpenStreetMap embed, with no API key, account or cookies required
 - **Photo gallery:** a section of the same Hugo site, with a lightbox viewer via [PhotoSwipe](https://photoswipe.com/) (MIT-licensed, vendored locally rather than loaded from elsewhere)
+- **Search:** a site-wide search box (press `/` or Ctrl+K) using [FlexSearch](https://github.com/nextapps-de/flexsearch) (Apache-2.0, vendored locally rather than loaded from elsewhere) to search page content entirely in the visitor's own browser, with nothing sent anywhere
 - **Images:** automatically resized into multiple resolutions and converted to modern formats at build time, so visitors never download a full-size original unnecessarily
 - **DNS:** the domain's DNS records point to GitHub Pages; these are standard, publicly resolvable records that can be checked independently with tools such as `dig`, `nslookup`, or any online DNS lookup service
 - **TLS/HTTPS:** certificates are issued and renewed automatically by the hosting platform
