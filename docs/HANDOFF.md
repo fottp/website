@@ -53,7 +53,7 @@ If it is granted, the repo can be made **private** and the site will still publi
 3. Check an editor can still sign in to `/admin/` and save a change. Editors' access comes from the `editors` team (Write) and their tokens are already limited to `fottp/website`, so nothing should change.
 4. Expect anything that reads the repo without signing in to stop working: raw file links, and unauthenticated GitHub API checks such as looking up a deploy's status.
 5. Private repos use the plan's allowance of Actions minutes. A build takes about a minute, so the nightly rebuild is well inside a Team allowance.
-6. Branch rules, code owners and the theme release watcher carry on as they are. Update this file (remove the "public" remarks, and the Free-plan notes above and in the setup table).
+6. Branch rules, code owners and the theme release watcher carry on as they are. Also give `fottp/infrastructure` the same review protocol, which the Free plan can't enforce on a private repo: its README's "Review and merging" lists the ruleset to create. Update this file (remove the "public" remarks, and the Free-plan notes above and in the setup table).
 
 ## How the site is built
 **Layout.** `hugo.toml` (menu, form keys, theme settings); `content/` (Markdown page bundles, with photos beside their page); `layouts/`, `assets/css/custom.css`, `data/` (our changes to the theme); `static/` (CNAME, logo, favicons, the CMS in `admin/`, the photo viewer in `vendor/photoswipe/`). Never commit `public/`, `resources/_gen/` or `.hugo_build.lock`.
